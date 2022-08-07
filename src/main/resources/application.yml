@@ -1,0 +1,42 @@
+#Jasypt Config
+jasypt:
+  encryptor:
+    bean: jasyptEncryptorBean
+
+#JWT
+jwt:
+  secret-key: ENC(S7GPwu6uPVXhktuGgDomU2MxMUqHfw8w4jL5cQAtGYAD8CvjxOouxMkyPVAYWkjCxtc1NGRQQxKv8LSjYA2rtQ==)
+
+#Database
+spring:
+  datasource:
+    url: ENC(i/bTGZHhhAaw3KVhyyiVQ4PB0mg3aPLEJC35rJS0DT0uWVf4jFLV5F8qxVoxWZc+oUPEq6jLpPYeUkZzR9XDmQ==)
+    driver-class-name: ENC(nkeB4qM7JXIrMFqgRniSr1ZqUzDXCa/TGIyuplg6+eX3Or261/ZL9Km6mReh7Qio)
+    username: ENC(dXOnLsHMsIb618EB4m15ZAkpIzMosyTjO8KmPsdbg4M=)
+    password: ENC(NmGGtfAWnOQfnYjKjdBgC9X5xlUnD41q3tFsmm3DnjU=)
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: ENC(lKvwvCfz+pBhgHMrDHoxMaTI09JBWvQ6kID2zNQS8o3eVs7QvwpzzSglXix/xRqa3GcGPNUiGPp5Z0OFUgZJmw==)
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  #OAuth
+  profiles:
+    include: oauth
+
+  #Swagger
+  #/v3/swagger-ui/index.html
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
