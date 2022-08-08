@@ -6,13 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
 public class Author {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +19,10 @@ public class Author {
 	private Long seq;
 	private String name;
 	private String description;
+
+	@Builder
+	public Author(String description, String name) {
+		this.description = description;
+		this.name = name;
+	}
 }
