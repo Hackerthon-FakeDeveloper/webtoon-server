@@ -3,18 +3,13 @@ package org.corodiak.scfakedeveloper.config;
 import org.corodiak.scfakedeveloper.auth.filter.TokenAuthFilter;
 import org.corodiak.scfakedeveloper.auth.handler.OAuth2AuthenticationFailureHandler;
 import org.corodiak.scfakedeveloper.auth.handler.OAuth2AuthenticationSuccessHandler;
-import org.corodiak.scfakedeveloper.auth.jwt.AuthToken;
 import org.corodiak.scfakedeveloper.auth.jwt.AuthTokenProvider;
 import org.corodiak.scfakedeveloper.auth.service.CustomOAuth2UserService;
 import org.corodiak.scfakedeveloper.auth.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -29,8 +24,20 @@ import lombok.extern.slf4j.Slf4j;
 public class SecurityConfig {
 
 	private final CustomOAuth2UserService customOAuth2UserService;
-	private final CustomUserDetailsService customUserDetailsService;
 	private final AuthTokenProvider authTokenProvider;
+
+	private static final String[] PERMIT_ALL = {
+		"/login/**",
+		"/v2/api-docs",
+		"/swagger-resources",
+		"/swagger-resources/**",
+		"/configuration/ui",
+		"/configuration/security",
+		"/swagger-ui.html",
+		"/webjars/**",
+		"/v3/api-docs/**",
+		"/swagger-ui/**"
+	};
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -46,14 +53,13 @@ public class SecurityConfig {
 			.failureHandler(oAuth2AuthenticationFailureHandler())
 			.and()
 			.authorizeHttpRequests()
+			.antMatchers(PERMIT_ALL).permitAll()
 			.antMatchers("/admin").hasRole("ADMIN")
-			.antMatchers("/*").hasAnyRole("USER", "ADMIN")
-			.antMatchers("/login/*").permitAll();
-
+			.antMatchers("/*").hasAnyRole("USER", "ADMIN");
+		
+		//임시 설정
 		http.csrf().disable();
-
 		http.addFilterBefore(tokenAuthFilter(), UsernamePasswordAuthenticationFilter.class);
-
 		return http.build();
 	}
 
