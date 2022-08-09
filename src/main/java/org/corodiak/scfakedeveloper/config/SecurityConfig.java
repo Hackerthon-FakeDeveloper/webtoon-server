@@ -1,13 +1,16 @@
 package org.corodiak.scfakedeveloper.config;
 
+import java.io.OutputStream;
+
 import org.corodiak.scfakedeveloper.auth.filter.TokenAuthFilter;
 import org.corodiak.scfakedeveloper.auth.handler.OAuth2AuthenticationFailureHandler;
 import org.corodiak.scfakedeveloper.auth.handler.OAuth2AuthenticationSuccessHandler;
 import org.corodiak.scfakedeveloper.auth.jwt.AuthTokenProvider;
 import org.corodiak.scfakedeveloper.auth.service.CustomOAuth2UserService;
-import org.corodiak.scfakedeveloper.auth.service.CustomUserDetailsService;
+import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -56,10 +59,21 @@ public class SecurityConfig {
 			.antMatchers(PERMIT_ALL).permitAll()
 			.antMatchers("/admin").hasRole("ADMIN")
 			.antMatchers("/*").hasAnyRole("USER", "ADMIN");
-		
 		//임시 설정
 		http.csrf().disable();
+
 		http.addFilterBefore(tokenAuthFilter(), UsernamePasswordAuthenticationFilter.class);
+
+		http.exceptionHandling()
+			.authenticationEntryPoint((request, response, authException) -> {
+				ResponseModel responseModel = ResponseModel.builder()
+					.httpStatus(HttpStatus.UNAUTHORIZED)
+					.message("UnAuthorize or Permission Denied")
+					.build();
+				response.setStatus(401);
+				OutputStream outputStream = response.getOutputStream();
+				outputStream.write(responseModel.toJson().getBytes());
+			});
 		return http.build();
 	}
 
@@ -77,5 +91,4 @@ public class SecurityConfig {
 	public TokenAuthFilter tokenAuthFilter() {
 		return new TokenAuthFilter(authTokenProvider);
 	}
-
 }

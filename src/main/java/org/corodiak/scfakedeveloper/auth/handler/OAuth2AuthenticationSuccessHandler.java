@@ -5,7 +5,6 @@ import java.io.OutputStream;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,7 +12,6 @@ import org.corodiak.scfakedeveloper.auth.jwt.AuthToken;
 import org.corodiak.scfakedeveloper.auth.jwt.AuthTokenProvider;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.UserPrincipal;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -33,11 +31,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-		Authentication authentication) throws IOException, ServletException {
+		Authentication authentication) throws IOException {
 		UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
 
 		String role = authentication.getAuthorities().stream()
-			.map(a -> ((GrantedAuthority)a).getAuthority())
+			.map(GrantedAuthority::getAuthority)
 			.collect(Collectors.joining("|"));
 
 		Date expiry = new Date();
@@ -48,6 +46,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			.message("Authorization Token Issued.")
 			.build();
 		response.setHeader("Authorization", authToken.getToken());
+		//send redirect 필요
 		OutputStream outputStream = response.getOutputStream();
 		outputStream.write(responseModel.toJson().getBytes());
 	}
