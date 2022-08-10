@@ -19,6 +19,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
 
     @Override
+    @Transactional
     public boolean addReview(int scoreFirst, int scoreSecond, int scoreThird,
                              String content, Long userSeq, Long webtoonSeq) {
         Review review = Review.builder()
@@ -34,6 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public ReviewVo findReview(Long seq) {
         Optional<Review> review = reviewRepository.findBySeq(seq);
         if (review.isPresent()) {
@@ -43,6 +45,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public List<ReviewVo> findByUserSeq(Long seq, Long start, Long display) {
         List<Review> reviewList = reviewRepository.findByUserSeq(seq, start, display);
         List<ReviewVo> results = reviewList.stream()
@@ -52,8 +55,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public List<ReviewVo> findByWebtoonSeq(Long seq, Long start, Long display) {
-        List<Review> reviewList = reviewRepository.findByUserSeq(seq, start, display);
+        List<Review> reviewList = reviewRepository.findByWebtoonSeq(seq, start, display);
         List<ReviewVo> results = reviewList.stream()
                 .map(e -> new ReviewVo.ReviewVoWithUserAndWebtoon(e))
                 .collect(Collectors.toList());
@@ -79,6 +83,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public void removeReview(Long seq) {
         reviewRepository.deleteById(seq);
     }

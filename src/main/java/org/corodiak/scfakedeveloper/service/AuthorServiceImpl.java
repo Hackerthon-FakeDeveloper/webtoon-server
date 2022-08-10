@@ -19,6 +19,7 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
 
     @Override
+    @Transactional
     public boolean addAuthor(String name, String description) {
         Author author = Author.builder()
                 .name(name)
@@ -29,6 +30,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Transactional
     public List<AuthorVo> findAll() {
         List<Author> authorList = authorRepository.findAll();
         List<AuthorVo> results = authorList.stream()
@@ -38,6 +40,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Transactional
     public AuthorVo findAuthor(Long seq) {
         Optional<Author> author = authorRepository.findById(seq);
         if (author.isPresent()) {
@@ -47,6 +50,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Transactional
     public void removeAuthor(Long seq) {
         authorRepository.deleteById(seq);
     }
@@ -67,6 +71,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Transactional
     public List<AuthorVo> searchAuthor(String keyword) {
         List<Author> authorList = authorRepository.search(keyword);
         List<AuthorVo> results = authorList.stream()

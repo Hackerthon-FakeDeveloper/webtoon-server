@@ -31,7 +31,6 @@ public class ReviewController {
         return responseModel;
     }
 
-    /*
     @RequestMapping(value = "/{seq}", method = RequestMethod.GET)
     public ResponseModel reviewGet(
             @PathVariable("seq") Long seq
@@ -65,7 +64,6 @@ public class ReviewController {
         responseModel.addData("reviewList", reviewList);
         return responseModel;
     }
-    */
 
     @RequestMapping(value = "/{seq}", method = RequestMethod.PUT)
     public ResponseModel reviewUpdate(
