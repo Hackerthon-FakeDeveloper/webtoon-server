@@ -18,7 +18,13 @@ public interface WebtoonService {
     List<WebtoonVo> findByAuthorSeq(Long seq);
 
     @Transactional
+    List<WebtoonVo> findByPlatform(String platform, Long start, Long display);
+
+    @Transactional
     List<WebtoonVo> findAll(Long start, Long display);
+
+    @Transactional
+    List<WebtoonVo> search(String keyword, Long start, Long display);
 
     @Transactional
     boolean updateWebtoon(Long seq, String title, String platform, boolean isAdult, String thumbnail,

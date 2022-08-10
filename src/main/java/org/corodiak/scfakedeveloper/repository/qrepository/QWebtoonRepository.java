@@ -10,5 +10,9 @@ public interface QWebtoonRepository {
 
     List<Webtoon> findByAuthorSeq(Long seq);
 
+    List<Webtoon> findByPlatform(String platform, Long start, Long display);
+
     List<Webtoon> findAll(Long start, Long display);
+
+    List<Webtoon> search(String keyword, Long start, Long display);
 }

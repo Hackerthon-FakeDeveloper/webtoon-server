@@ -54,12 +54,36 @@ public class WebtoonController {
         return responseModel;
     }
 
+    @RequestMapping(value = "/platformWebtoon", method = RequestMethod.GET)
+    public ResponseModel platformWebtoonList(
+            @RequestParam("platform") String platform,
+            @RequestParam(name = "start", required = false, defaultValue = "0") long start,
+            @RequestParam(name = "display", required = false, defaultValue = "20") long display
+    ) {
+        List<WebtoonVo> webtoonList = webtoonService.findByPlatform(platform, start, display);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData("webtoonList", webtoonList);
+        return responseModel;
+    }
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseModel webtoonList(
             @RequestParam(name = "start", required = false, defaultValue = "0") long start,
             @RequestParam(name = "display", required = false, defaultValue = "20") long display
     ) {
         List<WebtoonVo> webtoonList = webtoonService.findAll(start, display);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData("webtoonList", webtoonList);
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public ResponseModel search(
+            @RequestParam("keyword") String keyword,
+            @RequestParam(name = "start", required = false, defaultValue = "0") long start,
+            @RequestParam(name = "display", required = false, defaultValue = "20") long display
+    ) {
+        List<WebtoonVo> webtoonList = webtoonService.search(keyword, start, display);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData("webtoonList", webtoonList);
         return responseModel;

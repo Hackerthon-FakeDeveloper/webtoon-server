@@ -60,8 +60,28 @@ public class WebtoonServiceImpl implements WebtoonService {
 
     @Override
     @Transactional
+    public List<WebtoonVo> findByPlatform(String platform, Long start, Long display) {
+        List<Webtoon> webtoonList = webtoonRepository.findByPlatform(platform, start, display);
+        List<WebtoonVo> results = webtoonList.stream()
+                .map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
+                .collect(Collectors.toList());
+        return results;
+    }
+
+    @Override
+    @Transactional
     public List<WebtoonVo> findAll(Long start, Long display) {
         List<Webtoon> webtoonList = webtoonRepository.findAll(start, display);
+        List<WebtoonVo> results = webtoonList.stream()
+                .map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
+                .collect(Collectors.toList());
+        return results;
+    }
+
+    @Override
+    @Transactional
+    public List<WebtoonVo> search(String keyword, Long start, Long display) {
+        List<Webtoon> webtoonList = webtoonRepository.search(keyword, start, display);
         List<WebtoonVo> results = webtoonList.stream()
                 .map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
                 .collect(Collectors.toList());
