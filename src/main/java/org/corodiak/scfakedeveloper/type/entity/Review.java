@@ -34,13 +34,14 @@ public class Review extends BaseTimeEntity {
 	private Webtoon webtoon;
 
 	@Builder
-	public Review(int scoreFirst, int scoreSecond, int scoreThird,
-				  String content, Long userSeq, Long webtoonSeq) {
+	public Review(Long seq, int scoreFirst, int scoreSecond, int scoreThird,
+				  String content, User user, Webtoon webtoon) {
+		this.seq = seq;
 		this.scoreFirst = scoreFirst;
 		this.scoreSecond = scoreSecond;
 		this.scoreThird = scoreThird;
 		this.content = content;
-		this.user = User.builder().seq(userSeq).build();
-		this.webtoon = Webtoon.builder().seq(webtoonSeq).build();
+		this.user = user;
+		this.webtoon = webtoon;
 	}
 }

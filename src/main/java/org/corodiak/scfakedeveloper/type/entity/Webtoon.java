@@ -11,17 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@Setter
 public class Webtoon extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +36,17 @@ public class Webtoon extends BaseTimeEntity {
 	private Author author;
 	//Genre 분리
 
+	@Builder
+	public Webtoon(Long seq, String title, String platform, boolean isAdult, String thumbnail,
+				   String url, String description, LocalDate startDate, Author author) {
+		this.seq = seq;
+		this.title = title;
+		this.platform = platform;
+		this.isAdult = isAdult;
+		this.thumbnail = thumbnail;
+		this.url = url;
+		this.description = description;
+		this.startDate = startDate;
+		this.author = author;
+	}
 }

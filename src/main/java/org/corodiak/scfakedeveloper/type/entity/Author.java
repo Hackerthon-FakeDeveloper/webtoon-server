@@ -21,7 +21,8 @@ public class Author {
 	private String description;
 
 	@Builder
-	public Author(String description, String name) {
+	public Author(Long seq, String description, String name) {
+		this.seq = seq;
 		this.description = description;
 		this.name = name;
 	}

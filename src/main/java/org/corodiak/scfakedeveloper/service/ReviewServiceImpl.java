@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.ReviewRepository;
 import org.corodiak.scfakedeveloper.type.entity.Review;
+import org.corodiak.scfakedeveloper.type.entity.User;
+import org.corodiak.scfakedeveloper.type.entity.Webtoon;
 import org.corodiak.scfakedeveloper.type.vo.ReviewVo;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +29,8 @@ public class ReviewServiceImpl implements ReviewService {
                 .scoreSecond(scoreSecond)
                 .scoreThird(scoreThird)
                 .content(content)
-                .userSeq(userSeq)
-                .webtoonSeq(webtoonSeq)
+                .user(User.builder().seq(userSeq).build())
+                .webtoon(Webtoon.builder().seq(webtoonSeq).build())
                 .build();
         reviewRepository.save(review);
         return true;
