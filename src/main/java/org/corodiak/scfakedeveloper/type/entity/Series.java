@@ -6,13 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
 public class Series extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +19,11 @@ public class Series extends BaseTimeEntity {
 	private Long seq;
 	private String title;
 	private String description;
+
+	@Builder
+	public Series(Long seq, String title, String description) {
+		this.seq = seq;
+		this.title = title;
+		this.description = description;
+	}
 }
