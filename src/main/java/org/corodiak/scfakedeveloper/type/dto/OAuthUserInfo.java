@@ -1,5 +1,6 @@
 package org.corodiak.scfakedeveloper.type.dto;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class OAuthUserInfo {
@@ -7,7 +8,7 @@ public abstract class OAuthUserInfo {
 	protected Map<String, Object> attributes;
 
 	public OAuthUserInfo(Map<String, Object> attributes) {
-		this.attributes = attributes;
+		this.attributes = new HashMap<>(attributes);
 	}
 
 	public Map<String, Object> getAttributes() {

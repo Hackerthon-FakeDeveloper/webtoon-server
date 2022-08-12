@@ -42,6 +42,10 @@ public class SecurityConfig {
 		"/swagger-ui/**"
 	};
 
+	/*
+	HttpSecurity 의 sessionManagement()는 Exception을 발생시킨다.
+	상세 타입이 아니라 선언 자체가 Exception.class를 발생시킨다.
+	 */
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http

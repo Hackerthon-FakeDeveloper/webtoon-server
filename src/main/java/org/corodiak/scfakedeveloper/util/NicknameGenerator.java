@@ -20,9 +20,6 @@ public class NicknameGenerator {
 
 	public NicknameGenerator() throws IOException {
 		ClassPathResource c1 = new ClassPathResource("static/adj.csv");
-		if(!c1.exists()) {
-			System.out.println(c1);
-		}
 		InputStream inputStreamAdj = c1.getInputStream();
 		InputStream inputStreamNoun = new ClassPathResource("static/noun.csv").getInputStream();
 		adjList = new ArrayList<>();
@@ -41,7 +38,9 @@ public class NicknameGenerator {
 	}
 
 	public String generate() {
-		return adjList.get(random.nextInt(adjList.size())) + nounList.get(random.nextInt(nounList.size()))
-			+ String.format("%04d", random.nextInt(10000));
+		String adj = adjList.get(random.nextInt(adjList.size()));
+		String noun = nounList.get(random.nextInt(nounList.size()));
+		String code = String.format("%04d", random.nextInt(10000));
+		return String.format("%s%s%s", adj, noun, code);
 	}
 }

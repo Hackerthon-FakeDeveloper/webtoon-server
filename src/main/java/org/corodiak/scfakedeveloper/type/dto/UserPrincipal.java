@@ -1,7 +1,9 @@
 package org.corodiak.scfakedeveloper.type.dto;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.corodiak.scfakedeveloper.type.entity.User;
@@ -60,12 +62,12 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 
 	@Override
 	public Map<String, Object> getAttributes() {
-		return attributes;
+		return new HashMap<>(attributes);
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
+		return new ArrayList<>(authorities);
 	}
 
 	@Override
@@ -76,16 +78,5 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 	public static UserPrincipal create(User user) {
 		return new UserPrincipal(user.getSeq(), user.getNickname(), user.getRole(),
 			Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getKey())));
-	}
-
-	@Override
-	public String toString() {
-		return "UserPrincipal{" +
-			"userId=" + userId +
-			", nickname='" + nickname + '\'' +
-			", role=" + role +
-			", authorities=" + authorities +
-			", attributes=" + attributes +
-			'}';
 	}
 }
