@@ -2,6 +2,7 @@ package org.corodiak.scfakedeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.corodiak.scfakedeveloper.service.AuthorService;
+import org.corodiak.scfakedeveloper.type.dto.AuthorDto;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.vo.AuthorVo;
 import org.springframework.web.bind.annotation.*;
@@ -45,11 +46,9 @@ public class AuthorController {
 
     @RequestMapping(value = "/{seq}", method = RequestMethod.PUT)
     public ResponseModel authorUpdate(
-            @PathVariable("seq") Long seq,
-            @RequestParam("name") String name,
-            @RequestParam("description") String description
+            @RequestBody AuthorDto authorDto
     ) {
-        authorService.updateAuthor(seq, name, description);
+        authorService.updateAuthor(authorDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }

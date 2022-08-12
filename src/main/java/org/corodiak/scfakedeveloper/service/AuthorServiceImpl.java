@@ -3,6 +3,7 @@ package org.corodiak.scfakedeveloper.service;
 import lombok.RequiredArgsConstructor;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.AuthorRepository;
+import org.corodiak.scfakedeveloper.type.dto.AuthorDto;
 import org.corodiak.scfakedeveloper.type.entity.Author;
 import org.corodiak.scfakedeveloper.type.vo.AuthorVo;
 import org.springframework.stereotype.Service;
@@ -57,15 +58,15 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    public boolean updateAuthor(Long seq, String name, String description) {
-        Optional<Author> author = authorRepository.findById(seq);
+    public boolean updateAuthor(AuthorDto authorDto) {
+        Optional<Author> author = authorRepository.findById(authorDto.getSeq());
         if (!author.isPresent()) {
             throw new SearchResultNotExistException();
         }
 
         Author result = author.get();
-        result.setName(name);
-        result.setDescription(description);
+        result.setName(authorDto.getName());
+        result.setDescription(authorDto.getDescription());
 
         return true;
     }

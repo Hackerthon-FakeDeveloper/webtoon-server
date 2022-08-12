@@ -1,5 +1,6 @@
 package org.corodiak.scfakedeveloper.service;
 
+import org.corodiak.scfakedeveloper.type.dto.AuthorDto;
 import org.corodiak.scfakedeveloper.type.vo.AuthorVo;
 
 import javax.transaction.Transactional;
@@ -15,7 +16,7 @@ public interface AuthorService {
     void removeAuthor(Long seq);
 
     @Transactional
-    boolean updateAuthor(Long seq, String name, String description);
+    boolean updateAuthor(AuthorDto authorDto);
 
     List<AuthorVo> searchAuthor(String keyword);
 }
