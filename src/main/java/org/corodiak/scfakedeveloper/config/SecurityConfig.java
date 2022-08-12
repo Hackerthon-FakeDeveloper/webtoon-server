@@ -59,7 +59,8 @@ public class SecurityConfig {
 			.antMatchers(PERMIT_ALL).permitAll()
 			.antMatchers("/admin").hasRole("ADMIN")
 			.antMatchers("/*").hasAnyRole("USER", "ADMIN");
-		//임시 설정
+
+		//Rest API 이기에, Stateless라 CSRF 방어 불필요
 		http.csrf().disable();
 
 		http.addFilterBefore(tokenAuthFilter(), UsernamePasswordAuthenticationFilter.class);
