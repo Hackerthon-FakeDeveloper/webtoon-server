@@ -13,7 +13,7 @@ public class AuthUtil {
 	public static long getAuthenticationInfoSeq() throws UnAuthorizeException {
 		try {
 			return Long.parseLong(getAuthenticationInfo().getUsername());
-		} catch (Exception e) {
+		} catch (NumberFormatException | NullPointerException e) {
 			throw new UnAuthorizeException();
 		}
 	}

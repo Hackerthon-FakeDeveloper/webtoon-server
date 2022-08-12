@@ -4,12 +4,18 @@ import java.security.Key;
 import java.util.Date;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
+@Slf4j
 public class AuthToken {
 
 	@Getter
@@ -39,14 +45,16 @@ public class AuthToken {
 	}
 
 	public Claims getClaims() {
+		Claims claims = null;
 		try {
-			return Jwts.parserBuilder()
+			claims = Jwts.parserBuilder()
 				.setSigningKey(key)
 				.build()
 				.parseClaimsJws(token)
 				.getBody();
-		} catch (Exception e) {
-			return null;
+		} catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException ignored) {
+			log.info("Auth Token is Not Validated. : {}", token);
 		}
+		return claims;
 	}
 }
