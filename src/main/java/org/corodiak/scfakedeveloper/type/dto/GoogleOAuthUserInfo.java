@@ -10,7 +10,11 @@ public class GoogleOAuthUserInfo extends OAuthUserInfo {
 
 	@Override
 	public String getId() {
-		return (String)attributes.get("sub");
+		Object sub = attributes.get("sub");
+		if(sub instanceof String) {
+			return (String)attributes.get("sub");
+		}
+		throw new NullPointerException("Sub is null.");
 	}
 
 	@Override
@@ -20,12 +24,20 @@ public class GoogleOAuthUserInfo extends OAuthUserInfo {
 
 	@Override
 	public String getEmail() {
-		return (String)attributes.get("email");
+		Object email = attributes.get("email");
+		if(email instanceof String) {
+			return (String)email;
+		}
+		throw new NullPointerException("Email is null.");
 	}
 
 	@Override
 	public String getName() {
-		return (String)attributes.get("name");
+		Object name = attributes.get("name");
+		if(name instanceof String) {
+			return (String)name;
+		}
+		throw new NullPointerException("Name is null.");
 	}
 
 	@Override
