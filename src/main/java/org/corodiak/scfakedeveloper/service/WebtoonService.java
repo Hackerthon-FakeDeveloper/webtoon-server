@@ -1,5 +1,6 @@
 package org.corodiak.scfakedeveloper.service;
 
+import org.corodiak.scfakedeveloper.type.dto.WebtoonDto;
 import org.corodiak.scfakedeveloper.type.vo.WebtoonVo;
 
 import javax.transaction.Transactional;
@@ -8,8 +9,7 @@ import java.util.List;
 
 public interface WebtoonService {
     @Transactional
-    boolean addWebtoon(String title, String platform, boolean isAdult, String thumbnail,
-                       String url, String description, LocalDate startDate, Long authorSeq);
+    boolean addWebtoon(WebtoonDto webtoonDto);
 
     @Transactional
     WebtoonVo findWebtoon(Long seq);
@@ -27,8 +27,7 @@ public interface WebtoonService {
     List<WebtoonVo> search(String keyword, Long start, Long display);
 
     @Transactional
-    boolean updateWebtoon(Long seq, String title, String platform, boolean isAdult, String thumbnail,
-                          String url, String description, LocalDate startDate, Long authorSeq);
+    boolean updateWebtoon(WebtoonDto webtoonDto);
 
     @Transactional
     void removeWebtoon(Long seq);

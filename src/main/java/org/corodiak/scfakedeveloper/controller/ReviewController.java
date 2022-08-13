@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
 import org.corodiak.scfakedeveloper.service.ReviewService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
+import org.corodiak.scfakedeveloper.type.dto.ReviewDto;
 import org.corodiak.scfakedeveloper.type.vo.ReviewVo;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,15 +19,11 @@ public class ReviewController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseModel reviewAdd(
-        @RequestParam("scoreFirst") int scoreFirst,
-        @RequestParam("scoreSecond") int scoreSecond,
-        @RequestParam("scoreThird") int scoreThird,
-        @RequestParam("content") String content,
-        @RequestParam("webtoonSeq") Long webtoonSeq
+            @RequestBody ReviewDto reviewDto
     ) {
         Long userSeq = AuthUtil.getAuthenticationInfoSeq();
-        reviewService.addReview(scoreFirst, scoreSecond, scoreThird, content,
-                userSeq, webtoonSeq);
+        reviewDto.setUser(userSeq);
+        reviewService.addReview(reviewDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
@@ -65,15 +62,11 @@ public class ReviewController {
         return responseModel;
     }
 
-    @RequestMapping(value = "/{seq}", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseModel reviewUpdate(
-            @PathVariable("seq") Long seq,
-            @RequestParam("scoreFirst") int scoreFirst,
-            @RequestParam("scoreSecond") int scoreSecond,
-            @RequestParam("scoreThird") int scoreThird,
-            @RequestParam("content") String content
+            @RequestBody ReviewDto reviewDto
     ) {
-        reviewService.updateReview(seq, scoreFirst, scoreSecond, scoreThird, content);
+        reviewService.updateReview(reviewDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }

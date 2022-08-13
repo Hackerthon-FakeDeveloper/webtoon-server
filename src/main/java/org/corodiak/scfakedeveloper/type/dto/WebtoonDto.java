@@ -16,5 +16,5 @@ public class WebtoonDto {
 	private String url;
 	private String description;
 	private LocalDate startDate;
-	private String author;
+	private Long author;
 }

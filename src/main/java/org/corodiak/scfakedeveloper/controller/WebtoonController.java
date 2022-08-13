@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
 import org.corodiak.scfakedeveloper.service.WebtoonService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
+import org.corodiak.scfakedeveloper.type.dto.WebtoonDto;
 import org.corodiak.scfakedeveloper.type.vo.WebtoonVo;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -21,17 +22,9 @@ public class WebtoonController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseModel webtoonAdd(
-            @RequestParam("title") String title,
-            @RequestParam("platform") String platform,
-            @RequestParam("isAdult") boolean isAdult,
-            @RequestParam("thumbnail") String thumbnail,
-            @RequestParam("url") String url,
-            @RequestParam("description") String description,
-            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @RequestParam("authorSeq") Long authorSeq
+            @RequestBody WebtoonDto webtoonDto
     ) {
-        webtoonService.addWebtoon(title, platform, isAdult, thumbnail, url,
-                description, startDate, authorSeq);
+        webtoonService.addWebtoon(webtoonDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
@@ -91,19 +84,11 @@ public class WebtoonController {
         return responseModel;
     }
 
-    @RequestMapping(value = "/{seq}", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseModel webtoonUpdate(
-            @PathVariable("seq") Long seq,
-            @RequestParam("title") String title,
-            @RequestParam("platform") String platform,
-            @RequestParam("isAdult") boolean isAdult,
-            @RequestParam("thumbnail") String thumbnail,
-            @RequestParam("url") String url,
-            @RequestParam("description") String description,
-            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @RequestParam("authorSeq") Long authorSeq
+            @RequestBody WebtoonDto webtoonDto
     ) {
-        webtoonService.updateWebtoon(seq, title, platform, isAdult, thumbnail, url, description, startDate, authorSeq);
+        webtoonService.updateWebtoon(webtoonDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }

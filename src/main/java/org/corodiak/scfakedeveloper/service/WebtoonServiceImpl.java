@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.WebtoonLikeRepository;
 import org.corodiak.scfakedeveloper.repository.WebtoonRepository;
+import org.corodiak.scfakedeveloper.type.dto.WebtoonDto;
 import org.corodiak.scfakedeveloper.type.entity.Author;
 import org.corodiak.scfakedeveloper.type.entity.User;
 import org.corodiak.scfakedeveloper.type.entity.Webtoon;
@@ -29,17 +30,16 @@ public class WebtoonServiceImpl implements WebtoonService {
 
 	@Override
 	@Transactional
-	public boolean addWebtoon(String title, String platform, boolean isAdult, String thumbnail,
-		String url, String description, LocalDate startDate, Long authorSeq) {
+	public boolean addWebtoon(WebtoonDto webtoonDto) {
 		Webtoon webtoon = Webtoon.builder()
-			.title(title)
-			.platform(platform)
-			.isAdult(isAdult)
-			.thumbnail(thumbnail)
-			.url(url)
-			.description(description)
-			.startDate(startDate)
-			.author(Author.builder().seq(authorSeq).build())
+			.title(webtoonDto.getTitle())
+			.platform(webtoonDto.getPlatform())
+			.isAdult(webtoonDto.isAdult())
+			.thumbnail(webtoonDto.getThumbnail())
+			.url(webtoonDto.getUrl())
+			.description(webtoonDto.getDescription())
+			.startDate(webtoonDto.getStartDate())
+			.author(Author.builder().seq(webtoonDto.getAuthor()).build())
 			.build();
 		webtoonRepository.save(webtoon);
 		return true;
@@ -97,22 +97,21 @@ public class WebtoonServiceImpl implements WebtoonService {
 
 	@Override
 	@Transactional
-	public boolean updateWebtoon(Long seq, String title, String platform, boolean isAdult, String thumbnail,
-		String url, String description, LocalDate startDate, Long authorSeq) {
-		Optional<Webtoon> webtoon = webtoonRepository.findBySeq(seq);
+	public boolean updateWebtoon(WebtoonDto webtoonDto) {
+		Optional<Webtoon> webtoon = webtoonRepository.findBySeq(webtoonDto.getSeq());
 		if (!webtoon.isPresent()) {
 			throw new SearchResultNotExistException();
 		}
 
 		Webtoon result = webtoon.get();
-		result.setTitle(title);
-		result.setPlatform(platform);
-		result.setAdult(isAdult);
-		result.setThumbnail(thumbnail);
-		result.setUrl(url);
-		result.setDescription(description);
-		result.setStartDate(startDate);
-		result.setAuthor(Author.builder().seq(authorSeq).build());
+		result.setTitle(webtoonDto.getTitle());
+		result.setPlatform(webtoonDto.getPlatform());
+		result.setAdult(webtoonDto.isAdult());
+		result.setThumbnail(webtoonDto.getThumbnail());
+		result.setUrl(webtoonDto.getUrl());
+		result.setDescription(webtoonDto.getDescription());
+		result.setStartDate(webtoonDto.getStartDate());
+		result.setAuthor(Author.builder().seq(webtoonDto.getAuthor()).build());
 
 		return true;
 	}

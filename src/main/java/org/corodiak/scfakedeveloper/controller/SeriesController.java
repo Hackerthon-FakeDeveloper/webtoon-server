@@ -3,6 +3,7 @@ package org.corodiak.scfakedeveloper.controller;
 import lombok.RequiredArgsConstructor;
 import org.corodiak.scfakedeveloper.service.SeriesService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
+import org.corodiak.scfakedeveloper.type.dto.SeriesDto;
 import org.corodiak.scfakedeveloper.type.vo.SeriesVo;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +18,9 @@ public class SeriesController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseModel SeriesAdd(
-            @RequestParam("title") String title,
-            @RequestParam("description") String description
+            @RequestBody SeriesDto seriesDto
     ) {
-        seriesService.addSeries(title, description);
+        seriesService.addSeries(seriesDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
@@ -53,13 +53,11 @@ public class SeriesController {
         return responseModel;
     }
 
-    @RequestMapping(value = "/{seq}", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseModel seriesUpdate(
-            @PathVariable("seq") Long seq,
-            @RequestParam("title") String title,
-            @RequestParam("description") String description
+            @RequestBody SeriesDto seriesDto
     ) {
-        seriesService.updateSeries(seq, title, description);
+        seriesService.updateSeries(seriesDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }

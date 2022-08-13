@@ -3,6 +3,7 @@ package org.corodiak.scfakedeveloper.service;
 import lombok.RequiredArgsConstructor;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.ReviewRepository;
+import org.corodiak.scfakedeveloper.type.dto.ReviewDto;
 import org.corodiak.scfakedeveloper.type.entity.Review;
 import org.corodiak.scfakedeveloper.type.entity.User;
 import org.corodiak.scfakedeveloper.type.entity.Webtoon;
@@ -22,15 +23,14 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public boolean addReview(int scoreFirst, int scoreSecond, int scoreThird,
-                             String content, Long userSeq, Long webtoonSeq) {
+    public boolean addReview(ReviewDto reviewDto) {
         Review review = Review.builder()
-                .scoreFirst(scoreFirst)
-                .scoreSecond(scoreSecond)
-                .scoreThird(scoreThird)
-                .content(content)
-                .user(User.builder().seq(userSeq).build())
-                .webtoon(Webtoon.builder().seq(webtoonSeq).build())
+                .scoreFirst(reviewDto.getScoreFirst())
+                .scoreSecond(reviewDto.getScoreSecond())
+                .scoreThird(reviewDto.getScoreThird())
+                .content(reviewDto.getContent())
+                .user(User.builder().seq(reviewDto.getUser()).build())
+                .webtoon(Webtoon.builder().seq(reviewDto.getWebtoon()).build())
                 .build();
         reviewRepository.save(review);
         return true;
@@ -68,18 +68,17 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public boolean updateReview(Long seq, int scoreFirst, int scoreSecond,
-                                int scoreThird, String content) {
-        Optional<Review> review = reviewRepository.findById(seq);
+    public boolean updateReview(ReviewDto reviewDto) {
+        Optional<Review> review = reviewRepository.findById(reviewDto.getSeq());
         if (!review.isPresent()) {
             throw new SearchResultNotExistException();
         }
 
         Review result = review.get();
-        result.setScoreFirst(scoreFirst);
-        result.setScoreSecond(scoreSecond);
-        result.setScoreThird(scoreThird);
-        result.setContent(content);
+        result.setScoreFirst(reviewDto.getScoreFirst());
+        result.setScoreSecond(reviewDto.getScoreSecond());
+        result.setScoreThird(reviewDto.getScoreThird());
+        result.setContent(reviewDto.getContent());
 
         return true;
     }

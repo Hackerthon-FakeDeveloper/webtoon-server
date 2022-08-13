@@ -18,10 +18,9 @@ public class AuthorController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseModel authorAdd(
-            @RequestParam("name") String name,
-            @RequestParam("description") String description
+            @RequestBody AuthorDto authorDto
     ) {
-        authorService.addAuthor(name, description);
+        authorService.addAuthor(authorDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
@@ -44,7 +43,7 @@ public class AuthorController {
         return responseModel;
     }
 
-    @RequestMapping(value = "/{seq}", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseModel authorUpdate(
             @RequestBody AuthorDto authorDto
     ) {

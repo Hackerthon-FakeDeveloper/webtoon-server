@@ -21,10 +21,10 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    public boolean addAuthor(String name, String description) {
+    public boolean addAuthor(AuthorDto authorDto) {
         Author author = Author.builder()
-                .name(name)
-                .description(description)
+                .name(authorDto.getName())
+                .description(authorDto.getDescription())
                 .build();
         authorRepository.save(author);
         return true;

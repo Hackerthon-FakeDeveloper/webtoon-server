@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface AuthorService {
-    boolean addAuthor(String name, String description);
+    boolean addAuthor(AuthorDto authorDto);
 
     List<AuthorVo> findAll();
 

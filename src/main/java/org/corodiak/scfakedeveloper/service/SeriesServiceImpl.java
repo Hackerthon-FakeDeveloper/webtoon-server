@@ -3,6 +3,7 @@ package org.corodiak.scfakedeveloper.service;
 import lombok.RequiredArgsConstructor;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.SeriesRepository;
+import org.corodiak.scfakedeveloper.type.dto.SeriesDto;
 import org.corodiak.scfakedeveloper.type.entity.Series;
 import org.corodiak.scfakedeveloper.type.vo.SeriesVo;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,10 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     @Transactional
-    public boolean addSeries(String title, String description) {
+    public boolean addSeries(SeriesDto seriesDto) {
         Series series = Series.builder()
-                .title(title)
-                .description(description)
+                .title(seriesDto.getTitle())
+                .description(seriesDto.getDescription())
                 .build();
         seriesRepository.save(series);
         return true;
@@ -61,15 +62,15 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     @Transactional
-    public boolean updateSeries(Long seq, String title, String description) {
-        Optional<Series> series = seriesRepository.findById(seq);
+    public boolean updateSeries(SeriesDto seriesDto) {
+        Optional<Series> series = seriesRepository.findById(seriesDto.getSeq());
         if (!series.isPresent()) {
             throw new SearchResultNotExistException();
         }
 
         Series result = series.get();
-        result.setTitle(title);
-        result.setDescription(description);
+        result.setTitle(seriesDto.getTitle());
+        result.setDescription(seriesDto.getDescription());
 
         return true;
     }
