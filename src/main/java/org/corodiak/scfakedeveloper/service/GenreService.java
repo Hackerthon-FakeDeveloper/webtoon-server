@@ -1,5 +1,6 @@
 package org.corodiak.scfakedeveloper.service;
 
+import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.GenreDto;
 import org.corodiak.scfakedeveloper.type.vo.GenreVo;
 
@@ -11,7 +12,7 @@ public interface GenreService {
     boolean addGenre(GenreDto genreDto);
 
     @Transactional
-    GenreVo findGenre(Long seq);
+    GenreVo findGenre(Long seq) throws SearchResultNotExistException;
 
     @Transactional
     List<GenreVo> findAll();

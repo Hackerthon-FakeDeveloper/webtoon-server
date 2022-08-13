@@ -32,7 +32,7 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     @Transactional
-    public SeriesVo findSeries(Long seq) {
+    public SeriesVo findSeries(Long seq) throws SearchResultNotExistException {
         Optional<Series> series = seriesRepository.findById(seq);
         if (series.isPresent()) {
             return new SeriesVo(series.get());

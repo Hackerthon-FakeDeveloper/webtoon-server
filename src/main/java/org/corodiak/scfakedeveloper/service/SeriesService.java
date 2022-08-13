@@ -1,5 +1,6 @@
 package org.corodiak.scfakedeveloper.service;
 
+import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.SeriesDto;
 import org.corodiak.scfakedeveloper.type.vo.SeriesVo;
 
@@ -11,7 +12,7 @@ public interface SeriesService {
     boolean addSeries(SeriesDto seriesDto);
 
     @Transactional
-    SeriesVo findSeries(Long seq);
+    SeriesVo findSeries(Long seq) throws SearchResultNotExistException;
 
     @Transactional
     List<SeriesVo> findAll();

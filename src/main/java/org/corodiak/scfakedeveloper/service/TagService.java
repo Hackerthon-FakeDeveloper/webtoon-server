@@ -1,5 +1,6 @@
 package org.corodiak.scfakedeveloper.service;
 
+import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.TagDto;
 import org.corodiak.scfakedeveloper.type.vo.TagVo;
 
@@ -11,7 +12,7 @@ public interface TagService {
     boolean addTag(TagDto tagDto);
 
     @Transactional
-    TagVo findTag(Long seq);
+    TagVo findTag(Long seq) throws SearchResultNotExistException;
 
     @Transactional
     List<TagVo> findAll();

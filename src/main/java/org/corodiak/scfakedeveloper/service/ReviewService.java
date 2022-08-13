@@ -1,5 +1,6 @@
 package org.corodiak.scfakedeveloper.service;
 
+import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.ReviewDto;
 import org.corodiak.scfakedeveloper.type.vo.ReviewVo;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public interface ReviewService {
     boolean addReview(ReviewDto reviewDto);
 
-    ReviewVo findReview(Long seq);
+    ReviewVo findReview(Long seq) throws SearchResultNotExistException;
 
     List<ReviewVo> findByUserSeq(Long seq, Long start, Long display);
 

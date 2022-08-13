@@ -31,7 +31,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     @Transactional
-    public GenreVo findGenre(Long seq) {
+    public GenreVo findGenre(Long seq) throws SearchResultNotExistException {
         Optional<Genre> genre = genreRepository.findById(seq);
         if (genre.isPresent()) {
             return new GenreVo(genre.get());

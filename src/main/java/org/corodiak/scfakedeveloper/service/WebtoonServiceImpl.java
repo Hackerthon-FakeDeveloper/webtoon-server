@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,7 +46,7 @@ public class WebtoonServiceImpl implements WebtoonService {
 
 	@Override
 	@Transactional
-	public WebtoonVo findWebtoon(Long seq) {
+	public WebtoonVo findWebtoon(Long seq) throws SearchResultNotExistException {
 		Optional<Webtoon> webtoon = webtoonRepository.findBySeq(seq);
 		if (webtoon.isPresent()) {
 			return new WebtoonVo.WebtoonVoWithAuthor(webtoon.get());
@@ -97,9 +96,9 @@ public class WebtoonServiceImpl implements WebtoonService {
 
 	@Override
 	@Transactional
-	public boolean updateWebtoon(WebtoonDto webtoonDto) {
+	public boolean updateWebtoon(WebtoonDto webtoonDto) throws SearchResultNotExistException {
 		Optional<Webtoon> webtoon = webtoonRepository.findBySeq(webtoonDto.getSeq());
-		if (!webtoon.isPresent()) {
+		if (webtoon.isEmpty()) {
 			throw new SearchResultNotExistException();
 		}
 

@@ -31,7 +31,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     @Transactional
-    public TagVo findTag(Long seq) {
+    public TagVo findTag(Long seq) throws SearchResultNotExistException {
         Optional<Tag> tag = tagRepository.findById(seq);
         if (tag.isPresent()) {
             return new TagVo(tag.get());
