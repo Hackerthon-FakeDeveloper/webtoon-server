@@ -1,0 +1,54 @@
+package org.corodiak.scfakedeveloper.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.corodiak.scfakedeveloper.service.GenreService;
+import org.corodiak.scfakedeveloper.type.dto.GenreDto;
+import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
+import org.corodiak.scfakedeveloper.type.vo.GenreVo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/genre")
+public class GenreController {
+
+    private final GenreService genreService;
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseModel genreAdd(
+            @RequestBody GenreDto genreDto
+    ) {
+        genreService.addGenre(genreDto);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/{seq}", method = RequestMethod.GET)
+    public ResponseModel genreGet(
+            @PathVariable("seq") Long seq
+    ) {
+        GenreVo genre = genreService.findGenre(seq);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData("genre", genre);
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ResponseModel genreList() {
+        List<GenreVo> genreList = genreService.findAll();
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData("genreList", genreList);
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
+    public ResponseModel genreDelete(
+            @PathVariable("seq") Long seq
+    ) {
+        genreService.removeGenre(seq);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+}

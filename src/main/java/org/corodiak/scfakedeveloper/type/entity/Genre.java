@@ -6,9 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
@@ -19,4 +17,9 @@ public class Genre {
 	@Column(name = "genre_seq")
 	private Long seq;
 	private String genre;
+
+	@Builder
+	public Genre(String genre) {
+		this.genre = genre;
+	}
 }
