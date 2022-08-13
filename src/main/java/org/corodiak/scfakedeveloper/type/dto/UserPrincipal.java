@@ -1,9 +1,11 @@
 package org.corodiak.scfakedeveloper.type.dto;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.corodiak.scfakedeveloper.type.entity.User;
@@ -62,7 +64,12 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 
 	@Override
 	public Map<String, Object> getAttributes() {
-		return new HashMap<>(attributes);
+		Map<String, Object> clone = new HashMap<>();
+		for (String key : attributes.keySet()) {
+			Object value = attributes.get(key);
+			clone.put(key, value);
+		}
+		return clone;
 	}
 
 	@Override
