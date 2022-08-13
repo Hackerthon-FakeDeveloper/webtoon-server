@@ -1,6 +1,10 @@
 package org.corodiak.scfakedeveloper.service;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.WebtoonLikeRepository;
@@ -14,11 +18,7 @@ import org.corodiak.scfakedeveloper.type.entity.id.WebtoonLikeId;
 import org.corodiak.scfakedeveloper.type.vo.WebtoonVo;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

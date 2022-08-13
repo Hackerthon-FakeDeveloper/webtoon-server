@@ -1,9 +1,9 @@
 package org.corodiak.scfakedeveloper.repository.qrepository;
 
-import org.corodiak.scfakedeveloper.type.entity.Author;
-
 import java.util.List;
 
+import org.corodiak.scfakedeveloper.type.entity.Author;
+
 public interface QAuthorRepository {
-    List<Author> search(String keyword);
+	List<Author> search(String keyword);
 }

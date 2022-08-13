@@ -1,9 +1,9 @@
 package org.corodiak.scfakedeveloper.type.vo;
 
+import org.corodiak.scfakedeveloper.type.entity.Series;
 
 import lombok.Getter;
 import lombok.ToString;
-import org.corodiak.scfakedeveloper.type.entity.Series;
 
 @Getter
 @ToString

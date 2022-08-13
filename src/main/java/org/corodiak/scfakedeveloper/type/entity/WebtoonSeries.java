@@ -1,6 +1,5 @@
 package org.corodiak.scfakedeveloper.type.entity;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;

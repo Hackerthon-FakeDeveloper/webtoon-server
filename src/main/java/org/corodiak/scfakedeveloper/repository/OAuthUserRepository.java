@@ -9,5 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OAuthUserRepository extends JpaRepository<OAuthUser, Long> {
 	Optional<OAuthUser> findByProviderUserIdAndOap(String providerUserId, OAuthProvider oap);
+
 	List<OAuthUser> findByUserSeq(Long userSeq);
 }

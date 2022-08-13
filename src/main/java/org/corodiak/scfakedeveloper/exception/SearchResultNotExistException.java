@@ -2,13 +2,13 @@ package org.corodiak.scfakedeveloper.exception;
 
 public class SearchResultNotExistException extends NullPointerException {
 
-    private static final String DEFAULT_MESSAGE = "Search Result Not Exist!";
+	private static final String DEFAULT_MESSAGE = "Search Result Not Exist!";
 
-    public SearchResultNotExistException() {
-        super(DEFAULT_MESSAGE);
-    }
+	public SearchResultNotExistException() {
+		super(DEFAULT_MESSAGE);
+	}
 
-    public SearchResultNotExistException(String s) {
-        super(s);
-    }
+	public SearchResultNotExistException(String s) {
+		super(s);
+	}
 }

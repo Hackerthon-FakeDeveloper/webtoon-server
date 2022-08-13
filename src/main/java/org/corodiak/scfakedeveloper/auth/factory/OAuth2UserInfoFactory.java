@@ -7,7 +7,8 @@ import org.corodiak.scfakedeveloper.type.dto.OAuthUserInfo;
 import org.corodiak.scfakedeveloper.type.etc.OAuthProvider;
 
 public class OAuth2UserInfoFactory {
-	public static OAuthUserInfo of(OAuthProvider oAuthProvider, Map<String, Object> attributes) throws IllegalArgumentException {
+	public static OAuthUserInfo of(OAuthProvider oAuthProvider, Map<String, Object> attributes) throws
+		IllegalArgumentException {
 		switch (oAuthProvider) {
 			case GOOGLE:
 				return new GoogleOAuthUserInfo(attributes);
