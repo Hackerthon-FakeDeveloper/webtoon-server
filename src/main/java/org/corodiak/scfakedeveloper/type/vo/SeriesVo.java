@@ -9,13 +9,13 @@ import lombok.ToString;
 @ToString
 public class SeriesVo {
 
-    private Long seq;
-    private String title;
-    private String description;
+	private Long seq;
+	private String title;
+	private String description;
 
-    public SeriesVo(Series entity) {
-        this.seq = entity.getSeq();
-        this.title = entity.getTitle();
-        this.description = entity.getDescription();
-    }
+	public SeriesVo(Series entity) {
+		this.seq = entity.getSeq();
+		this.title = entity.getTitle();
+		this.description = entity.getDescription();
+	}
 }

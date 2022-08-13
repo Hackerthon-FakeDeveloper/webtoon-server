@@ -1,11 +1,9 @@
 package org.corodiak.scfakedeveloper.type.dto;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.corodiak.scfakedeveloper.type.entity.User;

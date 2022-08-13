@@ -13,7 +13,7 @@ public class GoogleOAuthUserInfo extends OAuthUserInfo {
 	@Override
 	public String getId() throws UnAuthorizeException {
 		Object sub = attributes.get("sub");
-		if(sub instanceof String) {
+		if (sub instanceof String) {
 			return (String)attributes.get("sub");
 		}
 		throw new UnAuthorizeException("Sub is null.");
@@ -27,7 +27,7 @@ public class GoogleOAuthUserInfo extends OAuthUserInfo {
 	@Override
 	public String getEmail() throws UnAuthorizeException {
 		Object email = attributes.get("email");
-		if(email instanceof String) {
+		if (email instanceof String) {
 			return (String)email;
 		}
 		throw new UnAuthorizeException("Email is null.");
@@ -36,7 +36,7 @@ public class GoogleOAuthUserInfo extends OAuthUserInfo {
 	@Override
 	public String getName() throws UnAuthorizeException {
 		Object name = attributes.get("name");
-		if(name instanceof String) {
+		if (name instanceof String) {
 			return (String)name;
 		}
 		throw new UnAuthorizeException("Name is null.");
