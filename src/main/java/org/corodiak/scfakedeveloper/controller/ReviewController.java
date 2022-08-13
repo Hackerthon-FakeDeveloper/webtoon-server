@@ -79,4 +79,24 @@ public class ReviewController {
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
+
+    @RequestMapping(value = "/like/{seq}", method = RequestMethod.POST)
+    public ResponseModel likReview(
+            @PathVariable("seq") Long reviewSeq
+    ) {
+        Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+        reviewService.likeReview(userSeq, reviewSeq);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/dislike/{seq}", method = RequestMethod.POST)
+    public ResponseModel dislikReview(
+            @PathVariable("seq") Long reviewSeq
+    ) {
+        Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+        reviewService.dislikeReview(userSeq, reviewSeq);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
 }

@@ -2,11 +2,14 @@ package org.corodiak.scfakedeveloper.service;
 
 import lombok.RequiredArgsConstructor;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
+import org.corodiak.scfakedeveloper.repository.ReviewLikeRepository;
 import org.corodiak.scfakedeveloper.repository.ReviewRepository;
 import org.corodiak.scfakedeveloper.type.dto.ReviewDto;
 import org.corodiak.scfakedeveloper.type.entity.Review;
+import org.corodiak.scfakedeveloper.type.entity.ReviewLike;
 import org.corodiak.scfakedeveloper.type.entity.User;
 import org.corodiak.scfakedeveloper.type.entity.Webtoon;
+import org.corodiak.scfakedeveloper.type.entity.id.ReviewLikeId;
 import org.corodiak.scfakedeveloper.type.vo.ReviewVo;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final ReviewLikeRepository reviewLikeRepository;
 
     @Override
     @Transactional
@@ -87,5 +91,25 @@ public class ReviewServiceImpl implements ReviewService {
     @Transactional
     public void removeReview(Long seq) {
         reviewRepository.deleteById(seq);
+    }
+
+    @Override
+    @Transactional
+    public void likeReview(Long userSeq, Long reviewSeq) {
+        ReviewLike reviewLike = ReviewLike.builder()
+                .review(Review.builder().seq(reviewSeq).build())
+                .user(User.builder().seq(userSeq).build())
+                .build();
+        reviewLikeRepository.save(reviewLike);
+    }
+
+    @Override
+    @Transactional
+    public void dislikeReview(Long userSeq, Long reviewSeq) {
+        ReviewLikeId reviewLikeId = ReviewLikeId.builder()
+                .review(reviewSeq)
+                .user(userSeq)
+                .build();
+        reviewLikeRepository.deleteById(reviewLikeId);
     }
 }

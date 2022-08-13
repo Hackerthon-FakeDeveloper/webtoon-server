@@ -19,4 +19,10 @@ public interface ReviewService {
     boolean updateReview(ReviewDto reviewDto);
 
     void removeReview(Long seq);
+
+    @Transactional
+    void likeReview(Long userSeq, Long reviewSeq);
+
+    @Transactional
+    void dislikeReview(Long userSeq, Long reviewSeq);
 }
