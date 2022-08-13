@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +21,10 @@ public class Tag {
 	@Column(name = "tag_seq")
 	private Long seq;
 	private String name;
+
+	@Builder
+	public Tag(Long seq, String name) {
+		this.seq = seq;
+		this.name = name;
+	}
 }

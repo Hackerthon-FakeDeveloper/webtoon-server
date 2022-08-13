@@ -19,7 +19,8 @@ public class Genre {
 	private String genre;
 
 	@Builder
-	public Genre(String genre) {
+	public Genre(Long seq, String genre) {
+		this.seq = seq;
 		this.genre = genre;
 	}
 }
