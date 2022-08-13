@@ -1,6 +1,8 @@
 package org.corodiak.scfakedeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
 import org.corodiak.scfakedeveloper.service.WebtoonService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.vo.WebtoonVo;
@@ -111,6 +113,26 @@ public class WebtoonController {
             @PathVariable("seq") Long seq
     ) {
         webtoonService.removeWebtoon(seq);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/like/{seq}", method = RequestMethod.POST)
+    public ResponseModel likWebtoon(
+        @PathVariable("seq") Long webtoonSeq
+    ) {
+        Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+        webtoonService.likeWebtoon(userSeq, webtoonSeq);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/dislike/{seq}", method = RequestMethod.POST)
+    public ResponseModel dislikWebtoon(
+        @PathVariable("seq") Long webtoonSeq
+    ) {
+        Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+        webtoonService.dislikeWebtoon(userSeq, webtoonSeq);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
