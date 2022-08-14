@@ -44,7 +44,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	@Transactional
-	public ReviewVo findReview(Long seq) throws SearchResultNotExistException {
+	public ReviewVo findReview(Long seq) {
 		Optional<Review> review = reviewRepository.findBySeq(seq);
 		if (review.isPresent()) {
 			return new ReviewVo.ReviewVoWithUserAndWebtoon(review.get());
