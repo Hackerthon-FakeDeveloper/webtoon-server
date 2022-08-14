@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserVo findUser(Long seq) {
+    public UserVo findUser(Long seq) throws SearchResultNotExistException {
         Optional<User> user = userRepository.findById(seq);
         if (user.isPresent()) {
             return new UserVo(user.get());
@@ -41,9 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean updateUser(UserDto userDto) {
+    public boolean updateUser(UserDto userDto) throws SearchResultNotExistException {
         Optional<User> user = userRepository.findById(userDto.getSeq());
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new SearchResultNotExistException();
         }
 

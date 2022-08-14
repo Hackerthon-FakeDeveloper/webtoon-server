@@ -34,7 +34,7 @@ public class StillCutServiceImpl implements StillCutService {
 
     @Override
     @Transactional
-    public StillCutVo findStillCut(Long seq) {
+    public StillCutVo findStillCut(Long seq) throws SearchResultNotExistException {
         Optional<StillCut> stillCut = stillCutRepository.findById(seq);
         if (stillCut.isPresent()) {
             return new StillCutVo.StillCutVoWithWebtoon(stillCut.get());
@@ -54,9 +54,9 @@ public class StillCutServiceImpl implements StillCutService {
 
     @Override
     @Transactional
-    public boolean updateStillCut(StillCutDto stillCutDto) {
+    public boolean updateStillCut(StillCutDto stillCutDto) throws SearchResultNotExistException {
         Optional<StillCut> stillCut = stillCutRepository.findById(stillCutDto.getSeq());
-        if (!stillCut.isPresent()) {
+        if (stillCut.isEmpty()) {
             throw new SearchResultNotExistException();
         }
 
