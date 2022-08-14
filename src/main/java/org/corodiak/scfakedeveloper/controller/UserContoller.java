@@ -1,10 +1,12 @@
 package org.corodiak.scfakedeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
 import org.corodiak.scfakedeveloper.service.UserService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.UserDto;
 import org.corodiak.scfakedeveloper.type.vo.UserVo;
+import org.corodiak.scfakedeveloper.type.vo.ViewHistoryVo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,6 +53,35 @@ public class UserContoller {
             @PathVariable("seq") Long seq
     ) {
         userService.removeUser(seq);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/viewHistory/{webtoonSeq}", method = RequestMethod.POST)
+    public ResponseModel viewHistoryAdd(
+            @PathVariable("webtoonSeq") Long webtoonSeq
+    ) {
+        Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+        userService.addViewHistory(userSeq, webtoonSeq);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/viewHistory/list", method = RequestMethod.GET)
+    public ResponseModel viewHistryList() {
+        Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+        List<ViewHistoryVo> viewHistoryList = userService.findViewHistroy(userSeq);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData("viewHistoryList", viewHistoryList);
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/viewHistory/{webtoonSeq}", method = RequestMethod.DELETE)
+    public ResponseModel viewHistoryRemove(
+            @PathVariable("webtoonSeq") Long webtoonSeq
+    ) {
+        Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+        userService.removeViewHistory(userSeq, webtoonSeq);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
