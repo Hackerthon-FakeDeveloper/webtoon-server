@@ -18,7 +18,7 @@ public interface ReviewService {
 	List<ReviewVo> findByWebtoonSeq(Long seq, Long start, Long display);
 
 	@Transactional
-	boolean updateReview(ReviewDto reviewDto);
+	boolean updateReview(ReviewDto reviewDto) throws SearchResultNotExistException;
 
 	void removeReview(Long seq);
 
