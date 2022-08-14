@@ -9,13 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
 public class StillCut extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +26,12 @@ public class StillCut extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "webtoon_seq")
 	private Webtoon webtoon;
+
+	@Builder
+	public StillCut(Long seq, String url, String description, Webtoon webtoon) {
+		this.seq = seq;
+		this.url = url;
+		this.description = description;
+		this.webtoon = webtoon;
+	}
 }
