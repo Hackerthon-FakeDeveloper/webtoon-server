@@ -14,7 +14,7 @@ public class GoogleOAuthUserInfo extends OAuthUserInfo {
 	public String getId() throws UnAuthorizeException {
 		Object sub = attributes.get("sub");
 		if (sub instanceof String) {
-			return (String)attributes.get("sub");
+			return (String)sub;
 		}
 		throw new UnAuthorizeException("Sub is null.");
 	}
