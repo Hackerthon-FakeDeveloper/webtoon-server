@@ -9,12 +9,11 @@ import javax.transaction.Transactional;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.WebtoonLikeRepository;
 import org.corodiak.scfakedeveloper.repository.WebtoonRepository;
+import org.corodiak.scfakedeveloper.repository.WebtoonSeriesRepository;
 import org.corodiak.scfakedeveloper.type.dto.WebtoonDto;
-import org.corodiak.scfakedeveloper.type.entity.Author;
-import org.corodiak.scfakedeveloper.type.entity.User;
-import org.corodiak.scfakedeveloper.type.entity.Webtoon;
-import org.corodiak.scfakedeveloper.type.entity.WebtoonLike;
+import org.corodiak.scfakedeveloper.type.entity.*;
 import org.corodiak.scfakedeveloper.type.entity.id.WebtoonLikeId;
+import org.corodiak.scfakedeveloper.type.entity.id.WebtoonSeriesId;
 import org.corodiak.scfakedeveloper.type.vo.WebtoonVo;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +25,7 @@ public class WebtoonServiceImpl implements WebtoonService {
 
 	private final WebtoonRepository webtoonRepository;
 	private final WebtoonLikeRepository webtoonLikeRepository;
+	private final WebtoonSeriesRepository webtoonSeriesRepository;
 
 	@Override
 	@Transactional
@@ -139,5 +139,25 @@ public class WebtoonServiceImpl implements WebtoonService {
 			.user(userSeq)
 			.build();
 		webtoonLikeRepository.deleteById(webtoonLikeId);
+	}
+
+	@Override
+	@Transactional
+	public void addWebtoonSeries(Long webtoonSeq, Long seriesSeq) {
+		WebtoonSeries webtoonSeries = WebtoonSeries.builder()
+				.webtoon(Webtoon.builder().seq(webtoonSeq).build())
+				.series(Series.builder().seq(seriesSeq).build())
+				.build();
+		webtoonSeriesRepository.save(webtoonSeries);
+	}
+
+	@Override
+	@Transactional
+	public void removeWebtoonSeries(Long webtoonSeq, Long seriesSeq) {
+		WebtoonSeriesId webtoonSeriesId = WebtoonSeriesId.builder()
+				.webtoon(webtoonSeq)
+				.series(seriesSeq)
+				.build();
+		webtoonSeriesRepository.deleteById(webtoonSeriesId);
 	}
 }

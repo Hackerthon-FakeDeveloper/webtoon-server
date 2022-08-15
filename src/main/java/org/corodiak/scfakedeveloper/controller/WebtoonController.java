@@ -6,6 +6,7 @@ import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
 import org.corodiak.scfakedeveloper.service.WebtoonService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.WebtoonDto;
+import org.corodiak.scfakedeveloper.type.dto.WebtoonSeriesDto;
 import org.corodiak.scfakedeveloper.type.vo.WebtoonVo;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -121,6 +122,24 @@ public class WebtoonController {
 	) {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		webtoonService.dislikeWebtoon(userSeq, webtoonSeq);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		return responseModel;
+	}
+
+	@RequestMapping(value = "/series", method = RequestMethod.POST)
+	public ResponseModel webtoonSeriesAdd(
+			@RequestBody WebtoonSeriesDto webtoonSeriesDto
+	) {
+		webtoonService.addWebtoonSeries(webtoonSeriesDto.getWebtoon(), webtoonSeriesDto.getSeries());
+		ResponseModel responseModel = ResponseModel.builder().build();
+		return responseModel;
+	}
+
+	@RequestMapping(value = "/series", method = RequestMethod.DELETE)
+	public ResponseModel webtoonSeriesRemove(
+			@RequestBody WebtoonSeriesDto webtoonSeriesDto
+	) {
+		webtoonService.removeWebtoonSeries(webtoonSeriesDto.getWebtoon(), webtoonSeriesDto.getSeries());
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}

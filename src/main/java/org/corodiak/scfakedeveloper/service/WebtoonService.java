@@ -38,4 +38,10 @@ public interface WebtoonService {
 
 	@Transactional
 	void dislikeWebtoon(Long userSeq, Long webtoonSeq);
+
+	@Transactional
+	void addWebtoonSeries(Long webtoonSeq, Long seriesSeq);
+
+	@Transactional
+    void removeWebtoonSeries(Long webtoonSeq, Long seriesSeq);
 }
