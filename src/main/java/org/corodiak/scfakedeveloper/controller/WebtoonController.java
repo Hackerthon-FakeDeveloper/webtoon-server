@@ -7,6 +7,7 @@ import org.corodiak.scfakedeveloper.service.WebtoonService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.WebtoonDto;
 import org.corodiak.scfakedeveloper.type.dto.WebtoonSeriesDto;
+import org.corodiak.scfakedeveloper.type.dto.WebtoonTagDto;
 import org.corodiak.scfakedeveloper.type.vo.WebtoonVo;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -140,6 +141,24 @@ public class WebtoonController {
 			@RequestBody WebtoonSeriesDto webtoonSeriesDto
 	) {
 		webtoonService.removeWebtoonSeries(webtoonSeriesDto.getWebtoon(), webtoonSeriesDto.getSeries());
+		ResponseModel responseModel = ResponseModel.builder().build();
+		return responseModel;
+	}
+
+	@RequestMapping(value = "/tag", method = RequestMethod.POST)
+	public ResponseModel webtoonTagAdd(
+			@RequestBody WebtoonTagDto webtoonTagDto
+	) {
+		webtoonService.addWebtoonTag(webtoonTagDto.getWebtoon(), webtoonTagDto.getTag());
+		ResponseModel responseModel = ResponseModel.builder().build();
+		return responseModel;
+	}
+
+	@RequestMapping(value = "/tag", method = RequestMethod.DELETE)
+	public ResponseModel webtoonTagRemove(
+			@RequestBody WebtoonTagDto webtoonTagDto
+	) {
+		webtoonService.removeWebtoonTag(webtoonTagDto.getWebtoon(), webtoonTagDto.getTag());
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}

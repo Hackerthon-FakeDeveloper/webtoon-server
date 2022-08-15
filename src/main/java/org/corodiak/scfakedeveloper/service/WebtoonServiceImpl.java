@@ -10,10 +10,12 @@ import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.WebtoonLikeRepository;
 import org.corodiak.scfakedeveloper.repository.WebtoonRepository;
 import org.corodiak.scfakedeveloper.repository.WebtoonSeriesRepository;
+import org.corodiak.scfakedeveloper.repository.WebtoonTagRepository;
 import org.corodiak.scfakedeveloper.type.dto.WebtoonDto;
 import org.corodiak.scfakedeveloper.type.entity.*;
 import org.corodiak.scfakedeveloper.type.entity.id.WebtoonLikeId;
 import org.corodiak.scfakedeveloper.type.entity.id.WebtoonSeriesId;
+import org.corodiak.scfakedeveloper.type.entity.id.WebtoonTagId;
 import org.corodiak.scfakedeveloper.type.vo.WebtoonVo;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ public class WebtoonServiceImpl implements WebtoonService {
 	private final WebtoonRepository webtoonRepository;
 	private final WebtoonLikeRepository webtoonLikeRepository;
 	private final WebtoonSeriesRepository webtoonSeriesRepository;
+	private final WebtoonTagRepository webtoonTagRepository;
 
 	@Override
 	@Transactional
@@ -159,5 +162,25 @@ public class WebtoonServiceImpl implements WebtoonService {
 				.series(seriesSeq)
 				.build();
 		webtoonSeriesRepository.deleteById(webtoonSeriesId);
+	}
+
+	@Override
+	@Transactional
+	public void addWebtoonTag(Long webtoonSeq, Long tagSeq) {
+		WebtoonTag webtoonTag = WebtoonTag.builder()
+				.webtoon(Webtoon.builder().seq(webtoonSeq).build())
+				.tag(Tag.builder().seq(tagSeq).build())
+				.build();
+		webtoonTagRepository.save(webtoonTag);
+	}
+
+	@Override
+	@Transactional
+	public void removeWebtoonTag(Long webtoonSeq, Long tagSeq) {
+		WebtoonTagId webtoonTagId = WebtoonTagId.builder()
+				.webtoon(webtoonSeq)
+				.tag(tagSeq)
+				.build();
+		webtoonTagRepository.deleteById(webtoonTagId);
 	}
 }
