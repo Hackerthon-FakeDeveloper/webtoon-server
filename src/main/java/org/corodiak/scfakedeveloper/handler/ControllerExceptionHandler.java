@@ -2,10 +2,13 @@ package org.corodiak.scfakedeveloper.handler;
 
 import java.util.NoSuchElementException;
 
+import javax.naming.SizeLimitExceededException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.corodiak.scfakedeveloper.auth.exception.UnAuthorizeException;
+import org.corodiak.scfakedeveloper.exception.FileUploadFailException;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,20 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice(basePackages = "org.corodiak.scfakedeveloper.controller")
 @Slf4j
 public class ControllerExceptionHandler {
+
+	@ExceptionHandler({
+		FileUploadFailException.class,
+		SizeLimitExceededException.class,
+		FileUploadException.class
+	})
+	public ResponseModel fileUploadError(HttpServletRequest request, HttpServletResponse response, Exception e) {
+		ResponseModel responseModel = ResponseModel.builder()
+			.httpStatus(HttpStatus.BAD_REQUEST)
+			.message("파일 업로드에 실패하였습니다. 허용되지 않은 확장자, 파일명, 또는 크기인지 확인하십시오.")
+			.build();
+		response.setStatus(400);
+		return responseModel;
+	}
 
 	@ExceptionHandler({
 		NoSuchElementException.class,

@@ -2,6 +2,7 @@
 jasypt:
   encryptor:
     bean: jasyptEncryptorBean
+#    password: [VM Arguments OR Environment Variable]
 
 #JWT
 jwt:
@@ -28,6 +29,9 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
 
   #OAuth
   profiles:
@@ -40,3 +44,8 @@ spring:
       matching-strategy: ant_path_matcher
 
 
+resource:
+  file:
+    allow-extension: bmp,jpg,jpeg,png,gif
+#    path: [VM Arguments OR Environment Variable]
+    url: /resources/files

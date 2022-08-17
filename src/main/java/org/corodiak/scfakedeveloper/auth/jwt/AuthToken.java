@@ -53,7 +53,7 @@ public class AuthToken {
 				.parseClaimsJws(token)
 				.getBody();
 		} catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException ignored) {
-			log.info("Auth Token is Not Validated. : {}", token);
+			log.debug("Auth Token is Not Validated. : {}", token);
 		}
 		return claims;
 	}
