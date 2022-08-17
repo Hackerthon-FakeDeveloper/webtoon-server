@@ -46,6 +46,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			.message("Authorization Token Issued.")
 			.build();
 		response.setHeader("Authorization", authToken.getToken());
+		response.setContentType("application/json");
 		//send redirect 필요
 		OutputStream outputStream = response.getOutputStream();
 		outputStream.write(responseModel.toJson().getBytes());

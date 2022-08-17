@@ -73,9 +73,10 @@ public class SecurityConfig {
 			.authenticationEntryPoint((request, response, authException) -> {
 				ResponseModel responseModel = ResponseModel.builder()
 					.httpStatus(HttpStatus.UNAUTHORIZED)
-					.message("UnAuthorize or Permission Denied")
+					.message("인증되지 않은 사용자이거나 권한이 부족합니다.")
 					.build();
 				response.setStatus(401);
+				response.setContentType("application/json");
 				OutputStream outputStream = response.getOutputStream();
 				outputStream.write(responseModel.toJson().getBytes());
 			});

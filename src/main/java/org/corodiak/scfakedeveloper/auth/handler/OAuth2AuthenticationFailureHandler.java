@@ -20,6 +20,7 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
 			.message("인증되지 않은 사용자이거나 권한이 부족합니다.")
 			.build();
 		response.setStatus(401);
+		response.setContentType("application/json");
 		OutputStream outputStream = response.getOutputStream();
 		outputStream.write(responseModel.toJson().getBytes());
 	}
