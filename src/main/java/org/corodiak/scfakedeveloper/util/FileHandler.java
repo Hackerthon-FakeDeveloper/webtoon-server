@@ -31,12 +31,18 @@ public class FileHandler {
 			throw new FileUploadFailException("허용되지 않은 확장자 : " + originalFilename);
 		}
 		String newFilename = System.nanoTime() + "_" + UUID.randomUUID() + "." + extension;
-		File file = new File(filePath + File.separator + newFilename);
+		String destPath = filePath + File.separator + newFilename;
+		File file = new File(destPath);
 		try {
+			String os = System.getProperty("os.name").toLowerCase();
 			multipartFile.transferTo(file);
-			file.setReadable(true);
-			file.setWritable(false);
-			file.setExecutable(false);
+			if(os.contains("win")) {
+				file.setReadable(true);
+				file.setWritable(false);
+				file.setExecutable(false);
+			} else {
+				Runtime.getRuntime().exec("chmod 400 " + destPath);
+			}
 		} catch (IOException e) {
 			throw new FileUploadFailException("파일 저장 실패", e);
 		}
