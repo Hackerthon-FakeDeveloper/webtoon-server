@@ -1,9 +1,9 @@
 package org.corodiak.scfakedeveloper.repository.qrepository;
 
-import org.corodiak.scfakedeveloper.type.entity.User;
-
 import java.util.List;
 
+import org.corodiak.scfakedeveloper.type.entity.User;
+
 public interface QUserRepository {
-    List<User> findAll(Long start, Long display);
+	List<User> findAll(Long start, Long display);
 }

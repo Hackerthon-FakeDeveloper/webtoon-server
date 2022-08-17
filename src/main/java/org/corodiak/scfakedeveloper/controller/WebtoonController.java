@@ -129,7 +129,7 @@ public class WebtoonController {
 
 	@RequestMapping(value = "/series", method = RequestMethod.POST)
 	public ResponseModel webtoonSeriesAdd(
-			@RequestBody WebtoonSeriesDto webtoonSeriesDto
+		@RequestBody WebtoonSeriesDto webtoonSeriesDto
 	) {
 		webtoonService.addWebtoonSeries(webtoonSeriesDto.getWebtoon(), webtoonSeriesDto.getSeries());
 		ResponseModel responseModel = ResponseModel.builder().build();
@@ -138,7 +138,7 @@ public class WebtoonController {
 
 	@RequestMapping(value = "/series", method = RequestMethod.DELETE)
 	public ResponseModel webtoonSeriesRemove(
-			@RequestBody WebtoonSeriesDto webtoonSeriesDto
+		@RequestBody WebtoonSeriesDto webtoonSeriesDto
 	) {
 		webtoonService.removeWebtoonSeries(webtoonSeriesDto.getWebtoon(), webtoonSeriesDto.getSeries());
 		ResponseModel responseModel = ResponseModel.builder().build();
@@ -147,7 +147,7 @@ public class WebtoonController {
 
 	@RequestMapping(value = "/tag", method = RequestMethod.POST)
 	public ResponseModel webtoonTagAdd(
-			@RequestBody WebtoonTagDto webtoonTagDto
+		@RequestBody WebtoonTagDto webtoonTagDto
 	) {
 		webtoonService.addWebtoonTag(webtoonTagDto.getWebtoon(), webtoonTagDto.getTag());
 		ResponseModel responseModel = ResponseModel.builder().build();
@@ -156,7 +156,7 @@ public class WebtoonController {
 
 	@RequestMapping(value = "/tag", method = RequestMethod.DELETE)
 	public ResponseModel webtoonTagRemove(
-			@RequestBody WebtoonTagDto webtoonTagDto
+		@RequestBody WebtoonTagDto webtoonTagDto
 	) {
 		webtoonService.removeWebtoonTag(webtoonTagDto.getWebtoon(), webtoonTagDto.getTag());
 		ResponseModel responseModel = ResponseModel.builder().build();

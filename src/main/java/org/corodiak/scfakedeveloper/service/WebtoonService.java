@@ -42,11 +42,11 @@ public interface WebtoonService {
 	@Transactional
 	void addWebtoonSeries(Long webtoonSeq, Long seriesSeq);
 
-    @Transactional
-    void addWebtoonTag(Long webtoonSeq, Long tagSeq);
+	@Transactional
+	void addWebtoonTag(Long webtoonSeq, Long tagSeq);
 
-    @Transactional
-    void removeWebtoonSeries(Long webtoonSeq, Long seriesSeq);
+	@Transactional
+	void removeWebtoonSeries(Long webtoonSeq, Long seriesSeq);
 
 	@Transactional
 	void removeWebtoonTag(Long webtoonSeq, Long tagSeq);

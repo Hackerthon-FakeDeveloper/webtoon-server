@@ -12,7 +12,14 @@ import org.corodiak.scfakedeveloper.repository.WebtoonRepository;
 import org.corodiak.scfakedeveloper.repository.WebtoonSeriesRepository;
 import org.corodiak.scfakedeveloper.repository.WebtoonTagRepository;
 import org.corodiak.scfakedeveloper.type.dto.WebtoonDto;
-import org.corodiak.scfakedeveloper.type.entity.*;
+import org.corodiak.scfakedeveloper.type.entity.Author;
+import org.corodiak.scfakedeveloper.type.entity.Series;
+import org.corodiak.scfakedeveloper.type.entity.Tag;
+import org.corodiak.scfakedeveloper.type.entity.User;
+import org.corodiak.scfakedeveloper.type.entity.Webtoon;
+import org.corodiak.scfakedeveloper.type.entity.WebtoonLike;
+import org.corodiak.scfakedeveloper.type.entity.WebtoonSeries;
+import org.corodiak.scfakedeveloper.type.entity.WebtoonTag;
 import org.corodiak.scfakedeveloper.type.entity.id.WebtoonLikeId;
 import org.corodiak.scfakedeveloper.type.entity.id.WebtoonSeriesId;
 import org.corodiak.scfakedeveloper.type.entity.id.WebtoonTagId;
@@ -148,9 +155,9 @@ public class WebtoonServiceImpl implements WebtoonService {
 	@Transactional
 	public void addWebtoonSeries(Long webtoonSeq, Long seriesSeq) {
 		WebtoonSeries webtoonSeries = WebtoonSeries.builder()
-				.webtoon(Webtoon.builder().seq(webtoonSeq).build())
-				.series(Series.builder().seq(seriesSeq).build())
-				.build();
+			.webtoon(Webtoon.builder().seq(webtoonSeq).build())
+			.series(Series.builder().seq(seriesSeq).build())
+			.build();
 		webtoonSeriesRepository.save(webtoonSeries);
 	}
 
@@ -158,9 +165,9 @@ public class WebtoonServiceImpl implements WebtoonService {
 	@Transactional
 	public void removeWebtoonSeries(Long webtoonSeq, Long seriesSeq) {
 		WebtoonSeriesId webtoonSeriesId = WebtoonSeriesId.builder()
-				.webtoon(webtoonSeq)
-				.series(seriesSeq)
-				.build();
+			.webtoon(webtoonSeq)
+			.series(seriesSeq)
+			.build();
 		webtoonSeriesRepository.deleteById(webtoonSeriesId);
 	}
 
@@ -168,9 +175,9 @@ public class WebtoonServiceImpl implements WebtoonService {
 	@Transactional
 	public void addWebtoonTag(Long webtoonSeq, Long tagSeq) {
 		WebtoonTag webtoonTag = WebtoonTag.builder()
-				.webtoon(Webtoon.builder().seq(webtoonSeq).build())
-				.tag(Tag.builder().seq(tagSeq).build())
-				.build();
+			.webtoon(Webtoon.builder().seq(webtoonSeq).build())
+			.tag(Tag.builder().seq(tagSeq).build())
+			.build();
 		webtoonTagRepository.save(webtoonTag);
 	}
 
@@ -178,9 +185,9 @@ public class WebtoonServiceImpl implements WebtoonService {
 	@Transactional
 	public void removeWebtoonTag(Long webtoonSeq, Long tagSeq) {
 		WebtoonTagId webtoonTagId = WebtoonTagId.builder()
-				.webtoon(webtoonSeq)
-				.tag(tagSeq)
-				.build();
+			.webtoon(webtoonSeq)
+			.tag(tagSeq)
+			.build();
 		webtoonTagRepository.deleteById(webtoonTagId);
 	}
 }

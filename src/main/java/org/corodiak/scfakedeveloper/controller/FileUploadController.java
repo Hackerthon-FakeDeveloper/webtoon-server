@@ -20,7 +20,7 @@ public class FileUploadController {
 
 	@RequestMapping("/upload")
 	private ResponseModel upload(
-		@RequestParam(value = "file", required = true)MultipartFile multipartFile
+		@RequestParam(value = "file", required = true) MultipartFile multipartFile
 	) throws FileUploadFailException {
 		String url = fileUploadService.saveFile(multipartFile);
 		ResponseModel responseModel = ResponseModel.builder().build();

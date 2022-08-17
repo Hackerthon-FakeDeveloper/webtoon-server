@@ -16,10 +16,12 @@ public class WebtoonSeriesId implements Serializable {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if (o == null || getClass() != o.getClass()) {
 			return false;
+		}
 		WebtoonSeriesId that = (WebtoonSeriesId)o;
 		return Objects.equals(webtoon, that.webtoon) && Objects.equals(series, that.series);
 	}
