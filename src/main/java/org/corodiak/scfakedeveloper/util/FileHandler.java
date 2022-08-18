@@ -36,7 +36,7 @@ public class FileHandler {
 		try {
 			String os = System.getProperty("os.name").toLowerCase();
 			multipartFile.transferTo(file);
-			if(os.contains("win")) {
+			if (os.contains("win")) {
 				file.setReadable(true);
 				file.setWritable(false);
 				file.setExecutable(false);
