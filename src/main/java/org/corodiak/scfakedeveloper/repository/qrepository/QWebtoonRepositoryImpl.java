@@ -42,6 +42,8 @@ public class QWebtoonRepositoryImpl implements QWebtoonRepository {
 	public List<Webtoon> findByPlatform(String platform, Long start, Long display) {
 		List<Webtoon> results = queryFactory.selectFrom(qWebtoon)
 			.where(qWebtoon.platform.eq(platform))
+                .innerJoin(qWebtoon.author, qAuthor)
+                .fetchJoin()
 			.offset(start)
 			.limit(display)
 			.fetch();
@@ -51,6 +53,8 @@ public class QWebtoonRepositoryImpl implements QWebtoonRepository {
 	@Override
 	public List<Webtoon> findAll(Long start, Long display) {
 		List<Webtoon> results = queryFactory.selectFrom(qWebtoon)
+                .innerJoin(qWebtoon.author, qAuthor)
+                .fetchJoin()
 			.offset(start)
 			.limit(display)
 			.fetch();
@@ -61,6 +65,8 @@ public class QWebtoonRepositoryImpl implements QWebtoonRepository {
 	public List<Webtoon> search(String keyword, Long start, Long display) {
 		List<Webtoon> results = queryFactory.selectFrom(qWebtoon)
 			.where(qWebtoon.title.contains(keyword).or(qWebtoon.description.contains(keyword)))
+                .innerJoin(qWebtoon.author, qAuthor)
+                .fetchJoin()
 			.offset(start)
 			.limit(display)
 			.fetch();
