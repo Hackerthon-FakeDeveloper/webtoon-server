@@ -153,6 +153,16 @@ public class WebtoonServiceImpl implements WebtoonService {
 
 	@Override
 	@Transactional
+	public List<WebtoonVo> findByLike(Long userSeq) {
+		List<WebtoonLike> webtoonLikeList = webtoonLikeRepository.findByUserSeq(userSeq);
+		List<WebtoonVo> results = webtoonLikeList.stream()
+				.map(e -> new WebtoonVo(e.getWebtoon()))
+				.collect(Collectors.toList());
+		return results;
+	}
+
+	@Override
+	@Transactional
 	public void addWebtoonSeries(Long webtoonSeq, Long seriesSeq) {
 		WebtoonSeries webtoonSeries = WebtoonSeries.builder()
 			.webtoon(Webtoon.builder().seq(webtoonSeq).build())
@@ -173,6 +183,16 @@ public class WebtoonServiceImpl implements WebtoonService {
 
 	@Override
 	@Transactional
+	public List<WebtoonVo> findBySeries(Long seriesSeq) {
+		List<WebtoonSeries> webtoonSeriesList = webtoonSeriesRepository.findBySeriesSeq(seriesSeq);
+		List<WebtoonVo> results = webtoonSeriesList.stream()
+				.map(e -> new WebtoonVo(e.getWebtoon()))
+				.collect(Collectors.toList());
+		return results;
+	}
+
+	@Override
+	@Transactional
 	public void addWebtoonTag(Long webtoonSeq, Long tagSeq) {
 		WebtoonTag webtoonTag = WebtoonTag.builder()
 			.webtoon(Webtoon.builder().seq(webtoonSeq).build())
@@ -189,5 +209,15 @@ public class WebtoonServiceImpl implements WebtoonService {
 			.tag(tagSeq)
 			.build();
 		webtoonTagRepository.deleteById(webtoonTagId);
+	}
+
+	@Override
+	@Transactional
+	public List<WebtoonVo> findByTag(Long tagSeq) {
+		List<WebtoonTag> webtoonTagList = webtoonTagRepository.findByTagSeq(tagSeq);
+		List<WebtoonVo> results = webtoonTagList.stream()
+				.map(e -> new WebtoonVo(e.getWebtoon()))
+				.collect(Collectors.toList());
+		return results;
 	}
 }

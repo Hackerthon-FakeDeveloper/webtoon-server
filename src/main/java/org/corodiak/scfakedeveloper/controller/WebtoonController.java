@@ -108,7 +108,7 @@ public class WebtoonController {
 	}
 
 	@RequestMapping(value = "/like/{seq}", method = RequestMethod.POST)
-	public ResponseModel likWebtoon(
+	public ResponseModel likeWebtoon(
 		@PathVariable("seq") Long webtoonSeq
 	) {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
@@ -118,12 +118,21 @@ public class WebtoonController {
 	}
 
 	@RequestMapping(value = "/dislike/{seq}", method = RequestMethod.POST)
-	public ResponseModel dislikWebtoon(
+	public ResponseModel dislikeWebtoon(
 		@PathVariable("seq") Long webtoonSeq
 	) {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		webtoonService.dislikeWebtoon(userSeq, webtoonSeq);
 		ResponseModel responseModel = ResponseModel.builder().build();
+		return responseModel;
+	}
+
+	@RequestMapping(value = "/like", method = RequestMethod.GET)
+	public ResponseModel searchByLike() {
+		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+		List<WebtoonVo> webtoonList = webtoonService.findByLike(userSeq);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("webtoonList", webtoonList);
 		return responseModel;
 	}
 
@@ -145,6 +154,16 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@RequestMapping(value = "/series/{seq}", method = RequestMethod.GET)
+	public ResponseModel searchBySeries(
+			@PathVariable("seq") Long seriesSeq
+	) {
+		List<WebtoonVo> webtoonList = webtoonService.findBySeries(seriesSeq);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("webtoonList", webtoonList);
+		return responseModel;
+	}
+
 	@RequestMapping(value = "/tag", method = RequestMethod.POST)
 	public ResponseModel webtoonTagAdd(
 		@RequestBody WebtoonTagDto webtoonTagDto
@@ -160,6 +179,16 @@ public class WebtoonController {
 	) {
 		webtoonService.removeWebtoonTag(webtoonTagDto.getWebtoon(), webtoonTagDto.getTag());
 		ResponseModel responseModel = ResponseModel.builder().build();
+		return responseModel;
+	}
+
+	@RequestMapping(value = "/tag/{seq}", method = RequestMethod.GET)
+	public ResponseModel searchByTag(
+			@PathVariable("seq") Long tagSeq
+	) {
+		List<WebtoonVo> webtoonList = webtoonService.findByTag(tagSeq);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("webtoonList", webtoonList);
 		return responseModel;
 	}
 }

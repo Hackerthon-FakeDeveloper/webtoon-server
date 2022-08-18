@@ -39,8 +39,14 @@ public interface WebtoonService {
 	@Transactional
 	void dislikeWebtoon(Long userSeq, Long webtoonSeq);
 
-	@Transactional
+    @Transactional
+    List<WebtoonVo> findByLike(Long userSeq);
+
+    @Transactional
 	void addWebtoonSeries(Long webtoonSeq, Long seriesSeq);
+
+	@Transactional
+	List<WebtoonVo> findBySeries(Long seriesSeq);
 
 	@Transactional
 	void addWebtoonTag(Long webtoonSeq, Long tagSeq);
@@ -50,4 +56,7 @@ public interface WebtoonService {
 
 	@Transactional
 	void removeWebtoonTag(Long webtoonSeq, Long tagSeq);
+
+	@Transactional
+	List<WebtoonVo> findByTag(Long tagSeq);
 }
