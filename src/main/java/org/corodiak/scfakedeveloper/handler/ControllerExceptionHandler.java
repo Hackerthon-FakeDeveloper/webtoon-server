@@ -12,6 +12,7 @@ import org.corodiak.scfakedeveloper.exception.FileUploadFailException;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -41,7 +42,8 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler({
 		NoSuchElementException.class,
 		MissingServletRequestParameterException.class,
-		MalformedJsonException.class
+		MalformedJsonException.class,
+		HttpMessageNotReadableException.class
 	})
 	public ResponseModel parameterError(HttpServletRequest request, HttpServletResponse response, Exception e) {
 		ResponseModel responseModel = ResponseModel.builder()
@@ -79,6 +81,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public ResponseModel unExceptedError(HttpServletRequest request, HttpServletResponse response, Exception e) {
 		log.error("UnExcepted Error occurred. : {}", e.toString());
+		e.printStackTrace();
 		response.setStatus(500);
 		return ResponseModel.builder()
 			.httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
