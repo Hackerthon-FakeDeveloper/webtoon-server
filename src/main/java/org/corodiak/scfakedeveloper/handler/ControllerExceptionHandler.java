@@ -16,6 +16,8 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.google.gson.stream.MalformedJsonException;
+
 import lombok.extern.slf4j.Slf4j;
 
 @RestControllerAdvice(basePackages = "org.corodiak.scfakedeveloper.controller")
@@ -38,7 +40,8 @@ public class ControllerExceptionHandler {
 
 	@ExceptionHandler({
 		NoSuchElementException.class,
-		MissingServletRequestParameterException.class
+		MissingServletRequestParameterException.class,
+		MalformedJsonException.class
 	})
 	public ResponseModel parameterError(HttpServletRequest request, HttpServletResponse response, Exception e) {
 		ResponseModel responseModel = ResponseModel.builder()
