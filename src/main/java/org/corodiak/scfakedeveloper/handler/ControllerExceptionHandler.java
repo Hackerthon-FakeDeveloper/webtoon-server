@@ -81,7 +81,6 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public ResponseModel unExceptedError(HttpServletRequest request, HttpServletResponse response, Exception e) {
 		log.error("UnExcepted Error occurred. : {}", e.toString());
-		e.printStackTrace();
 		response.setStatus(500);
 		return ResponseModel.builder()
 			.httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
