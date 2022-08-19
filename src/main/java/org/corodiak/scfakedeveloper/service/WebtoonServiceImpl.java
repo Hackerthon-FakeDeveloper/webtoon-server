@@ -158,8 +158,8 @@ public class WebtoonServiceImpl implements WebtoonService {
 	public List<WebtoonVo> findByLike(Long userSeq) {
 		List<WebtoonLike> webtoonLikeList = webtoonLikeRepository.findByUserSeq(userSeq);
 		List<WebtoonVo> results = webtoonLikeList.stream()
-				.map(e -> new WebtoonVo(e.getWebtoon()))
-				.collect(Collectors.toList());
+			.map(e -> new WebtoonVo(e.getWebtoon()))
+			.collect(Collectors.toList());
 		return results;
 	}
 
@@ -188,8 +188,8 @@ public class WebtoonServiceImpl implements WebtoonService {
 	public List<WebtoonVo> findBySeries(Long seriesSeq) {
 		List<WebtoonSeries> webtoonSeriesList = webtoonSeriesRepository.findBySeriesSeq(seriesSeq);
 		List<WebtoonVo> results = webtoonSeriesList.stream()
-				.map(e -> new WebtoonVo(e.getWebtoon()))
-				.collect(Collectors.toList());
+			.map(e -> new WebtoonVo(e.getWebtoon()))
+			.collect(Collectors.toList());
 		return results;
 	}
 
@@ -218,8 +218,8 @@ public class WebtoonServiceImpl implements WebtoonService {
 	public List<WebtoonVo> findByTag(Long tagSeq) {
 		List<WebtoonTag> webtoonTagList = webtoonTagRepository.findByTagSeq(tagSeq);
 		List<WebtoonVo> results = webtoonTagList.stream()
-				.map(e -> new WebtoonVo(e.getWebtoon()))
-				.collect(Collectors.toList());
+			.map(e -> new WebtoonVo(e.getWebtoon()))
+			.collect(Collectors.toList());
 		return results;
 	}
 }

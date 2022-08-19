@@ -156,7 +156,7 @@ public class WebtoonController {
 
 	@RequestMapping(value = "/series/{seq}", method = RequestMethod.GET)
 	public ResponseModel searchBySeries(
-			@PathVariable("seq") Long seriesSeq
+		@PathVariable("seq") Long seriesSeq
 	) {
 		List<WebtoonVo> webtoonList = webtoonService.findBySeries(seriesSeq);
 		ResponseModel responseModel = ResponseModel.builder().build();
@@ -184,7 +184,7 @@ public class WebtoonController {
 
 	@RequestMapping(value = "/tag/{seq}", method = RequestMethod.GET)
 	public ResponseModel searchByTag(
-			@PathVariable("seq") Long tagSeq
+		@PathVariable("seq") Long tagSeq
 	) {
 		List<WebtoonVo> webtoonList = webtoonService.findByTag(tagSeq);
 		ResponseModel responseModel = ResponseModel.builder().build();

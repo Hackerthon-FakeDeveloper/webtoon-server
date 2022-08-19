@@ -1,9 +1,9 @@
 package org.corodiak.scfakedeveloper.repository.qrepository;
 
-import org.corodiak.scfakedeveloper.type.entity.WebtoonTag;
-
 import java.util.List;
 
+import org.corodiak.scfakedeveloper.type.entity.WebtoonTag;
+
 public interface QWebtoonTagRepository {
-    List<WebtoonTag> findByTagSeq(Long seq);
+	List<WebtoonTag> findByTagSeq(Long seq);
 }
