@@ -2,6 +2,8 @@ package org.corodiak.scfakedeveloper.type.dto;
 
 import java.time.LocalDate;
 
+import org.corodiak.scfakedeveloper.type.etc.SerialStatus;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +18,6 @@ public class WebtoonDto {
 	private String url;
 	private String description;
 	private LocalDate startDate;
+	private SerialStatus serialStatus;
 	private Long author;
 }

@@ -3,6 +3,7 @@ package org.corodiak.scfakedeveloper.type.vo;
 import java.time.LocalDate;
 
 import org.corodiak.scfakedeveloper.type.entity.Webtoon;
+import org.corodiak.scfakedeveloper.type.etc.SerialStatus;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -18,6 +19,7 @@ public class WebtoonVo {
 	private String thumbnail;
 	private String url;
 	private String description;
+	private SerialStatus serialStatus;
 	private LocalDate startDate;
 
 	public WebtoonVo(Webtoon entity) {
@@ -28,6 +30,7 @@ public class WebtoonVo {
 		this.thumbnail = entity.getThumbnail();
 		this.url = entity.getUrl();
 		this.description = entity.getDescription();
+		this.serialStatus = entity.getSerialStatus();
 		this.startDate = entity.getStartDate();
 	}
 

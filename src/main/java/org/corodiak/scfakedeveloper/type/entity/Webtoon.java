@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.corodiak.scfakedeveloper.type.etc.SerialStatus;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,15 +36,15 @@ public class Webtoon extends BaseTimeEntity {
 	private String url;
 	private String description;
 	private LocalDate startDate;
+	private SerialStatus serialStatus;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "author_seq")
 	private Author author;
-	//Genre 분리
 
 	@Builder
 	public Webtoon(Long seq, String title, String platform, boolean isAdult, String thumbnail,
-		String url, String description, LocalDate startDate, Author author) {
+		String url, String description, LocalDate startDate, SerialStatus serialStatus, Author author) {
 		this.seq = seq;
 		this.title = title;
 		this.platform = platform;
@@ -51,6 +53,7 @@ public class Webtoon extends BaseTimeEntity {
 		this.url = url;
 		this.description = description;
 		this.startDate = startDate;
+		this.serialStatus = serialStatus;
 		this.author = author;
 	}
 }

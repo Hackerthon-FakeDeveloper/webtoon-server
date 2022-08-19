@@ -48,6 +48,7 @@ public class WebtoonServiceImpl implements WebtoonService {
 			.url(webtoonDto.getUrl())
 			.description(webtoonDto.getDescription())
 			.startDate(webtoonDto.getStartDate())
+			.serialStatus(webtoonDto.getSerialStatus())
 			.author(Author.builder().seq(webtoonDto.getAuthor()).build())
 			.build();
 		webtoonRepository.save(webtoon);
@@ -120,6 +121,7 @@ public class WebtoonServiceImpl implements WebtoonService {
 		result.setUrl(webtoonDto.getUrl());
 		result.setDescription(webtoonDto.getDescription());
 		result.setStartDate(webtoonDto.getStartDate());
+		result.setSerialStatus(webtoonDto.getSerialStatus());
 		result.setAuthor(Author.builder().seq(webtoonDto.getAuthor()).build());
 
 		return true;
