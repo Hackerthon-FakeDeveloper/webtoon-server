@@ -17,6 +17,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.google.common.net.UrlEscapers;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,7 +49,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			.build();
 		response.setHeader("Authorization", authToken.getToken());
 		response.setContentType("application/json");
-		//send redirect 필요
+		response.sendRedirect(
+			"http://modutoon.com/login/" + UrlEscapers.urlPathSegmentEscaper().escape(authToken.getToken()));
 		OutputStream outputStream = response.getOutputStream();
 		outputStream.write(responseModel.toJson().getBytes());
 	}
