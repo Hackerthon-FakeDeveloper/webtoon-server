@@ -19,7 +19,6 @@ import org.corodiak.scfakedeveloper.type.entity.id.ViewHistoryId;
 import org.corodiak.scfakedeveloper.type.vo.UserVo;
 import org.corodiak.scfakedeveloper.type.vo.ViewHistoryVo;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import com.google.common.base.Strings;
 
@@ -62,16 +61,16 @@ public class UserServiceImpl implements UserService {
 		}
 
 		User result = user.get();
-		if(!Strings.isNullOrEmpty(userDto.getNickname())) {
+		if (!Strings.isNullOrEmpty(userDto.getNickname())) {
 			result.setNickname(userDto.getNickname());
 		}
-		if(userDto.getAge() < 0) {
+		if (userDto.getAge() < 0) {
 			throw new NotAllowValueException("Not Allow Value at User Age!");
 		}
-		if(userDto.getAge() > 0) {
+		if (userDto.getAge() > 0) {
 			result.setAge(userDto.getAge());
 		}
-		if(!Strings.isNullOrEmpty(userDto.getGender())) {
+		if (!Strings.isNullOrEmpty(userDto.getGender())) {
 			result.setGender(userDto.getGender());
 		}
 
@@ -96,7 +95,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public List<ViewHistoryVo> findViewHistroy(Long seq) {
+	public List<ViewHistoryVo> findViewHistory(Long seq) {
 		List<ViewHistory> viewHistoryList = viewHistoryRepository.findByUserSeq(seq);
 		List<ViewHistoryVo> results = viewHistoryList.stream()
 			.map(e -> new ViewHistoryVo(e))

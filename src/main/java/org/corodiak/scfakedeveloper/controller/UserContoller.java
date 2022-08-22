@@ -78,7 +78,7 @@ public class UserContoller {
 	@RequestMapping(value = "/viewHistory/list", method = RequestMethod.GET)
 	public ResponseModel viewHistryList() {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
-		List<ViewHistoryVo> viewHistoryList = userService.findViewHistroy(userSeq);
+		List<ViewHistoryVo> viewHistoryList = userService.findViewHistory(userSeq);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		responseModel.addData("viewHistoryList", viewHistoryList);
 		return responseModel;

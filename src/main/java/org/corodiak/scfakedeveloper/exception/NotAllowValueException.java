@@ -1,6 +1,6 @@
 package org.corodiak.scfakedeveloper.exception;
 
-public class NotAllowValueException extends Exception{
+public class NotAllowValueException extends Exception {
 	private static final String DEFAULT_MESSAGE = "Not Allow Value!";
 
 	public NotAllowValueException() {

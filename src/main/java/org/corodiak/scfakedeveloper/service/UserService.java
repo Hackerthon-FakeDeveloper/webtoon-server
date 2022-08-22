@@ -27,7 +27,7 @@ public interface UserService {
 	void addViewHistory(Long userSeq, Long webtoonSeq);
 
 	@Transactional
-	List<ViewHistoryVo> findViewHistroy(Long seq);
+	List<ViewHistoryVo> findViewHistory(Long seq);
 
 	@Transactional
 	void removeViewHistory(Long userSeq, Long webtoonSeq);
