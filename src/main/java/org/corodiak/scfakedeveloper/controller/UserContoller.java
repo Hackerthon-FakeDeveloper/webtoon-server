@@ -9,6 +9,7 @@ import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.UserDto;
 import org.corodiak.scfakedeveloper.type.vo.UserVo;
 import org.corodiak.scfakedeveloper.type.vo.ViewHistoryVo;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class UserContoller {
 
 	private final UserService userService;
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel userGet(
 		@PathVariable("seq") Long seq
@@ -35,6 +37,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel userList(
 		@RequestParam(name = "start", required = false, defaultValue = "0") long start,
@@ -56,6 +59,7 @@ public class UserContoller {
 	// 	return responseModel;
 	// }
 
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel userDelete(
 		@PathVariable("seq") Long seq
@@ -65,6 +69,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/viewHistory/{webtoonSeq}", method = RequestMethod.POST)
 	public ResponseModel viewHistoryAdd(
 		@PathVariable("webtoonSeq") Long webtoonSeq
@@ -75,6 +80,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/viewHistory/list", method = RequestMethod.GET)
 	public ResponseModel viewHistryList() {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
@@ -84,6 +90,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/viewHistory/{webtoonSeq}", method = RequestMethod.DELETE)
 	public ResponseModel viewHistoryRemove(
 		@PathVariable("webtoonSeq") Long webtoonSeq
@@ -94,6 +101,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/checkinfoset", method = RequestMethod.GET)
 	public ResponseModel checkUserInfo() {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
@@ -102,6 +110,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_USER"})
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseModel userGet() {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
@@ -110,6 +119,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_USER"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel userUpdate(
 		@RequestBody UserDto userDto

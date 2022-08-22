@@ -6,6 +6,7 @@ import org.corodiak.scfakedeveloper.service.SeriesService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.SeriesDto;
 import org.corodiak.scfakedeveloper.type.vo.SeriesVo;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class SeriesController {
 
 	private final SeriesService seriesService;
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel SeriesAdd(
 		@RequestBody SeriesDto seriesDto
@@ -31,6 +33,7 @@ public class SeriesController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel seriesGet(
 		@PathVariable("seq") Long seq
@@ -41,6 +44,7 @@ public class SeriesController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel seriesList() {
 		List<SeriesVo> seriesList = seriesService.findAll();
@@ -49,6 +53,7 @@ public class SeriesController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ResponseModel search(
 		@RequestParam("keyword") String keyword
@@ -59,6 +64,7 @@ public class SeriesController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel seriesUpdate(
 		@RequestBody SeriesDto seriesDto
@@ -68,6 +74,7 @@ public class SeriesController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel seriesDelete(
 		@PathVariable("seq") Long seq

@@ -9,6 +9,7 @@ import org.corodiak.scfakedeveloper.type.dto.WebtoonDto;
 import org.corodiak.scfakedeveloper.type.dto.WebtoonSeriesDto;
 import org.corodiak.scfakedeveloper.type.dto.WebtoonTagDto;
 import org.corodiak.scfakedeveloper.type.vo.WebtoonVo;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class WebtoonController {
 
 	private final WebtoonService webtoonService;
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel webtoonAdd(
 		@RequestBody WebtoonDto webtoonDto
@@ -34,6 +36,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel webtoonGet(
 		@PathVariable("seq") Long seq
@@ -44,6 +47,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/authorWebtoon/{seq}", method = RequestMethod.GET)
 	public ResponseModel authorWebtoonList(
 		@PathVariable("seq") Long seq
@@ -54,6 +58,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/platformWebtoon", method = RequestMethod.GET)
 	public ResponseModel platformWebtoonList(
 		@RequestParam("platform") String platform,
@@ -66,6 +71,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel webtoonList(
 		@RequestParam(name = "start", required = false, defaultValue = "0") long start,
@@ -77,6 +83,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ResponseModel search(
 		@RequestParam("keyword") String keyword,
@@ -89,6 +96,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel webtoonUpdate(
 		@RequestBody WebtoonDto webtoonDto
@@ -98,6 +106,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel webtoonDelete(
 		@PathVariable("seq") Long seq
@@ -107,6 +116,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/like/{seq}", method = RequestMethod.POST)
 	public ResponseModel likeWebtoon(
 		@PathVariable("seq") Long webtoonSeq
@@ -117,6 +127,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/dislike/{seq}", method = RequestMethod.POST)
 	public ResponseModel dislikeWebtoon(
 		@PathVariable("seq") Long webtoonSeq
@@ -127,6 +138,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/like", method = RequestMethod.GET)
 	public ResponseModel searchByLike() {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
@@ -136,6 +148,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/series", method = RequestMethod.POST)
 	public ResponseModel webtoonSeriesAdd(
 		@RequestBody WebtoonSeriesDto webtoonSeriesDto
@@ -145,6 +158,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/series", method = RequestMethod.DELETE)
 	public ResponseModel webtoonSeriesRemove(
 		@RequestBody WebtoonSeriesDto webtoonSeriesDto
@@ -154,6 +168,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/series/{seq}", method = RequestMethod.GET)
 	public ResponseModel searchBySeries(
 		@PathVariable("seq") Long seriesSeq
@@ -164,6 +179,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/tag", method = RequestMethod.POST)
 	public ResponseModel webtoonTagAdd(
 		@RequestBody WebtoonTagDto webtoonTagDto
@@ -173,6 +189,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/tag", method = RequestMethod.DELETE)
 	public ResponseModel webtoonTagRemove(
 		@RequestBody WebtoonTagDto webtoonTagDto
@@ -182,6 +199,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/tag/{seq}", method = RequestMethod.GET)
 	public ResponseModel searchByTag(
 		@PathVariable("seq") Long tagSeq

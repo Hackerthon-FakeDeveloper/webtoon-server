@@ -6,6 +6,7 @@ import org.corodiak.scfakedeveloper.service.AuthorService;
 import org.corodiak.scfakedeveloper.type.dto.AuthorDto;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.vo.AuthorVo;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class AuthorController {
 
 	private final AuthorService authorService;
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel authorAdd(
 		@RequestBody AuthorDto authorDto
@@ -31,6 +33,7 @@ public class AuthorController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel authorGet(
 		@PathVariable("seq") Long seq
@@ -41,6 +44,7 @@ public class AuthorController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel authorList() {
 		List<AuthorVo> authorList = authorService.findAll();
@@ -49,6 +53,7 @@ public class AuthorController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel authorUpdate(
 		@RequestBody AuthorDto authorDto
@@ -58,6 +63,7 @@ public class AuthorController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel authorDelete(
 		@PathVariable("seq") Long seq
@@ -67,6 +73,7 @@ public class AuthorController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ResponseModel authorSearch(
 		@RequestParam("keyword") String keyword

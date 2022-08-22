@@ -6,6 +6,7 @@ import org.corodiak.scfakedeveloper.service.GenreService;
 import org.corodiak.scfakedeveloper.type.dto.GenreDto;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.vo.GenreVo;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class GenreController {
 
 	private final GenreService genreService;
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel genreAdd(
 		@RequestBody GenreDto genreDto
@@ -30,6 +32,7 @@ public class GenreController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel genreGet(
 		@PathVariable("seq") Long seq
@@ -40,6 +43,7 @@ public class GenreController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel genreList() {
 		List<GenreVo> genreList = genreService.findAll();
@@ -48,6 +52,7 @@ public class GenreController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel genreDelete(
 		@PathVariable("seq") Long seq

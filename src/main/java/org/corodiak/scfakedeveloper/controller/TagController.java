@@ -6,6 +6,7 @@ import org.corodiak.scfakedeveloper.service.TagService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.TagDto;
 import org.corodiak.scfakedeveloper.type.vo.TagVo;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class TagController {
 
 	private final TagService tagService;
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel tagAdd(
 		@RequestBody TagDto tagDto
@@ -30,6 +32,7 @@ public class TagController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel tagGet(
 		@PathVariable("seq") Long seq
@@ -40,6 +43,7 @@ public class TagController {
 		return responseModel;
 	}
 
+	// Permit All
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel tagList() {
 		List<TagVo> tagList = tagService.findAll();
@@ -48,6 +52,7 @@ public class TagController {
 		return responseModel;
 	}
 
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel tagDelete(
 		@PathVariable("seq") Long seq
