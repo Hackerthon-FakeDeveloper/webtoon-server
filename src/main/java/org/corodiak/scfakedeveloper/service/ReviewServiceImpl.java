@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
+import org.corodiak.scfakedeveloper.exception.PermissionDeniedException;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.ReviewLikeRepository;
 import org.corodiak.scfakedeveloper.repository.ReviewRepository;
@@ -29,7 +31,11 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	@Transactional
-	public boolean addReview(ReviewDto reviewDto) {
+	public boolean addReview(ReviewDto reviewDto) throws PermissionDeniedException {
+		if (!reviewDto.getUser().equals(AuthUtil.getAuthenticationInfoSeq())) {
+			throw new PermissionDeniedException();
+		}
+
 		Review review = Review.builder()
 			.scoreFirst(reviewDto.getScoreFirst())
 			.scoreSecond(reviewDto.getScoreSecond())
@@ -74,10 +80,14 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	@Transactional
-	public boolean updateReview(ReviewDto reviewDto) throws SearchResultNotExistException {
+	public boolean updateReview(ReviewDto reviewDto) throws SearchResultNotExistException, PermissionDeniedException {
 		Optional<Review> review = reviewRepository.findById(reviewDto.getSeq());
 		if (review.isEmpty()) {
 			throw new SearchResultNotExistException();
+		}
+
+		if (!reviewDto.getUser().equals(AuthUtil.getAuthenticationInfoSeq())) {
+			throw new PermissionDeniedException();
 		}
 
 		Review result = review.get();
@@ -91,7 +101,11 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	@Transactional
-	public void removeReview(Long seq) {
+	public void removeReview(Long seq) throws PermissionDeniedException {
+		Optional<Review> review = reviewRepository.findById(seq);
+		if (!review.get().getUser().getSeq().equals(AuthUtil.getAuthenticationInfoSeq())) {
+			throw new PermissionDeniedException();
+		}
 		reviewRepository.deleteById(seq);
 	}
 

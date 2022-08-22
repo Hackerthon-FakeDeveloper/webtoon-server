@@ -10,6 +10,7 @@ import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.corodiak.scfakedeveloper.auth.exception.UnAuthorizeException;
 import org.corodiak.scfakedeveloper.exception.FileUploadFailException;
 import org.corodiak.scfakedeveloper.exception.NotAllowValueException;
+import org.corodiak.scfakedeveloper.exception.PermissionDeniedException;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.springframework.http.HttpStatus;
@@ -61,7 +62,8 @@ public class ControllerExceptionHandler {
 
 	@ExceptionHandler({
 		UnAuthorizeException.class,
-		AccessDeniedException.class
+		AccessDeniedException.class,
+		PermissionDeniedException.class
 	})
 	public ResponseModel unAuthorizeRequestError(HttpServletRequest request, HttpServletResponse response,
 		Exception e) {

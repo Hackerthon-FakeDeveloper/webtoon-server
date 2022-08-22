@@ -3,6 +3,7 @@ package org.corodiak.scfakedeveloper.controller;
 import java.util.List;
 
 import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
+import org.corodiak.scfakedeveloper.exception.PermissionDeniedException;
 import org.corodiak.scfakedeveloper.service.ReviewService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.ReviewDto;
@@ -28,7 +29,7 @@ public class ReviewController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel reviewAdd(
 		@RequestBody ReviewDto reviewDto
-	) {
+	) throws PermissionDeniedException {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		reviewDto.setUser(userSeq);
 		reviewService.addReview(reviewDto);
@@ -77,7 +78,7 @@ public class ReviewController {
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel reviewUpdate(
 		@RequestBody ReviewDto reviewDto
-	) {
+	) throws PermissionDeniedException {
 		reviewService.updateReview(reviewDto);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
@@ -87,7 +88,7 @@ public class ReviewController {
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel reviewDelete(
 		@PathVariable("seq") Long seq
-	) {
+	) throws PermissionDeniedException {
 		reviewService.removeReview(seq);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
