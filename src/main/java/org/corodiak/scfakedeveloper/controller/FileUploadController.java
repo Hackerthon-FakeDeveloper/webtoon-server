@@ -4,6 +4,7 @@ import org.corodiak.scfakedeveloper.exception.FileUploadFailException;
 import org.corodiak.scfakedeveloper.service.FileUploadService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +19,7 @@ public class FileUploadController {
 
 	private final FileUploadService fileUploadService;
 
-	@RequestMapping("/upload")
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	private ResponseModel upload(
 		@RequestParam(value = "file", required = true) MultipartFile multipartFile
 	) throws FileUploadFailException {
