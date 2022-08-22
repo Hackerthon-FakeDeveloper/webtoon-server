@@ -14,6 +14,7 @@ import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -58,12 +59,15 @@ public class ControllerExceptionHandler {
 		return responseModel;
 	}
 
-	@ExceptionHandler(UnAuthorizeException.class)
+	@ExceptionHandler({
+		UnAuthorizeException.class,
+		AccessDeniedException.class
+	})
 	public ResponseModel unAuthorizeRequestError(HttpServletRequest request, HttpServletResponse response,
 		Exception e) {
 		ResponseModel responseModel = ResponseModel.builder()
 			.httpStatus(HttpStatus.UNAUTHORIZED)
-			.message("인증되지 않은 사용자입니다.")
+			.message("인증되지 않은 사용자이거나 권한이 부족합니다.")
 			.build();
 		response.setStatus(401);
 		return responseModel;
