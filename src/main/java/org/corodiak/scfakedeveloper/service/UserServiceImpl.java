@@ -61,8 +61,8 @@ public class UserServiceImpl implements UserService {
 		}
 
 		User result = user.get();
-		if (!Strings.isNullOrEmpty(userDto.getNickname())) {
-			result.setNickname(userDto.getNickname());
+		if (!Strings.isNullOrEmpty(userDto.getNickname().trim())) {
+			result.setNickname(userDto.getNickname().trim());
 		}
 		if (userDto.getAge() < 0) {
 			throw new NotAllowValueException("Not Allow Value at User Age!");
@@ -71,7 +71,11 @@ public class UserServiceImpl implements UserService {
 			result.setAge(userDto.getAge());
 		}
 		if (!Strings.isNullOrEmpty(userDto.getGender())) {
-			result.setGender(userDto.getGender());
+			if(userDto.getGender().equals("남") || userDto.getGender().equals("여")) {
+				result.setGender(userDto.getGender());
+			} else {
+				throw new NotAllowValueException("Not Allow Value at User Gender!");
+			}
 		}
 
 		return true;
