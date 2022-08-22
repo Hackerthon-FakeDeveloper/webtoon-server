@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.corodiak.scfakedeveloper.exception.NotAllowValueException;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.UserDto;
 import org.corodiak.scfakedeveloper.type.vo.UserVo;
@@ -17,7 +18,7 @@ public interface UserService {
 	List<UserVo> findAll(Long start, Long display);
 
 	@Transactional
-	boolean updateUser(UserDto userDto) throws SearchResultNotExistException;
+	boolean updateUser(UserDto userDto) throws SearchResultNotExistException, NotAllowValueException;
 
 	@Transactional
 	void removeUser(Long seq);

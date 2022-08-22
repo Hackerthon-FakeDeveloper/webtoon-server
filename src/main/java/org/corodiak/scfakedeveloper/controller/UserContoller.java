@@ -3,6 +3,7 @@ package org.corodiak.scfakedeveloper.controller;
 import java.util.List;
 
 import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
+import org.corodiak.scfakedeveloper.exception.NotAllowValueException;
 import org.corodiak.scfakedeveloper.service.UserService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.UserDto;
@@ -45,14 +46,15 @@ public class UserContoller {
 		return responseModel;
 	}
 
-	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseModel userUpdate(
-		@RequestBody UserDto userDto
-	) {
-		userService.updateUser(userDto);
-		ResponseModel responseModel = ResponseModel.builder().build();
-		return responseModel;
-	}
+	// 해당 로직 Admin으로 핸들링 할 것
+	// @RequestMapping(method = RequestMethod.PUT)
+	// public ResponseModel userUpdate(
+	// 	@RequestBody UserDto userDto
+	// ) {
+	// 	userService.updateUser(userDto);
+	// 	ResponseModel responseModel = ResponseModel.builder().build();
+	// 	return responseModel;
+	// }
 
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel userDelete(
@@ -97,6 +99,25 @@ public class UserContoller {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		ResponseModel responseModel = ResponseModel.builder().build();
 		responseModel.addData("check", userService.userInfoIsSet(userSeq));
+		return responseModel;
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseModel userGet() {
+		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("user", userService.findUser(userSeq));
+		return responseModel;
+	}
+
+	@RequestMapping(method = RequestMethod.PUT)
+	public ResponseModel userUpdate(
+		@RequestBody UserDto userDto
+	) throws NotAllowValueException {
+		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+		userDto.setSeq(userSeq);
+		userService.updateUser(userDto);
+		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}
 }

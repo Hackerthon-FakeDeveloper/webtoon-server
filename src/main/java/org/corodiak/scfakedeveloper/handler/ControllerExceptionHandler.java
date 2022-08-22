@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.corodiak.scfakedeveloper.auth.exception.UnAuthorizeException;
 import org.corodiak.scfakedeveloper.exception.FileUploadFailException;
+import org.corodiak.scfakedeveloper.exception.NotAllowValueException;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,8 @@ public class ControllerExceptionHandler {
 		MissingServletRequestParameterException.class,
 		MalformedJsonException.class,
 		HttpMessageNotReadableException.class,
-		MethodArgumentTypeMismatchException.class
+		MethodArgumentTypeMismatchException.class,
+		NotAllowValueException.class
 	})
 	public ResponseModel parameterError(HttpServletRequest request, HttpServletResponse response, Exception e) {
 		ResponseModel responseModel = ResponseModel.builder()

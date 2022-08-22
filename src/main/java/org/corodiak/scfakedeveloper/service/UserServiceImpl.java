@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.corodiak.scfakedeveloper.exception.NotAllowValueException;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.UserInfoSetRepository;
 import org.corodiak.scfakedeveloper.repository.UserRepository;
@@ -18,6 +19,9 @@ import org.corodiak.scfakedeveloper.type.entity.id.ViewHistoryId;
 import org.corodiak.scfakedeveloper.type.vo.UserVo;
 import org.corodiak.scfakedeveloper.type.vo.ViewHistoryVo;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import com.google.common.base.Strings;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,14 +55,25 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public boolean updateUser(UserDto userDto) throws SearchResultNotExistException {
+	public boolean updateUser(UserDto userDto) throws SearchResultNotExistException, NotAllowValueException {
 		Optional<User> user = userRepository.findById(userDto.getSeq());
 		if (user.isEmpty()) {
 			throw new SearchResultNotExistException();
 		}
 
 		User result = user.get();
-		result.setNickname(userDto.getNickname());
+		if(!Strings.isNullOrEmpty(userDto.getNickname())) {
+			result.setNickname(userDto.getNickname());
+		}
+		if(userDto.getAge() < 0) {
+			throw new NotAllowValueException("Not Allow Value at User Age!");
+		}
+		if(userDto.getAge() > 0) {
+			result.setAge(userDto.getAge());
+		}
+		if(!Strings.isNullOrEmpty(userDto.getGender())) {
+			result.setGender(userDto.getGender());
+		}
 
 		return true;
 	}
