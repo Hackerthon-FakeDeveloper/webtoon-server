@@ -91,4 +91,12 @@ public class UserContoller {
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}
+
+	@RequestMapping(value = "/checkinfoset", method = RequestMethod.GET)
+	public ResponseModel checkUserInfo() {
+		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("check", userService.userInfoIsSet(userSeq));
+		return responseModel;
+	}
 }

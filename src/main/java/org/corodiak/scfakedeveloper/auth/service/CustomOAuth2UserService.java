@@ -4,11 +4,13 @@ import java.util.Optional;
 
 import org.corodiak.scfakedeveloper.auth.factory.OAuth2UserInfoFactory;
 import org.corodiak.scfakedeveloper.repository.OAuthUserRepository;
+import org.corodiak.scfakedeveloper.repository.UserInfoSetRepository;
 import org.corodiak.scfakedeveloper.repository.UserRepository;
 import org.corodiak.scfakedeveloper.type.dto.OAuthUserInfo;
 import org.corodiak.scfakedeveloper.type.dto.UserPrincipal;
 import org.corodiak.scfakedeveloper.type.entity.OAuthUser;
 import org.corodiak.scfakedeveloper.type.entity.User;
+import org.corodiak.scfakedeveloper.type.entity.UserInfoSet;
 import org.corodiak.scfakedeveloper.type.etc.OAuthProvider;
 import org.corodiak.scfakedeveloper.type.etc.Role;
 import org.corodiak.scfakedeveloper.util.NicknameGenerator;
@@ -17,6 +19,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +29,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 	private final OAuthUserRepository oAuthUserRepository;
 	private final UserRepository userRepository;
+	private final UserInfoSetRepository userInfoSetRepository;
 	private final NicknameGenerator nicknameGenerator;
 
 	@Override
@@ -34,7 +38,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		return process(userRequest, oAuth2User);
 	}
 
-	private OAuth2User process(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
+	OAuth2User process(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
 		OAuthProvider oAuthProvider = OAuthProvider.valueOf(
 			userRequest.getClientRegistration().getClientName().toUpperCase());
 		OAuthUserInfo oAuth2UserInfo = OAuth2UserInfoFactory.of(oAuthProvider, oAuth2User.getAttributes());
@@ -42,7 +46,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		return user;
 	}
 
-	private OAuth2User saveOrUpDate(OAuthUserInfo oAuth2UserInfo) {
+	@Transactional
+	OAuth2User saveOrUpDate(OAuthUserInfo oAuth2UserInfo) {
 		Optional<OAuthUser> savedUser;
 		savedUser = oAuthUserRepository.findByProviderUserIdAndOap(
 			oAuth2UserInfo.getId(),
@@ -56,9 +61,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		} else {
 			user = User.builder()
 				.nickname(nicknameGenerator.generate())
+				.age(-1)
+				.gender("undefined")
 				.role(Role.USER)
 				.build();
-			userRepository.save(user);
+			user = userRepository.save(user);
+
+			userInfoSetRepository.save(new UserInfoSet(user.getSeq()));
 
 			oAuthUser = OAuthUser.builder()
 				.providerUserId(oAuth2UserInfo.getId())

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
+import org.corodiak.scfakedeveloper.repository.UserInfoSetRepository;
 import org.corodiak.scfakedeveloper.repository.UserRepository;
 import org.corodiak.scfakedeveloper.repository.ViewHistoryRepository;
 import org.corodiak.scfakedeveloper.type.dto.UserDto;
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
+	private final UserInfoSetRepository userInfoSetRepository;
 	private final ViewHistoryRepository viewHistoryRepository;
 
 	@Override
@@ -95,5 +97,10 @@ public class UserServiceImpl implements UserService {
 			.webtoon(webtoonSeq)
 			.build();
 		viewHistoryRepository.deleteById(viewHistoryId);
+	}
+
+	@Override
+	public boolean userInfoIsSet(Long userSeq) {
+		return userInfoSetRepository.findById(userSeq).isEmpty();
 	}
 }

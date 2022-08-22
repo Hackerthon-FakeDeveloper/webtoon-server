@@ -30,4 +30,7 @@ public interface UserService {
 
 	@Transactional
 	void removeViewHistory(Long userSeq, Long webtoonSeq);
+
+	@Transactional
+	boolean userInfoIsSet(Long userSeq);
 }
