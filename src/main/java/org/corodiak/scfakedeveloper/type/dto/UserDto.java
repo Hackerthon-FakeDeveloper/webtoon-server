@@ -10,5 +10,7 @@ import lombok.Setter;
 public class UserDto {
 	private Long seq;
 	private String nickname;
+	private int age;
+	private String gender;
 	private Role role;
 }

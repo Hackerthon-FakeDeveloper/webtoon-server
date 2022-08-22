@@ -33,14 +33,22 @@ public class User extends BaseTimeEntity {
 	@Column
 	private String nickname;
 
+	@Column
+	private int age;
+
+	@Column
+	private String gender;
+
 	@Enumerated(EnumType.STRING)
 	@Column
 	private Role role;
 
 	@Builder
-	public User(Long seq, String nickname, Role role) {
+	public User(Long seq, String nickname, int age, String gender, Role role) {
 		this.seq = seq;
 		this.nickname = nickname;
+		this.age = age;
+		this.gender = gender;
 		this.role = role;
 	}
 }
