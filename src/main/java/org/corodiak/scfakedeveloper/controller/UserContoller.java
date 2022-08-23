@@ -2,6 +2,7 @@ package org.corodiak.scfakedeveloper.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
 import org.corodiak.scfakedeveloper.exception.NotAllowValueException;
 import org.corodiak.scfakedeveloper.exception.PermissionDeniedException;
@@ -27,6 +28,7 @@ public class UserContoller {
 
 	private final UserService userService;
 
+	@Operation(summary = "유저 정보 조회(일반 유저)", description = "ROLE_USER")
 	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/user/{seq}", method = RequestMethod.GET)
 	public ResponseModel userGetAsUser(
@@ -42,6 +44,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Operation(summary = "유저 정보 조회(관리자)", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/admin/{seq}", method = RequestMethod.GET)
 	public ResponseModel userGetAsAdmin(
@@ -53,6 +56,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Operation(summary = "유저 정보 리스트 조회", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel userList(
@@ -65,6 +69,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Operation(summary = "유저 업데이트", description = "ROLE_USER")
 	@Secured({"ROLE_USER"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel userUpdate(
@@ -77,6 +82,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Operation(summary = "유저 삭제(일반 유저)", description = "ROLE_USER")
 	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/user/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel userDeleteAsUser(
@@ -91,6 +97,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Operation(summary = "유저 삭제(관리자)", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/admin/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel userDeleteAsAdmin(
@@ -101,6 +108,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Operation(summary = "기록 추가", description = "ROLE_USER / ROLE_ADMIN")
 	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/viewHistory/{webtoonSeq}", method = RequestMethod.POST)
 	public ResponseModel viewHistoryAdd(
@@ -112,6 +120,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Operation(summary = "내 기록 조회", description = "ROLE_USER / ROLE_ADMIN")
 	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/viewHistory/list", method = RequestMethod.GET)
 	public ResponseModel viewHistroyList() {
@@ -122,6 +131,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Operation(summary = "기록 삭제", description = "ROLE_USER / ROLE_ADMIN")
 	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/viewHistory/{webtoonSeq}", method = RequestMethod.DELETE)
 	public ResponseModel viewHistoryRemove(
@@ -133,6 +143,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
+	@Operation(summary = "유저 정보 업데이트 여부 체크", description = "ROLE_USER")
 	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/checkinfoset", method = RequestMethod.GET)
 	public ResponseModel checkUserInfo() {

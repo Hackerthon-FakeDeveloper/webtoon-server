@@ -2,6 +2,7 @@ package org.corodiak.scfakedeveloper.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.corodiak.scfakedeveloper.service.SeriesService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.SeriesDto;
@@ -23,6 +24,7 @@ public class SeriesController {
 
 	private final SeriesService seriesService;
 
+	@Operation(summary = "시리즈 추가", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel SeriesAdd(
@@ -34,6 +36,7 @@ public class SeriesController {
 	}
 
 	// Permit All
+	@Operation(summary = "시리즈 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel seriesGet(
 		@PathVariable("seq") Long seq
@@ -45,6 +48,7 @@ public class SeriesController {
 	}
 
 	// Permit All
+	@Operation(summary = "시리즈 목록 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel seriesList() {
 		List<SeriesVo> seriesList = seriesService.findAll();
@@ -54,6 +58,7 @@ public class SeriesController {
 	}
 
 	// Permit All
+	@Operation(summary = "시리즈 검색", description = "PERMIT_ALL")
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ResponseModel search(
 		@RequestParam("keyword") String keyword
@@ -64,6 +69,7 @@ public class SeriesController {
 		return responseModel;
 	}
 
+	@Operation(summary = "시리즈 업데이트", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel seriesUpdate(
@@ -74,6 +80,7 @@ public class SeriesController {
 		return responseModel;
 	}
 
+	@Operation(summary = "시리즈 삭제", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel seriesDelete(

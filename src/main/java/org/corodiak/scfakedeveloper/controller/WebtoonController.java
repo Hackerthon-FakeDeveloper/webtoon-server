@@ -125,8 +125,8 @@ public class WebtoonController {
 		return responseModel;
 	}
 
-	@Operation(summary = "웹툰 좋아요", description = "ROLE_USER | ROLE_ADMIN")
-	@Secured({"ROLE_USER"})
+	@Operation(summary = "웹툰 좋아요", description = "ROLE_USER / ROLE_ADMIN")
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/like/{seq}", method = RequestMethod.POST)
 	public ResponseModel likeWebtoon(
 		@PathVariable("seq") Long webtoonSeq
@@ -137,8 +137,8 @@ public class WebtoonController {
 		return responseModel;
 	}
 
-	@Operation(summary = "웹툰 좋아요 취소", description = "ROLE_USER | ROLE_ADMIN")
-	@Secured({"ROLE_USER"})
+	@Operation(summary = "웹툰 좋아요 취소", description = "ROLE_USER / ROLE_ADMIN")
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/dislike/{seq}", method = RequestMethod.POST)
 	public ResponseModel dislikeWebtoon(
 		@PathVariable("seq") Long webtoonSeq
@@ -149,8 +149,8 @@ public class WebtoonController {
 		return responseModel;
 	}
 
-	@Operation(summary = "내가 좋아요 한 웹툰 불러오기", description = "ROLE_USER | ROLE_ADMIN")
-	@Secured({"ROLE_USER"})
+	@Operation(summary = "내가 좋아요 한 웹툰 불러오기", description = "ROLE_USER / ROLE_ADMIN")
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/like", method = RequestMethod.GET)
 	public ResponseModel searchByLike() {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
@@ -160,6 +160,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Operation(summary = "웹툰 시리즈 추가", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/series", method = RequestMethod.POST)
 	public ResponseModel webtoonSeriesAdd(
@@ -170,6 +171,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Operation(summary = "웹툰 시리즈 삭제", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/series", method = RequestMethod.DELETE)
 	public ResponseModel webtoonSeriesRemove(
@@ -181,6 +183,7 @@ public class WebtoonController {
 	}
 
 	// Permit All
+	@Operation(summary = "웹툰 시리즈 기반 검색", description = "PERMIT_ALL")
 	@RequestMapping(value = "/series/{seq}", method = RequestMethod.GET)
 	public ResponseModel searchBySeries(
 		@PathVariable("seq") Long seriesSeq
@@ -191,6 +194,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Operation(summary = "웹툰 태그 추가", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/tag", method = RequestMethod.POST)
 	public ResponseModel webtoonTagAdd(
@@ -201,6 +205,7 @@ public class WebtoonController {
 		return responseModel;
 	}
 
+	@Operation(summary = "웹툰 태그 삭제", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/tag", method = RequestMethod.DELETE)
 	public ResponseModel webtoonTagRemove(
@@ -212,6 +217,7 @@ public class WebtoonController {
 	}
 
 	// Permit All
+	@Operation(summary = "웹툰 태그 기반 검색", description = "PERMIT_ALL")
 	@RequestMapping(value = "/tag/{seq}", method = RequestMethod.GET)
 	public ResponseModel searchByTag(
 		@PathVariable("seq") Long tagSeq

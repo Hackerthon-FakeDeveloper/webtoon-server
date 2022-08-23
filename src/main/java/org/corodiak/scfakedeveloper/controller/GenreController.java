@@ -2,6 +2,7 @@ package org.corodiak.scfakedeveloper.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.corodiak.scfakedeveloper.service.GenreService;
 import org.corodiak.scfakedeveloper.type.dto.GenreDto;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
@@ -22,6 +23,7 @@ public class GenreController {
 
 	private final GenreService genreService;
 
+	@Operation(summary = "장르 추가", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel genreAdd(
@@ -33,6 +35,7 @@ public class GenreController {
 	}
 
 	// Permit All
+	@Operation(summary = "장르 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel genreGet(
 		@PathVariable("seq") Long seq
@@ -44,6 +47,7 @@ public class GenreController {
 	}
 
 	// Permit All
+	@Operation(summary = "장르 목록 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel genreList() {
 		List<GenreVo> genreList = genreService.findAll();
@@ -52,6 +56,7 @@ public class GenreController {
 		return responseModel;
 	}
 
+	@Operation(summary = "장르 삭제", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel genreDelete(

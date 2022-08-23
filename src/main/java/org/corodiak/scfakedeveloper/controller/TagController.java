@@ -2,6 +2,7 @@ package org.corodiak.scfakedeveloper.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.corodiak.scfakedeveloper.service.TagService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.TagDto;
@@ -22,6 +23,7 @@ public class TagController {
 
 	private final TagService tagService;
 
+	@Operation(summary = "태그 추가", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel tagAdd(
@@ -33,6 +35,7 @@ public class TagController {
 	}
 
 	// Permit All
+	@Operation(summary = "태그 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel tagGet(
 		@PathVariable("seq") Long seq
@@ -44,6 +47,7 @@ public class TagController {
 	}
 
 	// Permit All
+	@Operation(summary = "태그 목록 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel tagList() {
 		List<TagVo> tagList = tagService.findAll();
@@ -52,6 +56,7 @@ public class TagController {
 		return responseModel;
 	}
 
+	@Operation(summary = "태그 삭제", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel tagDelete(
