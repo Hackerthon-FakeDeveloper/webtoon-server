@@ -1,6 +1,7 @@
 package org.corodiak.scfakedeveloper.config;
 
 import java.io.OutputStream;
+import java.util.List;
 
 import org.corodiak.scfakedeveloper.auth.filter.TokenAuthFilter;
 import org.corodiak.scfakedeveloper.auth.handler.OAuth2AuthenticationFailureHandler;
@@ -17,6 +18,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,6 +74,8 @@ public class SecurityConfig {
 
 		http.addFilterBefore(tokenAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
+		http.cors().configurationSource(corsConfigurationSource());
+
 		http.exceptionHandling()
 			.authenticationEntryPoint((request, response, authException) -> {
 				ResponseModel responseModel = ResponseModel.builder()
@@ -97,5 +103,20 @@ public class SecurityConfig {
 	@Bean
 	public TokenAuthFilter tokenAuthFilter() {
 		return new TokenAuthFilter(authTokenProvider);
+	}
+
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+		corsConfiguration.setAllowedOriginPatterns(List.of("*"));
+		corsConfiguration.setAllowedMethods(List.of("*"));
+		corsConfiguration.setAllowedHeaders(List.of("*"));
+		corsConfiguration.setAllowCredentials(true);
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", corsConfiguration);
+
+		return source;
 	}
 }
