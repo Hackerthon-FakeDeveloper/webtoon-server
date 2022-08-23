@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -22,6 +23,7 @@ public class StillCutController {
 
 	private final StillCutService stillCutService;
 
+	@Operation(summary = "스틸컷 추가", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel stillCutAdd(
@@ -33,6 +35,7 @@ public class StillCutController {
 	}
 
 	// Permit All
+	@Operation(summary = "스틸컷 단일 조회", description = "PERMIT_ALL 아마 쓸일 없을듯?")
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel stillCutGet(
 		@PathVariable("seq") Long seq
@@ -44,6 +47,7 @@ public class StillCutController {
 	}
 
 	// Permit All
+	@Operation(summary = "웹툰 스틸컷 불러오기", description = "PERMIT_ALL")
 	@RequestMapping(value = "/webtoonStillCut/{seq}", method = RequestMethod.GET)
 	public ResponseModel webtoonStillCutList(
 		@PathVariable("seq") Long seq
@@ -54,6 +58,7 @@ public class StillCutController {
 		return responseModel;
 	}
 
+	@Operation(summary = "스틸컷 수정", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel stillCutUpdate(
@@ -64,6 +69,7 @@ public class StillCutController {
 		return responseModel;
 	}
 
+	@Operation(summary = "스틸컷 삭제", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel stillCutDelete(

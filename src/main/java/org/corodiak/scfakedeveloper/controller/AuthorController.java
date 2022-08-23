@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -23,6 +24,7 @@ public class AuthorController {
 
 	private final AuthorService authorService;
 
+	@Operation(summary = "작가 정보 추가", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel authorAdd(
@@ -34,6 +36,7 @@ public class AuthorController {
 	}
 
 	// Permit All
+	@Operation(summary = "단일 작가 정보 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel authorGet(
 		@PathVariable("seq") Long seq
@@ -45,6 +48,7 @@ public class AuthorController {
 	}
 
 	// Permit All
+	@Operation(summary = "다수 작가 정보 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel authorList() {
 		List<AuthorVo> authorList = authorService.findAll();
@@ -53,6 +57,7 @@ public class AuthorController {
 		return responseModel;
 	}
 
+	@Operation(summary = "작가 정보 업데이트", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel authorUpdate(
@@ -63,6 +68,7 @@ public class AuthorController {
 		return responseModel;
 	}
 
+	@Operation(summary = "작가 정보 삭제", description = "ROLE_ADMIN")
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel authorDelete(
@@ -74,6 +80,7 @@ public class AuthorController {
 	}
 
 	// Permit All
+	@Operation(summary = "작가 검색", description = "PERMIT_ALL")
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ResponseModel authorSearch(
 		@RequestParam("keyword") String keyword

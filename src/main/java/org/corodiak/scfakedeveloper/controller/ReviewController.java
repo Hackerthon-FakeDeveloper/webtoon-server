@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -25,7 +26,8 @@ public class ReviewController {
 
 	private final ReviewService reviewService;
 
-	@Secured({"ROLE_USER"})
+	@Operation(summary = "리뷰 추가", description = "ROLE_USER / ROLE_ADMIN")
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel reviewAdd(
 		@RequestBody ReviewDto reviewDto
@@ -38,6 +40,7 @@ public class ReviewController {
 	}
 
 	// Permit All
+	@Operation(summary = "리뷰 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
 	public ResponseModel reviewGet(
 		@PathVariable("seq") Long seq
@@ -48,7 +51,8 @@ public class ReviewController {
 		return responseModel;
 	}
 
-	@Secured({"ROLE_USER"})
+	@Operation(summary = "내 리뷰 가져오기", description = "ROLE_USER / ROLE_ADMIN")
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/myReview", method = RequestMethod.GET)
 	public ResponseModel myReviewList(
 		@RequestParam(name = "start", required = false, defaultValue = "0") long start,
@@ -62,6 +66,7 @@ public class ReviewController {
 	}
 
 	// Permit All
+	@Operation(summary = "웹툰의 리뷰 불러오기", description = "ROLE_USER / ROLE_ADMIN")
 	@RequestMapping(value = "/webtoonReview/{seq}", method = RequestMethod.GET)
 	public ResponseModel webtoonReviewList(
 		@PathVariable("seq") Long seq,
@@ -74,6 +79,7 @@ public class ReviewController {
 		return responseModel;
 	}
 
+	@Operation(summary = "리뷰 업데이트", description = "ROLE_USER / ROLE_ADMIN")
 	@Secured({"ROLE_USER"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel reviewUpdate(
@@ -84,6 +90,7 @@ public class ReviewController {
 		return responseModel;
 	}
 
+	@Operation(summary = "리뷰 삭제", description = "ROLE_USER / ROLE_ADMIN")
 	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel reviewDelete(
@@ -94,6 +101,7 @@ public class ReviewController {
 		return responseModel;
 	}
 
+	@Operation(summary = "리뷰 좋아요", description = "ROLE_USER / ROLE_ADMIN")
 	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/like/{seq}", method = RequestMethod.POST)
 	public ResponseModel likReview(
@@ -105,6 +113,7 @@ public class ReviewController {
 		return responseModel;
 	}
 
+	@Operation(summary = "리뷰 좋아요 취소", description = "ROLE_USER / ROLE_ADMIN")
 	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/dislike/{seq}", method = RequestMethod.POST)
 	public ResponseModel dislikReview(
