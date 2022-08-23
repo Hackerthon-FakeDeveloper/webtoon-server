@@ -31,11 +31,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	@Transactional
-	public boolean addReview(ReviewDto reviewDto) throws PermissionDeniedException {
-		if (!reviewDto.getUser().equals(AuthUtil.getAuthenticationInfoSeq())) {
-			throw new PermissionDeniedException();
-		}
-
+	public boolean addReview(ReviewDto reviewDto) {
 		Review review = Review.builder()
 			.scoreFirst(reviewDto.getScoreFirst())
 			.scoreSecond(reviewDto.getScoreSecond())
@@ -80,14 +76,10 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	@Transactional
-	public boolean updateReview(ReviewDto reviewDto) throws SearchResultNotExistException, PermissionDeniedException {
+	public boolean updateReview(ReviewDto reviewDto) throws SearchResultNotExistException {
 		Optional<Review> review = reviewRepository.findById(reviewDto.getSeq());
 		if (review.isEmpty()) {
 			throw new SearchResultNotExistException();
-		}
-
-		if (!reviewDto.getUser().equals(AuthUtil.getAuthenticationInfoSeq())) {
-			throw new PermissionDeniedException();
 		}
 
 		Review result = review.get();
@@ -101,11 +93,17 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	@Transactional
-	public void removeReview(Long seq) throws PermissionDeniedException {
+	public void removeReviewAsUser(Long seq) throws PermissionDeniedException {
 		Optional<Review> review = reviewRepository.findById(seq);
 		if (!review.get().getUser().getSeq().equals(AuthUtil.getAuthenticationInfoSeq())) {
 			throw new PermissionDeniedException();
 		}
+		reviewRepository.deleteById(seq);
+	}
+
+	@Override
+	@Transactional
+	public void removeReviewAsAdmin(Long seq) {
 		reviewRepository.deleteById(seq);
 	}
 

@@ -32,6 +32,10 @@ public class ReviewController {
 	public ResponseModel reviewAdd(
 		@RequestBody ReviewDto reviewDto
 	) throws PermissionDeniedException {
+		if (!reviewDto.getUser().equals(AuthUtil.getAuthenticationInfoSeq())) {
+			throw new PermissionDeniedException();
+		}
+
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		reviewDto.setUser(userSeq);
 		reviewService.addReview(reviewDto);
@@ -66,7 +70,7 @@ public class ReviewController {
 	}
 
 	// Permit All
-	@Operation(summary = "웹툰의 리뷰 불러오기", description = "ROLE_USER / ROLE_ADMIN")
+	@Operation(summary = "웹툰의 리뷰 불러오기", description = "PERMIT_ALL")
 	@RequestMapping(value = "/webtoonReview/{seq}", method = RequestMethod.GET)
 	public ResponseModel webtoonReviewList(
 		@PathVariable("seq") Long seq,
@@ -80,29 +84,44 @@ public class ReviewController {
 	}
 
 	@Operation(summary = "리뷰 업데이트", description = "ROLE_USER / ROLE_ADMIN")
-	@Secured({"ROLE_USER"})
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel reviewUpdate(
 		@RequestBody ReviewDto reviewDto
 	) throws PermissionDeniedException {
+		if (!reviewDto.getUser().equals(AuthUtil.getAuthenticationInfoSeq())) {
+			throw new PermissionDeniedException();
+		}
+
 		reviewService.updateReview(reviewDto);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}
 
-	@Operation(summary = "리뷰 삭제", description = "ROLE_USER / ROLE_ADMIN")
+	@Operation(summary = "리뷰 삭제(일반 유저)", description = "ROLE_USER")
 	@Secured({"ROLE_USER"})
-	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
-	public ResponseModel reviewDelete(
+	@RequestMapping(value = "/user/{seq}", method = RequestMethod.DELETE)
+	public ResponseModel reviewDeleteAsUser(
 		@PathVariable("seq") Long seq
 	) throws PermissionDeniedException {
-		reviewService.removeReview(seq);
+		reviewService.removeReviewAsUser(seq);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		return responseModel;
+	}
+
+	@Operation(summary = "리뷰 삭제(관리자)", description = "ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN"})
+	@RequestMapping(value = "/admin/{seq}", method = RequestMethod.DELETE)
+	public ResponseModel reviewDeleteAsAdmin(
+			@PathVariable("seq") Long seq
+	) {
+		reviewService.removeReviewAsAdmin(seq);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}
 
 	@Operation(summary = "리뷰 좋아요", description = "ROLE_USER / ROLE_ADMIN")
-	@Secured({"ROLE_USER"})
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/like/{seq}", method = RequestMethod.POST)
 	public ResponseModel likReview(
 		@PathVariable("seq") Long reviewSeq
@@ -114,7 +133,7 @@ public class ReviewController {
 	}
 
 	@Operation(summary = "리뷰 좋아요 취소", description = "ROLE_USER / ROLE_ADMIN")
-	@Secured({"ROLE_USER"})
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/dislike/{seq}", method = RequestMethod.POST)
 	public ResponseModel dislikReview(
 		@PathVariable("seq") Long reviewSeq

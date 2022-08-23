@@ -10,7 +10,7 @@ import org.corodiak.scfakedeveloper.type.dto.ReviewDto;
 import org.corodiak.scfakedeveloper.type.vo.ReviewVo;
 
 public interface ReviewService {
-	boolean addReview(ReviewDto reviewDto) throws PermissionDeniedException;
+	boolean addReview(ReviewDto reviewDto);
 
 	ReviewVo findReview(Long seq) throws SearchResultNotExistException;
 
@@ -19,9 +19,13 @@ public interface ReviewService {
 	List<ReviewVo> findByWebtoonSeq(Long seq, Long start, Long display);
 
 	@Transactional
-	boolean updateReview(ReviewDto reviewDto) throws SearchResultNotExistException, PermissionDeniedException;
+	boolean updateReview(ReviewDto reviewDto) throws SearchResultNotExistException;
 
-	void removeReview(Long seq) throws PermissionDeniedException;
+	@Transactional
+	void removeReviewAsUser(Long seq) throws PermissionDeniedException;
+
+	@Transactional
+	void removeReviewAsAdmin(Long seq);
 
 	@Transactional
 	void likeReview(Long userSeq, Long reviewSeq);

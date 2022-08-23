@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
 import org.corodiak.scfakedeveloper.exception.NotAllowValueException;
+import org.corodiak.scfakedeveloper.exception.PermissionDeniedException;
 import org.corodiak.scfakedeveloper.service.UserService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.UserDto;
@@ -26,9 +27,24 @@ public class UserContoller {
 
 	private final UserService userService;
 
+	@Secured({"ROLE_USER"})
+	@RequestMapping(value = "/user/{seq}", method = RequestMethod.GET)
+	public ResponseModel userGetAsUser(
+			@PathVariable("seq") Long seq
+	) throws PermissionDeniedException {
+		if (!seq.equals(AuthUtil.getAuthenticationInfoSeq())) {
+			throw new PermissionDeniedException();
+		}
+
+		UserVo user = userService.findUser(seq);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("user", user);
+		return responseModel;
+	}
+
 	@Secured({"ROLE_ADMIN"})
-	@RequestMapping(value = "/{seq}", method = RequestMethod.GET)
-	public ResponseModel userGet(
+	@RequestMapping(value = "/admin/{seq}", method = RequestMethod.GET)
+	public ResponseModel userGetAsAdmin(
 		@PathVariable("seq") Long seq
 	) {
 		UserVo user = userService.findUser(seq);
@@ -49,27 +65,43 @@ public class UserContoller {
 		return responseModel;
 	}
 
-	// 해당 로직 Admin으로 핸들링 할 것
-	// @RequestMapping(method = RequestMethod.PUT)
-	// public ResponseModel userUpdate(
-	// 	@RequestBody UserDto userDto
-	// ) {
-	// 	userService.updateUser(userDto);
-	// 	ResponseModel responseModel = ResponseModel.builder().build();
-	// 	return responseModel;
-	// }
+	@Secured({"ROLE_USER"})
+	@RequestMapping(method = RequestMethod.PUT)
+	public ResponseModel userUpdate(
+			@RequestBody UserDto userDto
+	) throws NotAllowValueException {
+		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
+		userDto.setSeq(userSeq);
+		userService.updateUser(userDto);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		return responseModel;
+	}
 
 	@Secured({"ROLE_USER"})
-	@RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
-	public ResponseModel userDelete(
+	@RequestMapping(value = "/user/{seq}", method = RequestMethod.DELETE)
+	public ResponseModel userDeleteAsUser(
 		@PathVariable("seq") Long seq
+	) throws PermissionDeniedException {
+		if (!seq.equals(AuthUtil.getAuthenticationInfoSeq())) {
+			throw new PermissionDeniedException();
+		}
+
+		userService.removeUser(seq);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		return responseModel;
+	}
+
+	@Secured({"ROLE_ADMIN"})
+	@RequestMapping(value = "/admin/{seq}", method = RequestMethod.DELETE)
+	public ResponseModel userDeleteAsAdmin(
+			@PathVariable("seq") Long seq
 	) {
 		userService.removeUser(seq);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}
 
-	@Secured({"ROLE_USER"})
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/viewHistory/{webtoonSeq}", method = RequestMethod.POST)
 	public ResponseModel viewHistoryAdd(
 		@PathVariable("webtoonSeq") Long webtoonSeq
@@ -80,9 +112,9 @@ public class UserContoller {
 		return responseModel;
 	}
 
-	@Secured({"ROLE_USER"})
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/viewHistory/list", method = RequestMethod.GET)
-	public ResponseModel viewHistryList() {
+	public ResponseModel viewHistroyList() {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		List<ViewHistoryVo> viewHistoryList = userService.findViewHistory(userSeq);
 		ResponseModel responseModel = ResponseModel.builder().build();
@@ -90,7 +122,7 @@ public class UserContoller {
 		return responseModel;
 	}
 
-	@Secured({"ROLE_USER"})
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/viewHistory/{webtoonSeq}", method = RequestMethod.DELETE)
 	public ResponseModel viewHistoryRemove(
 		@PathVariable("webtoonSeq") Long webtoonSeq
@@ -107,27 +139,6 @@ public class UserContoller {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		ResponseModel responseModel = ResponseModel.builder().build();
 		responseModel.addData("check", userService.userInfoIsSet(userSeq));
-		return responseModel;
-	}
-
-	@Secured({"ROLE_USER"})
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseModel userGet() {
-		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
-		ResponseModel responseModel = ResponseModel.builder().build();
-		responseModel.addData("user", userService.findUser(userSeq));
-		return responseModel;
-	}
-
-	@Secured({"ROLE_USER"})
-	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseModel userUpdate(
-		@RequestBody UserDto userDto
-	) throws NotAllowValueException {
-		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
-		userDto.setSeq(userSeq);
-		userService.updateUser(userDto);
-		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}
 }
