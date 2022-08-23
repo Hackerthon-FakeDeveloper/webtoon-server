@@ -63,9 +63,7 @@ public class SecurityConfig {
 			.failureHandler(oAuth2AuthenticationFailureHandler())
 			.and()
 			.authorizeHttpRequests()
-			.antMatchers(PERMIT_ALL).permitAll()
-			.antMatchers("/admin").hasRole("ADMIN")
-			.antMatchers("/*").hasAnyRole("USER", "ADMIN");
+			.antMatchers(PERMIT_ALL).permitAll();
 
 		//Rest API 이기에, Stateless라 CSRF 방어 불필요
 		http.csrf().disable();
