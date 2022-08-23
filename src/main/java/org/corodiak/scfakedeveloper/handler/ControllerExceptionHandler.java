@@ -49,7 +49,8 @@ public class ControllerExceptionHandler {
 		MalformedJsonException.class,
 		HttpMessageNotReadableException.class,
 		MethodArgumentTypeMismatchException.class,
-		NotAllowValueException.class
+		NotAllowValueException.class,
+		NullPointerException.class
 	})
 	public ResponseModel parameterError(HttpServletRequest request, HttpServletResponse response, Exception e) {
 		ResponseModel responseModel = ResponseModel.builder()
