@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
 import org.corodiak.scfakedeveloper.exception.NotAllowValueException;
 import org.corodiak.scfakedeveloper.exception.PermissionDeniedException;
+import org.corodiak.scfakedeveloper.repository.UserInfoSetRepository;
 import org.corodiak.scfakedeveloper.service.UserService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.UserDto;
@@ -27,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class UserContoller {
 
 	private final UserService userService;
+	private final UserInfoSetRepository userInfoSetRepository;
 
 	@Operation(summary = "유저 정보 조회(일반 유저)", description = "ROLE_USER")
 	@Secured({"ROLE_USER"})
@@ -78,6 +80,7 @@ public class UserContoller {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		userDto.setSeq(userSeq);
 		userService.updateUser(userDto);
+		userInfoSetRepository.deleteById(userSeq);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}
