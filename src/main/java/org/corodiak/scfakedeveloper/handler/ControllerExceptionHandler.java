@@ -13,6 +13,7 @@ import org.corodiak.scfakedeveloper.exception.NotAllowValueException;
 import org.corodiak.scfakedeveloper.exception.PermissionDeniedException;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
@@ -50,7 +51,8 @@ public class ControllerExceptionHandler {
 		HttpMessageNotReadableException.class,
 		MethodArgumentTypeMismatchException.class,
 		NotAllowValueException.class,
-		NullPointerException.class
+		NullPointerException.class,
+		DataIntegrityViolationException.class
 	})
 	public ResponseModel parameterError(HttpServletRequest request, HttpServletResponse response, Exception e) {
 		ResponseModel responseModel = ResponseModel.builder()
