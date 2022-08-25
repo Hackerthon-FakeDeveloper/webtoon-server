@@ -15,7 +15,10 @@ public interface SeriesService {
 	@Transactional
 	SeriesVo findSeries(Long seq) throws SearchResultNotExistException;
 
-	@Transactional
+    @Transactional
+    SeriesVo findByWebtoonSeq(Long seq);
+
+    @Transactional
 	List<SeriesVo> findAll();
 
 	@Transactional
