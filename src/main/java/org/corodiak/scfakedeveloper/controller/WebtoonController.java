@@ -252,4 +252,30 @@ public class WebtoonController {
 		responseModel.addData("webtoonList", webtoonList);
 		return responseModel;
 	}
+
+	// Permit All
+	@Operation(summary = "인기 웹툰 조회", description = "PERMIT_ALL")
+	@RequestMapping(value = "/popular/all", method = RequestMethod.GET)
+	public ResponseModel popularWebtoon(
+			@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+			@RequestParam(name = "display", required = false, defaultValue = "20") long display
+	) {
+		List<WebtoonVo> webtoonList = webtoonService.findPopularWebtoon(start, display);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("webtoonList", webtoonList);
+		return responseModel;
+	}
+
+	// Permit All
+	@Operation(summary = "인기 웹툰 조회", description = "PERMIT_ALL")
+	@RequestMapping(value = "/popular/recent", method = RequestMethod.GET)
+	public ResponseModel recentPopularWebtoon(
+			@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+			@RequestParam(name = "display", required = false, defaultValue = "20") long display
+	) {
+		List<WebtoonVo> webtoonList = webtoonService.findRecentPopularWebtoon(start, display);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("webtoonList", webtoonList);
+		return responseModel;
+	}
 }

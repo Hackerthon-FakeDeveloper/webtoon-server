@@ -234,11 +234,32 @@ public class WebtoonServiceImpl implements WebtoonService {
 	}
 
 	@Override
+	@Transactional
 	public List<WebtoonVo> findNewWebtoon(Long start, Long display) {
 		List<Webtoon> webtoonList = webtoonRepository.findNewWebtoon(start, display);
 		List<WebtoonVo> results = webtoonList.stream()
 			.map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
 			.collect(Collectors.toList());
+		return results;
+	}
+
+	@Override
+	@Transactional
+	public List<WebtoonVo> findPopularWebtoon(Long start, Long display) {
+		List<Webtoon> webtoonList = webtoonRepository.findPopularWebtoon(start, display);
+		List<WebtoonVo> results = webtoonList.stream()
+				.map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
+				.collect(Collectors.toList());
+		return results;
+	}
+
+	@Override
+	@Transactional
+	public List<WebtoonVo> findRecentPopularWebtoon(Long start, Long display) {
+		List<Webtoon> webtoonList = webtoonRepository.findRecentPopularWebtoon(start, display);
+		List<WebtoonVo> results = webtoonList.stream()
+				.map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
+				.collect(Collectors.toList());
 		return results;
 	}
 }
