@@ -236,7 +236,7 @@ public class WebtoonController {
 	) {
 		List<WebtoonVo> webtoonList = webtoonService.findNewWebtoon(start, display);
 		ResponseModel responseModel = ResponseModel.builder().build();
-		responseModel.addData("new", webtoonList);
+		responseModel.addData("webtoonList", webtoonList);
 		return responseModel;
 	}
 }
