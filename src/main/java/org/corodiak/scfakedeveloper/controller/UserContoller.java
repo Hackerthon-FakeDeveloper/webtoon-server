@@ -12,6 +12,7 @@ import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.UserDto;
 import org.corodiak.scfakedeveloper.type.vo.UserVo;
 import org.corodiak.scfakedeveloper.type.vo.ViewHistoryVo;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
+@Slf4j
 public class UserContoller {
 
 	private final UserService userService;
@@ -74,7 +77,11 @@ public class UserContoller {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		userDto.setSeq(userSeq);
 		userService.updateUser(userDto);
-		userInfoSetRepository.deleteById(userSeq);
+		try {
+			userInfoSetRepository.deleteById(userSeq);
+		} catch (EmptyResultDataAccessException ignore) {
+			log.debug("Already Modified User.");
+		}
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}
