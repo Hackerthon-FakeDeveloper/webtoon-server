@@ -229,7 +229,7 @@ public class WebtoonController {
 	}
 
 	@Operation(summary = "최신 웹툰 조회", description = "PERMIT_ALL")
-	@RequestMapping(value = "/new")
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ResponseModel newWebtoon(
 		@RequestParam(name = "start", required = false, defaultValue = "0") long start,
 		@RequestParam(name = "display", required = false, defaultValue = "20") long display
