@@ -8,8 +8,10 @@ import javax.transaction.Transactional;
 
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.repository.SeriesRepository;
+import org.corodiak.scfakedeveloper.repository.WebtoonSeriesRepository;
 import org.corodiak.scfakedeveloper.type.dto.SeriesDto;
 import org.corodiak.scfakedeveloper.type.entity.Series;
+import org.corodiak.scfakedeveloper.type.entity.WebtoonSeries;
 import org.corodiak.scfakedeveloper.type.vo.SeriesVo;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class SeriesServiceImpl implements SeriesService {
 
 	private final SeriesRepository seriesRepository;
+	private final WebtoonSeriesRepository webtoonSeriesRepository;
 
 	@Override
 	@Transactional
@@ -38,6 +41,16 @@ public class SeriesServiceImpl implements SeriesService {
 		Optional<Series> series = seriesRepository.findById(seq);
 		if (series.isPresent()) {
 			return new SeriesVo(series.get());
+		}
+		throw new SearchResultNotExistException();
+	}
+
+	@Override
+	@Transactional
+	public SeriesVo findByWebtoonSeq(Long seq) {
+		Optional<WebtoonSeries> webtoonSeries = webtoonSeriesRepository.findByWebtoonSeq(seq);
+		if (webtoonSeries.isPresent()) {
+			return new SeriesVo(webtoonSeries.get().getSeries());
 		}
 		throw new SearchResultNotExistException();
 	}

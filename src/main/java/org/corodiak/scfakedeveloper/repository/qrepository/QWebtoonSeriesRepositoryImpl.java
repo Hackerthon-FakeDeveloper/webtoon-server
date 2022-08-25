@@ -1,11 +1,9 @@
 package org.corodiak.scfakedeveloper.repository.qrepository;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.corodiak.scfakedeveloper.type.entity.QSeries;
-import org.corodiak.scfakedeveloper.type.entity.QWebtoon;
-import org.corodiak.scfakedeveloper.type.entity.QWebtoonSeries;
-import org.corodiak.scfakedeveloper.type.entity.WebtoonSeries;
+import org.corodiak.scfakedeveloper.type.entity.*;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -28,5 +26,16 @@ public class QWebtoonSeriesRepositoryImpl implements QWebtoonSeriesRepository {
 			.fetchJoin()
 			.fetch();
 		return results;
+	}
+
+	@Override
+	public Optional<WebtoonSeries> findByWebtoonSeq(Long seq) {
+		WebtoonSeries results = queryFactory.selectFrom(qWebtoonSeries)
+				.where(qWebtoonSeries.webtoon.seq.eq(seq))
+				.innerJoin(qWebtoonSeries.series, qSeries)
+				.innerJoin(qWebtoonSeries.webtoon, qWebtoon)
+				.fetchJoin()
+				.fetchOne();
+		return Optional.ofNullable(results);
 	}
 }

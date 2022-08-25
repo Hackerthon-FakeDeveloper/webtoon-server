@@ -48,6 +48,18 @@ public class SeriesController {
 	}
 
 	// Permit All
+	@Operation(summary = "웹툰 기반 시리즈 조회", description = "PERMIT_ALL")
+	@RequestMapping(value = "/webtoon/{webtoonSeq}", method = RequestMethod.GET)
+	public ResponseModel getByWebtoon(
+			@PathVariable("webtoonSeq") Long webtoonSeq
+	) {
+		SeriesVo series = seriesService.findByWebtoonSeq(webtoonSeq);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("series", series);
+		return responseModel;
+	}
+
+	// Permit All
 	@Operation(summary = "시리즈 목록 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseModel seriesList() {
