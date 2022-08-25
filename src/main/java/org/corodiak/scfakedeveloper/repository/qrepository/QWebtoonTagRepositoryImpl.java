@@ -43,4 +43,15 @@ public class QWebtoonTagRepositoryImpl implements QWebtoonTagRepository {
 				.fetch();
 		return results;
 	}
+
+	@Override
+	public List<WebtoonTag> findByWebtoon(Long seq) {
+		List<WebtoonTag> results = queryFactory.selectFrom(qWebtoonTag)
+				.where(qWebtoonTag.webtoon.seq.eq(seq))
+				.innerJoin(qWebtoonTag.webtoon, qWebtoon)
+				.innerJoin(qWebtoonTag.tag, qTag)
+				.fetchJoin()
+				.fetch();
+		return results;
+	}
 }
