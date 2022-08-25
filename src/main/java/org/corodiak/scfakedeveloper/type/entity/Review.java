@@ -34,7 +34,7 @@ public class Review extends BaseTimeEntity {
 	@JoinColumn(name = "user_seq")
 	private User user;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "webtoon_seq")
 	private Webtoon webtoon;
 
