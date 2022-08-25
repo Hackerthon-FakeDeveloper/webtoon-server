@@ -220,9 +220,11 @@ public class WebtoonController {
 	@Operation(summary = "웹툰 태그 기반 검색(시퀀스)", description = "PERMIT_ALL")
 	@RequestMapping(value = "/tag/seq/{seq}", method = RequestMethod.GET)
 	public ResponseModel searchByTagSeq(
+			@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+			@RequestParam(name = "display", required = false, defaultValue = "20") long display,
 		@PathVariable("seq") Long tagSeq
 	) {
-		List<WebtoonVo> webtoonList = webtoonService.findByTagSeq(tagSeq);
+		List<WebtoonVo> webtoonList = webtoonService.findByTagSeq(tagSeq, start, display);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		responseModel.addData("webtoonList", webtoonList);
 		return responseModel;
@@ -232,9 +234,11 @@ public class WebtoonController {
 	@Operation(summary = "웹툰 태그 기반 검색(문자열)", description = "PERMIT_ALL")
 	@RequestMapping(value = "/tag/string/{tag}", method = RequestMethod.GET)
 	public ResponseModel searchByTagString(
+			@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+			@RequestParam(name = "display", required = false, defaultValue = "20") long display,
 			@PathVariable("tag") String tag
 	) {
-		List<WebtoonVo> webtoonList = webtoonService.findByTagString(tag);
+		List<WebtoonVo> webtoonList = webtoonService.findByTagString(tag, start, display);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		responseModel.addData("webtoonList", webtoonList);
 		return responseModel;

@@ -20,23 +20,25 @@ public class QWebtoonTagRepositoryImpl implements QWebtoonTagRepository {
 	private QTag qTag = QTag.tag;
 
 	@Override
-	public List<WebtoonTag> findByTagSeq(Long seq) {
+	public List<WebtoonTag> findByTagSeq(Long seq, Long start, Long display) {
 		List<WebtoonTag> results = queryFactory.selectFrom(qWebtoonTag)
 			.where(qWebtoonTag.tag.seq.eq(seq))
 			.innerJoin(qWebtoonTag.webtoon, qWebtoon)
 			.innerJoin(qWebtoonTag.tag, qTag)
 			.fetchJoin()
+				.offset(start).limit(display)
 			.fetch();
 		return results;
 	}
 
 	@Override
-	public List<WebtoonTag> findByTagString(String tag) {
+	public List<WebtoonTag> findByTagString(String tag, Long start, Long display) {
 		List<WebtoonTag> results = queryFactory.selectFrom(qWebtoonTag)
 				.where(qWebtoonTag.tag.name.contains(tag))
 				.innerJoin(qWebtoonTag.webtoon, qWebtoon)
 				.innerJoin(qWebtoonTag.tag, qTag)
 				.fetchJoin()
+				.offset(start).limit(display)
 				.fetch();
 		return results;
 	}
