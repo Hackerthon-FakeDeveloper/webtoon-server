@@ -58,7 +58,10 @@ public interface WebtoonService {
 	void removeWebtoonTag(Long webtoonSeq, Long tagSeq);
 
 	@Transactional
-	List<WebtoonVo> findByTag(Long tagSeq);
+	List<WebtoonVo> findByTagSeq(Long tagSeq);
+
+	@Transactional
+	List<WebtoonVo> findByTagString(String tag);
 
 	@Transactional
 	List<WebtoonVo> findNewWebtoon(Long start, Long display);

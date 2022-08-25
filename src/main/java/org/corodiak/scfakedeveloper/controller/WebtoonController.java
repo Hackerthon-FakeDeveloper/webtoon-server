@@ -217,17 +217,30 @@ public class WebtoonController {
 	}
 
 	// Permit All
-	@Operation(summary = "웹툰 태그 기반 검색", description = "PERMIT_ALL")
-	@RequestMapping(value = "/tag/{seq}", method = RequestMethod.GET)
-	public ResponseModel searchByTag(
+	@Operation(summary = "웹툰 태그 기반 검색(시퀀스)", description = "PERMIT_ALL")
+	@RequestMapping(value = "/tag/seq/{seq}", method = RequestMethod.GET)
+	public ResponseModel searchByTagSeq(
 		@PathVariable("seq") Long tagSeq
 	) {
-		List<WebtoonVo> webtoonList = webtoonService.findByTag(tagSeq);
+		List<WebtoonVo> webtoonList = webtoonService.findByTagSeq(tagSeq);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		responseModel.addData("webtoonList", webtoonList);
 		return responseModel;
 	}
 
+	// Permit All
+	@Operation(summary = "웹툰 태그 기반 검색(문자열)", description = "PERMIT_ALL")
+	@RequestMapping(value = "/tag/string/{tag}", method = RequestMethod.GET)
+	public ResponseModel searchByTagString(
+			@PathVariable("tag") String tag
+	) {
+		List<WebtoonVo> webtoonList = webtoonService.findByTagString(tag);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("webtoonList", webtoonList);
+		return responseModel;
+	}
+
+	// Permit All
 	@Operation(summary = "최신 웹툰 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ResponseModel newWebtoon(

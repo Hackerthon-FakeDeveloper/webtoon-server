@@ -215,11 +215,21 @@ public class WebtoonServiceImpl implements WebtoonService {
 
 	@Override
 	@Transactional
-	public List<WebtoonVo> findByTag(Long tagSeq) {
+	public List<WebtoonVo> findByTagSeq(Long tagSeq) {
 		List<WebtoonTag> webtoonTagList = webtoonTagRepository.findByTagSeq(tagSeq);
 		List<WebtoonVo> results = webtoonTagList.stream()
 			.map(e -> new WebtoonVo(e.getWebtoon()))
 			.collect(Collectors.toList());
+		return results;
+	}
+
+	@Override
+	@Transactional
+	public List<WebtoonVo> findByTagString(String tag) {
+		List<WebtoonTag> webtoonTagList = webtoonTagRepository.findByTagString(tag);
+		List<WebtoonVo> results = webtoonTagList.stream()
+				.map(e -> new WebtoonVo(e.getWebtoon()))
+				.collect(Collectors.toList());
 		return results;
 	}
 
