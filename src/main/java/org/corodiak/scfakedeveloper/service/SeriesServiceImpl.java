@@ -47,7 +47,7 @@ public class SeriesServiceImpl implements SeriesService {
 
 	@Override
 	@Transactional
-	public SeriesVo findByWebtoonSeq(Long seq) {
+	public SeriesVo findByWebtoonSeq(Long seq) throws SearchResultNotExistException {
 		Optional<WebtoonSeries> webtoonSeries = webtoonSeriesRepository.findByWebtoonSeq(seq);
 		if (webtoonSeries.isPresent()) {
 			return new SeriesVo(webtoonSeries.get().getSeries());
