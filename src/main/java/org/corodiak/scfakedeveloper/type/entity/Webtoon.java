@@ -37,6 +37,10 @@ public class Webtoon extends BaseTimeEntity {
 	private String description;
 	private LocalDate startDate;
 	private SerialStatus serialStatus;
+	private double scoreFirstAverage;
+	private double scoreSecondAverage;
+	private double scoreThirdAverage;
+	private double scoreTotalAverage;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "author_seq")
@@ -44,7 +48,8 @@ public class Webtoon extends BaseTimeEntity {
 
 	@Builder
 	public Webtoon(Long seq, String title, String platform, boolean isAdult, String thumbnail,
-		String url, String description, LocalDate startDate, SerialStatus serialStatus, Author author) {
+		String url, String description, LocalDate startDate, SerialStatus serialStatus, double scoreFirstAverage,
+		double scoreSecondAverage, double scoreThirdAverage, double scoreTotalAverage, Author author) {
 		this.seq = seq;
 		this.title = title;
 		this.platform = platform;
@@ -54,6 +59,10 @@ public class Webtoon extends BaseTimeEntity {
 		this.description = description;
 		this.startDate = startDate;
 		this.serialStatus = serialStatus;
+		this.scoreFirstAverage = scoreFirstAverage;
+		this.scoreSecondAverage = scoreSecondAverage;
+		this.scoreThirdAverage = scoreThirdAverage;
+		this.scoreTotalAverage = scoreTotalAverage;
 		this.author = author;
 	}
 }

@@ -20,6 +20,10 @@ public class WebtoonVo {
 	private String url;
 	private String description;
 	private SerialStatus serialStatus;
+	private double scoreFirstAverage;
+	private double scoreSecondAverage;
+	private double scoreThirdAverage;
+	private double scoreTotalAverage;
 	private LocalDate startDate;
 
 	public WebtoonVo(Webtoon entity) {
@@ -31,6 +35,10 @@ public class WebtoonVo {
 		this.url = entity.getUrl();
 		this.description = entity.getDescription();
 		this.serialStatus = entity.getSerialStatus();
+		this.scoreFirstAverage = entity.getScoreFirstAverage();
+		this.scoreSecondAverage = entity.getScoreSecondAverage();
+		this.scoreThirdAverage = entity.getScoreThirdAverage();
+		this.scoreTotalAverage = entity.getScoreTotalAverage();
 		this.startDate = entity.getStartDate();
 	}
 
