@@ -1,5 +1,6 @@
 package org.corodiak.scfakedeveloper.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -228,8 +229,8 @@ public class WebtoonServiceImpl implements WebtoonService {
 	public List<WebtoonVo> findByTagString(String tag, Long start, Long display) {
 		List<WebtoonTag> webtoonTagList = webtoonTagRepository.findByTagString(tag, start, display);
 		List<WebtoonVo> results = webtoonTagList.stream()
-				.map(e -> new WebtoonVo(e.getWebtoon()))
-				.collect(Collectors.toList());
+			.map(e -> new WebtoonVo(e.getWebtoon()))
+			.collect(Collectors.toList());
 		return results;
 	}
 
@@ -248,8 +249,8 @@ public class WebtoonServiceImpl implements WebtoonService {
 	public List<WebtoonVo> findPopularWebtoon(Long start, Long display) {
 		List<Webtoon> webtoonList = webtoonRepository.findPopularWebtoon(start, display);
 		List<WebtoonVo> results = webtoonList.stream()
-				.map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
-				.collect(Collectors.toList());
+			.map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
+			.collect(Collectors.toList());
 		return results;
 	}
 
@@ -258,8 +259,30 @@ public class WebtoonServiceImpl implements WebtoonService {
 	public List<WebtoonVo> findRecentPopularWebtoon(Long start, Long display) {
 		List<Webtoon> webtoonList = webtoonRepository.findRecentPopularWebtoon(start, display);
 		List<WebtoonVo> results = webtoonList.stream()
-				.map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
-				.collect(Collectors.toList());
+			.map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
+			.collect(Collectors.toList());
 		return results;
+	}
+
+	@Override
+	@Transactional
+	public List<WebtoonVo> findRelatedWebtoon(Long webtoonSeq) {
+		List<Webtoon> result;
+		Optional<WebtoonSeries> seriesSeq = webtoonSeriesRepository.findByWebtoonSeq(webtoonSeq);
+		if (seriesSeq.isPresent()) {
+			List<WebtoonSeries> series = webtoonSeriesRepository.findBySeriesSeq(seriesSeq.get().getSeries().getSeq());
+			result = series.stream().map(e -> e.getWebtoon()).filter(webtoon -> webtoon.getSeq() != webtoonSeq).collect(
+				Collectors.toList());
+		} else {
+			// List<WebtoonTag> tags = webtoonTagRepository.findByWebtoon(webtoonSeq);
+			// List<Long> tagSeqList = tags.stream().map(e -> e.getTag().getSeq()).collect(Collectors.toList());
+			// result = webtoonRepository.findRelatedTagWebtoon(tagSeqList);
+			result = new ArrayList<>();
+		}
+		return result.stream()
+			.filter(webtoon -> webtoon.getSeq() != webtoonSeq)
+			.map(e -> new WebtoonVo.WebtoonVoWithAuthor(e))
+			.collect(
+				Collectors.toList());
 	}
 }

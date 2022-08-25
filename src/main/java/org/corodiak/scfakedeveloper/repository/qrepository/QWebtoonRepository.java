@@ -21,4 +21,6 @@ public interface QWebtoonRepository {
 	List<Webtoon> findPopularWebtoon(Long start, Long display);
 
 	List<Webtoon> findRecentPopularWebtoon(Long start, Long display);
+
+	List<Webtoon> findRelatedTagWebtoon(List<Long> tagSeqList);
 }

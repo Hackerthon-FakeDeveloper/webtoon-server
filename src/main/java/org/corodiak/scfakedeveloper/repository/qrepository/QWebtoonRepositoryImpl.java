@@ -5,12 +5,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.corodiak.scfakedeveloper.type.entity.QAuthor;
+import org.corodiak.scfakedeveloper.type.entity.QTag;
 import org.corodiak.scfakedeveloper.type.entity.QWebtoon;
 import org.corodiak.scfakedeveloper.type.entity.QWebtoonLike;
+import org.corodiak.scfakedeveloper.type.entity.QWebtoonTag;
 import org.corodiak.scfakedeveloper.type.entity.Webtoon;
 import org.corodiak.scfakedeveloper.type.entity.WebtoonLike;
 
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +28,8 @@ public class QWebtoonRepositoryImpl implements QWebtoonRepository {
 	private QWebtoon qWebtoon = QWebtoon.webtoon;
 	private QAuthor qAuthor = QAuthor.author;
 	private QWebtoonLike qWebtoonLike = QWebtoonLike.webtoonLike;
+	private QWebtoonTag qWebtoonTag = QWebtoonTag.webtoonTag;
+	private QTag qTag = QTag.tag;
 
 	@Override
 	public Optional<Webtoon> findBySeq(Long seq) {
@@ -113,4 +121,16 @@ public class QWebtoonRepositoryImpl implements QWebtoonRepository {
 		return result;
 	}
 
+	@Override
+	public List<Webtoon> findRelatedTagWebtoon(List<Long> tagSeqList) {
+		List<Webtoon> results = queryFactory.selectFrom(qWebtoon).from(qWebtoonTag)
+			.innerJoin(qWebtoon, qWebtoonTag.webtoon)
+			.innerJoin(qTag, qWebtoonTag.tag)
+			.fetchJoin()
+			.where(qWebtoonTag.tag.seq.in(tagSeqList))
+			.orderBy(NumberExpression.random().asc())
+			.limit(7)
+			.fetch();
+		return results;
+	}
 }

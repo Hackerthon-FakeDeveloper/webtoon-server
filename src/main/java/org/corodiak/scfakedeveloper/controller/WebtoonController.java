@@ -282,4 +282,14 @@ public class WebtoonController {
 		responseModel.addData("webtoonList", webtoonList);
 		return responseModel;
 	}
+
+	@RequestMapping(value = "/relate/{seq}", method = RequestMethod.GET)
+	public ResponseModel relatedWebtoon(
+		@PathVariable("seq") Long webtoonSeq
+	) {
+		List<WebtoonVo> results = webtoonService.findRelatedWebtoon(webtoonSeq);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("webtoonList", results);
+		return responseModel;
+	}
 }
