@@ -87,7 +87,7 @@ public class UserContoller {
 	}
 
 	@Operation(summary = "유저 삭제(일반 유저)", description = "ROLE_USER")
-	@Secured({"ROLE_USER"})
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/user/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel userDeleteAsUser(
 		@PathVariable("seq") Long seq
