@@ -83,6 +83,16 @@ public class ReviewController {
 		return responseModel;
 	}
 
+	// Permit All
+	@Operation(summary = "전체 리뷰 개수 가져오기", description = "PERMIT_ALL")
+	@RequestMapping(value = "/count", method = RequestMethod.GET)
+	public ResponseModel reviewCount() {
+		Long count = reviewService.getReviewCount();
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("count", count);
+		return responseModel;
+	}
+
 	@Operation(summary = "리뷰 업데이트", description = "ROLE_USER / ROLE_ADMIN")
 	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.PUT)

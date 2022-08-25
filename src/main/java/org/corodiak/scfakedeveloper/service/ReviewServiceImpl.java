@@ -76,6 +76,13 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	@Transactional
+	public Long getReviewCount() {
+		Long count = reviewRepository.countAll();
+		return count;
+	}
+
+	@Override
+	@Transactional
 	public boolean updateReview(ReviewDto reviewDto) throws SearchResultNotExistException {
 		Optional<Review> review = reviewRepository.findById(reviewDto.getSeq());
 		if (review.isEmpty()) {

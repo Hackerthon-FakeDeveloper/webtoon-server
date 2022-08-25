@@ -56,4 +56,13 @@ public class QReviewRepositoryImpl implements QReviewRepository {
 			.fetch();
 		return results;
 	}
+
+	@Override
+	public Long countAll() {
+		Long result = queryFactory
+				.select(qReview.seq.count())
+				.from(qReview)
+				.fetchOne();
+		return result;
+	}
 }

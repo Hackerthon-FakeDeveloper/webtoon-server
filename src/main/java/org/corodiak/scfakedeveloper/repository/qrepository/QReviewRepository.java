@@ -11,4 +11,6 @@ public interface QReviewRepository {
 	List<Review> findByUserSeq(Long seq, Long start, Long display);
 
 	List<Review> findByWebtoonSeq(Long seq, Long start, Long display);
+
+    Long countAll();
 }
