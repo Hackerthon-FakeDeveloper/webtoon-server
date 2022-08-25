@@ -227,4 +227,16 @@ public class WebtoonController {
 		responseModel.addData("webtoonList", webtoonList);
 		return responseModel;
 	}
+
+	@Operation(summary = "최신 웹툰 조회", description = "PERMIT_ALL")
+	@RequestMapping(value = "/new")
+	public ResponseModel newWebtoon(
+		@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+		@RequestParam(name = "display", required = false, defaultValue = "20") long display
+	) {
+		List<WebtoonVo> webtoonList = webtoonService.findNewWebtoon(start, display);
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("new", webtoonList);
+		return responseModel;
+	}
 }

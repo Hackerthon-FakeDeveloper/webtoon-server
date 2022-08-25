@@ -72,4 +72,15 @@ public class QWebtoonRepositoryImpl implements QWebtoonRepository {
 			.fetch();
 		return results;
 	}
+
+	@Override
+	public List<Webtoon> findNewWebtoon(Long start, Long display) {
+		List<Webtoon> results = queryFactory.selectFrom(qWebtoon)
+			.orderBy(qWebtoon.startDate.desc())
+			.offset(start)
+			.limit(display)
+			.fetch();
+		return results;
+	}
+
 }

@@ -59,4 +59,7 @@ public interface WebtoonService {
 
 	@Transactional
 	List<WebtoonVo> findByTag(Long tagSeq);
+
+	@Transactional
+	List<WebtoonVo> findNewWebtoon(Long start, Long display);
 }

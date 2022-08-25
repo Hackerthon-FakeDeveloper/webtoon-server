@@ -15,4 +15,6 @@ public interface QWebtoonRepository {
 	List<Webtoon> findAll(Long start, Long display);
 
 	List<Webtoon> search(String keyword, Long start, Long display);
+
+	List<Webtoon> findNewWebtoon(Long start, Long display);
 }
