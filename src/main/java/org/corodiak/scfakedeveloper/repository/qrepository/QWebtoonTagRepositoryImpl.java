@@ -33,7 +33,8 @@ public class QWebtoonTagRepositoryImpl implements QWebtoonTagRepository {
 
 	@Override
 	public List<WebtoonTag> findByTagString(String tag, Long start, Long display) {
-		List<WebtoonTag> results = queryFactory.selectFrom(qWebtoonTag)
+		List<WebtoonTag> results = queryFactory.selectDistinct(qWebtoonTag)
+				.from(qWebtoonTag)
 				.where(qWebtoonTag.tag.name.contains(tag))
 				.innerJoin(qWebtoonTag.webtoon, qWebtoon)
 				.innerJoin(qWebtoonTag.tag, qTag)
