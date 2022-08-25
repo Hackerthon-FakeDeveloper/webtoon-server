@@ -30,17 +30,11 @@ public class UserContoller {
 	private final UserService userService;
 	private final UserInfoSetRepository userInfoSetRepository;
 
-	@Operation(summary = "유저 정보 조회(일반 유저)", description = "ROLE_USER")
-	@Secured({"ROLE_USER"})
-	@RequestMapping(value = "/user/{seq}", method = RequestMethod.GET)
-	public ResponseModel userGetAsUser(
-			@PathVariable("seq") Long seq
-	) throws PermissionDeniedException {
-		if (!seq.equals(AuthUtil.getAuthenticationInfoSeq())) {
-			throw new PermissionDeniedException();
-		}
-
-		UserVo user = userService.findUser(seq);
+	@Operation(summary = "본인 유저 정보 조회", description = "ROLE_USER / ROLE_ADMIN")
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
+	@RequestMapping(value = "/myInfo", method = RequestMethod.GET)
+	public ResponseModel myInfo() {
+		UserVo user = userService.findUser(AuthUtil.getAuthenticationInfoSeq());
 		ResponseModel responseModel = ResponseModel.builder().build();
 		responseModel.addData("user", user);
 		return responseModel;
