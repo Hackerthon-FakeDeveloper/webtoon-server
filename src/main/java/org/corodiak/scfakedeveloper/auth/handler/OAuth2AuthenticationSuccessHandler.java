@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-	private static final long TOKEN_DURATION = 1000L * 60L * 60L * 24L * 365L;
+	private static final long TOKEN_DURATION = 1000L * 60L * 60L * 24L;
 
 	private final AuthTokenProvider authTokenProvider;
 
