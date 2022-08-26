@@ -64,3 +64,8 @@ resource:
     allow-extension: bmp,jpg,jpeg,png,gif
     url: /resources/files
     # path: [VM Arguments OR Environment Variable] : Actual storage path for uploaded files
+
+bot:
+  BOT_TOKEN: ENC(p5GwF9EU3aVU1Ms98Df5Lsfg3MUHjz1JrF/4lVHM0MFnD88W5w+FMljzJHfrWTKMODMy7sLwIdaqf3P+/Qjslg==)
+  BOT_USERNAME: ENC(mLmTMljs06jJ0ymRNSz/jnwI50uFGarebOS/ER9dEiY=)
+  CHAT_ID: ENC(/XIf4f+7H+YmBPVVFg7ntkplF0T7QDdQWRVKZYC0nc4=)
