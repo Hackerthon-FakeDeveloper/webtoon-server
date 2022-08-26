@@ -1,5 +1,6 @@
 package org.corodiak.scfakedeveloper.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
@@ -31,11 +32,7 @@ public class ReviewController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseModel reviewAdd(
 		@RequestBody ReviewDto reviewDto
-	) throws PermissionDeniedException {
-		if (!reviewDto.getUser().equals(AuthUtil.getAuthenticationInfoSeq())) {
-			throw new PermissionDeniedException();
-		}
-
+	) {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		reviewDto.setUser(userSeq);
 		reviewService.addReview(reviewDto);
@@ -151,6 +148,15 @@ public class ReviewController {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		reviewService.dislikeReview(userSeq, reviewSeq);
 		ResponseModel responseModel = ResponseModel.builder().build();
+		return responseModel;
+	}
+
+	@RequestMapping(value = "/detailscore/{webtoonSeq}")
+	public ResponseModel detailReviewScore(
+		@PathVariable("webtoonSeq") Long webtoonSeq
+	) throws IOException {
+		ResponseModel responseModel = ResponseModel.builder().build();
+		responseModel.addData("detailReviewScore", reviewService.getDetailReview(webtoonSeq).getDetailReview());
 		return responseModel;
 	}
 }

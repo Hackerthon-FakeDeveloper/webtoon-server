@@ -1,5 +1,10 @@
 package org.corodiak.scfakedeveloper.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,8 +22,13 @@ import org.corodiak.scfakedeveloper.type.entity.ReviewLike;
 import org.corodiak.scfakedeveloper.type.entity.User;
 import org.corodiak.scfakedeveloper.type.entity.Webtoon;
 import org.corodiak.scfakedeveloper.type.entity.id.ReviewLikeId;
+import org.corodiak.scfakedeveloper.type.vo.DetailReviewScoreVo;
 import org.corodiak.scfakedeveloper.type.vo.ReviewVo;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +38,8 @@ public class ReviewServiceImpl implements ReviewService {
 
 	private final ReviewRepository reviewRepository;
 	private final ReviewLikeRepository reviewLikeRepository;
+	private final static String[] paths = {"10_review.json", "20_review.json", "30_review.json", "m_review.json",
+		"f_review.json"};
 
 	@Override
 	@Transactional
@@ -132,5 +144,30 @@ public class ReviewServiceImpl implements ReviewService {
 			.user(userSeq)
 			.build();
 		reviewLikeRepository.deleteById(reviewLikeId);
+	}
+
+	@Override
+	public DetailReviewScoreVo getDetailReview(Long webtoonSeq) throws IOException {
+		DetailReviewScoreVo reviewScoreVo = new DetailReviewScoreVo();
+		for (String path : paths) {
+			InputStream inputStream = new ClassPathResource("static/" + path).getInputStream();
+			String data = new BufferedReader(new InputStreamReader(inputStream)).lines()
+				.collect(Collectors.joining("\n"));
+			inputStream.close();
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(data);
+			double score = 0.0;
+			try {
+				Double.parseDouble(element.getAsJsonObject()
+					.get(Long.toString(webtoonSeq))
+					.getAsJsonObject()
+					.get("score_mean")
+					.getAsString());
+			} catch (NullPointerException ignored) {
+				score = 0.0;
+			}
+			reviewScoreVo.addData(path.split("\\.")[0], score);
+		}
+		return reviewScoreVo;
 	}
 }

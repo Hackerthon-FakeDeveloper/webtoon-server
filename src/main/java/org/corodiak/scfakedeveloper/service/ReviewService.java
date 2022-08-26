@@ -1,5 +1,6 @@
 package org.corodiak.scfakedeveloper.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,6 +8,7 @@ import javax.transaction.Transactional;
 import org.corodiak.scfakedeveloper.exception.PermissionDeniedException;
 import org.corodiak.scfakedeveloper.exception.SearchResultNotExistException;
 import org.corodiak.scfakedeveloper.type.dto.ReviewDto;
+import org.corodiak.scfakedeveloper.type.vo.DetailReviewScoreVo;
 import org.corodiak.scfakedeveloper.type.vo.ReviewVo;
 
 public interface ReviewService {
@@ -35,4 +37,6 @@ public interface ReviewService {
 
 	@Transactional
 	void dislikeReview(Long userSeq, Long reviewSeq);
+
+	DetailReviewScoreVo getDetailReview(Long webtoonSeq) throws IOException;
 }
