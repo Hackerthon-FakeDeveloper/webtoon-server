@@ -55,7 +55,7 @@ public class FileUploadController {
 		String message = "\n==================ALERT=================\n"
 			+ "============EXECUTED CAPTURE============\n"
 			+ "[User Seq] : " + AuthUtil.getAuthenticationInfoSeq()
-			+ "[Upoad Time] : " + dateTime;
+			+ "[Upload Time] : " + dateTime;
 		telegramMessageBot.sendMessage(message);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
