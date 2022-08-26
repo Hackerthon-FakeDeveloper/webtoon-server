@@ -40,7 +40,7 @@ public interface WebtoonService {
 	void dislikeWebtoon(Long userSeq, Long webtoonSeq);
 
 	@Transactional
-	List<WebtoonVo> findByLike(Long userSeq);
+	List<WebtoonVo> findByLike(Long userSeq, Long start, Long display);
 
 	@Transactional
 	void addWebtoonSeries(Long webtoonSeq, Long seriesSeq);

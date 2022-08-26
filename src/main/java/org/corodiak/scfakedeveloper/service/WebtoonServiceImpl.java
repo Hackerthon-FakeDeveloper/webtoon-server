@@ -156,8 +156,8 @@ public class WebtoonServiceImpl implements WebtoonService {
 
 	@Override
 	@Transactional
-	public List<WebtoonVo> findByLike(Long userSeq) {
-		List<WebtoonLike> webtoonLikeList = webtoonLikeRepository.findByUserSeq(userSeq);
+	public List<WebtoonVo> findByLike(Long userSeq, Long start, Long display) {
+		List<WebtoonLike> webtoonLikeList = webtoonLikeRepository.findByUserSeq(userSeq, start, display);
 		List<WebtoonVo> results = webtoonLikeList.stream()
 			.map(e -> new WebtoonVo(e.getWebtoon()))
 			.collect(Collectors.toList());

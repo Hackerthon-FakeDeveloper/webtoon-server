@@ -20,12 +20,13 @@ public class QWebtoonLikeRepositoryImpl implements QWebtoonLikeRepository {
 	private QUser qUser = QUser.user;
 
 	@Override
-	public List<WebtoonLike> findByUserSeq(Long seq) {
+	public List<WebtoonLike> findByUserSeq(Long seq, Long start, Long display) {
 		List<WebtoonLike> results = queryFactory.selectFrom(qWebtoonLike)
 			.where(qWebtoonLike.user.seq.eq(seq))
 			.innerJoin(qWebtoonLike.user, qUser)
 			.innerJoin(qWebtoonLike.webtoon, qWebtoon)
 			.fetchJoin()
+				.offset(start).limit(display)
 			.fetch();
 		return results;
 	}

@@ -152,9 +152,12 @@ public class WebtoonController {
 	@Operation(summary = "내가 좋아요 한 웹툰 불러오기", description = "ROLE_USER / ROLE_ADMIN")
 	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/like", method = RequestMethod.GET)
-	public ResponseModel searchByLike() {
+	public ResponseModel searchByLike(
+			@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+			@RequestParam(name = "display", required = false, defaultValue = "20") long display
+	) {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
-		List<WebtoonVo> webtoonList = webtoonService.findByLike(userSeq);
+		List<WebtoonVo> webtoonList = webtoonService.findByLike(userSeq, start, display);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		responseModel.addData("webtoonList", webtoonList);
 		return responseModel;
