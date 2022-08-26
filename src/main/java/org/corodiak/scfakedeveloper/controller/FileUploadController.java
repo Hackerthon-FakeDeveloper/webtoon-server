@@ -2,6 +2,7 @@ package org.corodiak.scfakedeveloper.controller;
 
 import javax.mail.MessagingException;
 
+import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
 import org.corodiak.scfakedeveloper.exception.FileUploadFailException;
 import org.corodiak.scfakedeveloper.service.EmailService;
 import org.corodiak.scfakedeveloper.service.FileUploadService;
@@ -36,25 +37,26 @@ public class FileUploadController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public ResponseModel upload(
 		@RequestParam(value = "file", required = true) MultipartFile multipartFile
-	) throws FileUploadFailException, TelegramApiException {
+	) throws FileUploadFailException {
 		String url = fileUploadService.saveFile(multipartFile);
-		LocalDateTime dateTime = LocalDateTime.now();
-		String message = "\n===============ALERT===============\n"
-				+ "============FILE UPLOAD============\n"
-				+ "[File URL] : " + url
-				+ "[Upoad Time] : " + dateTime;
-
-		telegramMessageBot.sendMessage(message);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		responseModel.addData("url", url);
 		return responseModel;
 	}
 
+	@Operation(summary = "화면 캡처 후 이메일 전송", description = "ROLE_USER | ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN, ROLE_USER"})
 	@RequestMapping(value = "/upload/capture", method = RequestMethod.POST)
 	public ResponseModel uploadCapture(
 		@RequestParam(value = "file", required = true) MultipartFile multipartFile
-	) throws FileUploadFailException, MessagingException {
+	) throws MessagingException, TelegramApiException {
 		emailService.sendMail(multipartFile);
+		LocalDateTime dateTime = LocalDateTime.now();
+		String message = "\n==================ALERT=================\n"
+			+ "============EXECUTED CAPTURE============\n"
+			+ "[User Seq] : " + AuthUtil.getAuthenticationInfoSeq()
+			+ "[Upoad Time] : " + dateTime;
+		telegramMessageBot.sendMessage(message);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
 	}
