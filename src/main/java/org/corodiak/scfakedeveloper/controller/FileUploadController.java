@@ -8,7 +8,6 @@ import org.corodiak.scfakedeveloper.service.EmailService;
 import org.corodiak.scfakedeveloper.service.FileUploadService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.util.TelegramMessageBot;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
