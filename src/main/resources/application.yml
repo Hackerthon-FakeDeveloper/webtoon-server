@@ -66,7 +66,7 @@ resource:
     # path: [VM Arguments OR Environment Variable] : Actual storage path for uploaded files
 
 email:
-  receiver: ENC(/avjnkUU1LS4jWzORQIu9vzWPg4NAazDAMwnfZQBj2aA595bE9Zj5P97fhAKdixR)
+  receiver: ENC(oni8WXBtIhGuEAu4l+9OSa2d3VlMe5IzJlihsqIU809AQOqbGPElwxMlXoOnouPG)
 
 bot:
   BOT_TOKEN: ENC(p5GwF9EU3aVU1Ms98Df5Lsfg3MUHjz1JrF/4lVHM0MFnD88W5w+FMljzJHfrWTKMODMy7sLwIdaqf3P+/Qjslg==)
