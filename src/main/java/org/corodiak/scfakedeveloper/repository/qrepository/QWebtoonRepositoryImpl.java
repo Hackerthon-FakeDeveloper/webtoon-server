@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
-
 import org.corodiak.scfakedeveloper.type.entity.QAuthor;
 import org.corodiak.scfakedeveloper.type.entity.QTag;
 import org.corodiak.scfakedeveloper.type.entity.QWebtoon;
@@ -14,8 +12,8 @@ import org.corodiak.scfakedeveloper.type.entity.QWebtoonLike;
 import org.corodiak.scfakedeveloper.type.entity.QWebtoonTag;
 import org.corodiak.scfakedeveloper.type.entity.Webtoon;
 import org.corodiak.scfakedeveloper.type.entity.WebtoonLike;
+import org.corodiak.scfakedeveloper.type.entity.WebtoonTag;
 
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -123,14 +121,13 @@ public class QWebtoonRepositoryImpl implements QWebtoonRepository {
 
 	@Override
 	public List<Webtoon> findRelatedTagWebtoon(List<Long> tagSeqList) {
-		List<Webtoon> results = queryFactory.selectFrom(qWebtoon).from(qWebtoonTag)
-			.innerJoin(qWebtoon, qWebtoonTag.webtoon)
-			.innerJoin(qTag, qWebtoonTag.tag)
+		List<WebtoonTag> results = queryFactory.selectFrom(qWebtoonTag)
+			.innerJoin(qWebtoonTag.webtoon, qWebtoon)
 			.fetchJoin()
 			.where(qWebtoonTag.tag.seq.in(tagSeqList))
-			.orderBy(NumberExpression.random().asc())
 			.limit(7)
 			.fetch();
-		return results;
+		List<Webtoon> webtoonList = results.stream().map(e -> e.getWebtoon()).collect(Collectors.toList());
+		return webtoonList;
 	}
 }

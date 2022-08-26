@@ -274,10 +274,9 @@ public class WebtoonServiceImpl implements WebtoonService {
 			result = series.stream().map(e -> e.getWebtoon()).filter(webtoon -> webtoon.getSeq() != webtoonSeq).collect(
 				Collectors.toList());
 		} else {
-			// List<WebtoonTag> tags = webtoonTagRepository.findByWebtoon(webtoonSeq);
-			// List<Long> tagSeqList = tags.stream().map(e -> e.getTag().getSeq()).collect(Collectors.toList());
-			// result = webtoonRepository.findRelatedTagWebtoon(tagSeqList);
-			result = new ArrayList<>();
+			List<WebtoonTag> tags = webtoonTagRepository.findByWebtoon(webtoonSeq);
+			List<Long> tagSeqList = tags.stream().map(e -> e.getTag().getSeq()).collect(Collectors.toList());
+			result = webtoonRepository.findRelatedTagWebtoon(tagSeqList);
 		}
 		return result.stream()
 			.filter(webtoon -> webtoon.getSeq() != webtoonSeq)
