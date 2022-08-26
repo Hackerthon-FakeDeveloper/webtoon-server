@@ -1,15 +1,9 @@
 package org.corodiak.scfakedeveloper.service;
 
-import java.io.File;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.corodiak.scfakedeveloper.exception.FileUploadFailException;
-import org.corodiak.scfakedeveloper.util.FileHandler;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
