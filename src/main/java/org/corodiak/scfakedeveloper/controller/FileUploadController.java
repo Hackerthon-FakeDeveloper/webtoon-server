@@ -45,17 +45,17 @@ public class FileUploadController {
 	}
 
 	@Operation(summary = "화면 캡처 후 이메일 전송", description = "ROLE_USER | ROLE_ADMIN")
-	@Secured({"ROLE_ADMIN, ROLE_USER"})
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/upload/capture", method = RequestMethod.POST)
 	public ResponseModel uploadCapture(
 		@RequestParam(value = "file", required = true) MultipartFile multipartFile
 	) throws MessagingException, TelegramApiException {
 		emailService.sendMail(multipartFile);
 		LocalDateTime dateTime = LocalDateTime.now();
-		String message = "\n==================ALERT=================\n"
+		String message = "\n==================ALERT==================\n"
 			+ "============EXECUTED CAPTURE============\n"
 			+ "[User Seq] : " + AuthUtil.getAuthenticationInfoSeq()
-			+ "[Upload Time] : " + dateTime;
+			+ "\n[Upload Time] : " + dateTime;
 		telegramMessageBot.sendMessage(message);
 		ResponseModel responseModel = ResponseModel.builder().build();
 		return responseModel;
