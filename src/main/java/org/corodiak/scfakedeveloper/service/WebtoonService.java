@@ -66,8 +66,8 @@ public interface WebtoonService {
 	@Transactional
 	List<WebtoonVo> findNewWebtoon(Long start, Long display);
 
-    @Transactional
-    List<WebtoonVo> findPopularWebtoon(Long start, Long display);
+	@Transactional
+	List<WebtoonVo> findPopularWebtoon(Long start, Long display);
 
 	@Transactional
 	List<WebtoonVo> findRecentPopularWebtoon(Long start, Long display);

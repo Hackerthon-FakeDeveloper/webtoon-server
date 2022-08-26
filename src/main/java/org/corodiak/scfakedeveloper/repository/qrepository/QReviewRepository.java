@@ -12,7 +12,7 @@ public interface QReviewRepository {
 
 	List<Review> findByWebtoonSeq(Long seq, Long start, Long display);
 
-    Long countAll();
+	Long countAll();
 
 	void batchUpdateReviewScore();
 }

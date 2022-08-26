@@ -3,6 +3,7 @@ package org.corodiak.scfakedeveloper.controller;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.Operation;
+
 import org.corodiak.scfakedeveloper.auth.util.AuthUtil;
 import org.corodiak.scfakedeveloper.exception.NotAllowValueException;
 import org.corodiak.scfakedeveloper.exception.PermissionDeniedException;
@@ -72,7 +73,7 @@ public class UserContoller {
 	@Secured({"ROLE_USER"})
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseModel userUpdate(
-			@RequestBody UserDto userDto
+		@RequestBody UserDto userDto
 	) throws NotAllowValueException {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		userDto.setSeq(userSeq);
@@ -105,7 +106,7 @@ public class UserContoller {
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/admin/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel userDeleteAsAdmin(
-			@PathVariable("seq") Long seq
+		@PathVariable("seq") Long seq
 	) {
 		userService.removeUser(seq);
 		ResponseModel responseModel = ResponseModel.builder().build();

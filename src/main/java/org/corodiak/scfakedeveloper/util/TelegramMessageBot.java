@@ -9,35 +9,35 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
 public class TelegramMessageBot extends TelegramLongPollingBot {
-    @Value("${bot.BOT_TOKEN}")
-    private String botToken;
+	@Value("${bot.BOT_TOKEN}")
+	private String botToken;
 
-    @Value("${bot.BOT_USERNAME}")
-    private String botUsername;
+	@Value("${bot.BOT_USERNAME}")
+	private String botUsername;
 
-    @Value("${bot.CHAT_ID}")
-    private String chatId;
+	@Value("${bot.CHAT_ID}")
+	private String chatId;
 
-    @Override
-    public String getBotUsername() {
-        return botUsername;
-    }
+	@Override
+	public String getBotUsername() {
+		return botUsername;
+	}
 
-    @Override
-    public String getBotToken() {
-        return botToken;
-    }
+	@Override
+	public String getBotToken() {
+		return botToken;
+	}
 
-    @Override
-    public void onUpdateReceived(Update update) {
+	@Override
+	public void onUpdateReceived(Update update) {
 
-    }
+	}
 
-    public void sendMessage(String message) throws TelegramApiException {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(chatId);
-        sendMessage.setText(message);
+	public void sendMessage(String message) throws TelegramApiException {
+		SendMessage sendMessage = new SendMessage();
+		sendMessage.setChatId(chatId);
+		sendMessage.setText(message);
 
-        execute(sendMessage);
-    }
+		execute(sendMessage);
+	}
 }

@@ -153,8 +153,8 @@ public class WebtoonController {
 	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping(value = "/like", method = RequestMethod.GET)
 	public ResponseModel searchByLike(
-			@RequestParam(name = "start", required = false, defaultValue = "0") long start,
-			@RequestParam(name = "display", required = false, defaultValue = "20") long display
+		@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+		@RequestParam(name = "display", required = false, defaultValue = "20") long display
 	) {
 		Long userSeq = AuthUtil.getAuthenticationInfoSeq();
 		List<WebtoonVo> webtoonList = webtoonService.findByLike(userSeq, start, display);
@@ -223,8 +223,8 @@ public class WebtoonController {
 	@Operation(summary = "웹툰 태그 기반 검색(시퀀스)", description = "PERMIT_ALL")
 	@RequestMapping(value = "/tag/seq/{seq}", method = RequestMethod.GET)
 	public ResponseModel searchByTagSeq(
-			@RequestParam(name = "start", required = false, defaultValue = "0") long start,
-			@RequestParam(name = "display", required = false, defaultValue = "20") long display,
+		@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+		@RequestParam(name = "display", required = false, defaultValue = "20") long display,
 		@PathVariable("seq") Long tagSeq
 	) {
 		List<WebtoonVo> webtoonList = webtoonService.findByTagSeq(tagSeq, start, display);
@@ -237,9 +237,9 @@ public class WebtoonController {
 	@Operation(summary = "웹툰 태그 기반 검색(문자열)", description = "PERMIT_ALL")
 	@RequestMapping(value = "/tag/string/{tag}", method = RequestMethod.GET)
 	public ResponseModel searchByTagString(
-			@RequestParam(name = "start", required = false, defaultValue = "0") long start,
-			@RequestParam(name = "display", required = false, defaultValue = "20") long display,
-			@PathVariable("tag") String tag
+		@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+		@RequestParam(name = "display", required = false, defaultValue = "20") long display,
+		@PathVariable("tag") String tag
 	) {
 		List<WebtoonVo> webtoonList = webtoonService.findByTagString(tag, start, display);
 		ResponseModel responseModel = ResponseModel.builder().build();
@@ -264,8 +264,8 @@ public class WebtoonController {
 	@Operation(summary = "인기 웹툰 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/popular/all", method = RequestMethod.GET)
 	public ResponseModel popularWebtoon(
-			@RequestParam(name = "start", required = false, defaultValue = "0") long start,
-			@RequestParam(name = "display", required = false, defaultValue = "20") long display
+		@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+		@RequestParam(name = "display", required = false, defaultValue = "20") long display
 	) {
 		List<WebtoonVo> webtoonList = webtoonService.findPopularWebtoon(start, display);
 		ResponseModel responseModel = ResponseModel.builder().build();
@@ -277,8 +277,8 @@ public class WebtoonController {
 	@Operation(summary = "인기 웹툰 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/popular/recent", method = RequestMethod.GET)
 	public ResponseModel recentPopularWebtoon(
-			@RequestParam(name = "start", required = false, defaultValue = "0") long start,
-			@RequestParam(name = "display", required = false, defaultValue = "20") long display
+		@RequestParam(name = "start", required = false, defaultValue = "0") long start,
+		@RequestParam(name = "display", required = false, defaultValue = "20") long display
 	) {
 		List<WebtoonVo> webtoonList = webtoonService.findRecentPopularWebtoon(start, display);
 		ResponseModel responseModel = ResponseModel.builder().build();

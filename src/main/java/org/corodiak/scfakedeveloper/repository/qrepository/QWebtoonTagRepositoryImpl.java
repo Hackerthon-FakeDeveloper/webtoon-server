@@ -26,7 +26,7 @@ public class QWebtoonTagRepositoryImpl implements QWebtoonTagRepository {
 			.innerJoin(qWebtoonTag.webtoon, qWebtoon)
 			.innerJoin(qWebtoonTag.tag, qTag)
 			.fetchJoin()
-				.offset(start).limit(display)
+			.offset(start).limit(display)
 			.fetch();
 		return results;
 	}
@@ -34,24 +34,24 @@ public class QWebtoonTagRepositoryImpl implements QWebtoonTagRepository {
 	@Override
 	public List<WebtoonTag> findByTagString(String tag, Long start, Long display) {
 		List<WebtoonTag> results = queryFactory.selectDistinct(qWebtoonTag)
-				.from(qWebtoonTag)
-				.where(qWebtoonTag.tag.name.contains(tag))
-				.innerJoin(qWebtoonTag.webtoon, qWebtoon)
-				.innerJoin(qWebtoonTag.tag, qTag)
-				.fetchJoin()
-				.offset(start).limit(display)
-				.fetch();
+			.from(qWebtoonTag)
+			.where(qWebtoonTag.tag.name.contains(tag))
+			.innerJoin(qWebtoonTag.webtoon, qWebtoon)
+			.innerJoin(qWebtoonTag.tag, qTag)
+			.fetchJoin()
+			.offset(start).limit(display)
+			.fetch();
 		return results;
 	}
 
 	@Override
 	public List<WebtoonTag> findByWebtoon(Long seq) {
 		List<WebtoonTag> results = queryFactory.selectFrom(qWebtoonTag)
-				.where(qWebtoonTag.webtoon.seq.eq(seq))
-				.innerJoin(qWebtoonTag.webtoon, qWebtoon)
-				.innerJoin(qWebtoonTag.tag, qTag)
-				.fetchJoin()
-				.fetch();
+			.where(qWebtoonTag.webtoon.seq.eq(seq))
+			.innerJoin(qWebtoonTag.webtoon, qWebtoon)
+			.innerJoin(qWebtoonTag.tag, qTag)
+			.fetchJoin()
+			.fetch();
 		return results;
 	}
 }

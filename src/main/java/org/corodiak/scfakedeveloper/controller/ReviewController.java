@@ -123,7 +123,7 @@ public class ReviewController {
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "/admin/{seq}", method = RequestMethod.DELETE)
 	public ResponseModel reviewDeleteAsAdmin(
-			@PathVariable("seq") Long seq
+		@PathVariable("seq") Long seq
 	) {
 		reviewService.removeReviewAsAdmin(seq);
 		ResponseModel responseModel = ResponseModel.builder().build();

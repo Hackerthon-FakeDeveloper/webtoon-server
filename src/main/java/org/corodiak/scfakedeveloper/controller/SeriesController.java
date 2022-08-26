@@ -3,6 +3,7 @@ package org.corodiak.scfakedeveloper.controller;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.Operation;
+
 import org.corodiak.scfakedeveloper.service.SeriesService;
 import org.corodiak.scfakedeveloper.type.dto.ResponseModel;
 import org.corodiak.scfakedeveloper.type.dto.SeriesDto;
@@ -51,7 +52,7 @@ public class SeriesController {
 	@Operation(summary = "웹툰 기반 시리즈 조회", description = "PERMIT_ALL")
 	@RequestMapping(value = "/webtoon/{webtoonSeq}", method = RequestMethod.GET)
 	public ResponseModel getByWebtoon(
-			@PathVariable("webtoonSeq") Long webtoonSeq
+		@PathVariable("webtoonSeq") Long webtoonSeq
 	) {
 		SeriesVo series = seriesService.findByWebtoonSeq(webtoonSeq);
 		ResponseModel responseModel = ResponseModel.builder().build();

@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 			result.setAge(userDto.getAge());
 		}
 		if (!Strings.isNullOrEmpty(userDto.getGender())) {
-			if(userDto.getGender().equals("F") || userDto.getGender().equals("M")) {
+			if (userDto.getGender().equals("F") || userDto.getGender().equals("M")) {
 				result.setGender(userDto.getGender());
 			} else {
 				throw new NotAllowValueException("Not Allow Value at User Gender!");

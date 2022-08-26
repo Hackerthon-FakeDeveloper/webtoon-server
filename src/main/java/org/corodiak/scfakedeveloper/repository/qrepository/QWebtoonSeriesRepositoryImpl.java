@@ -34,11 +34,11 @@ public class QWebtoonSeriesRepositoryImpl implements QWebtoonSeriesRepository {
 	@Override
 	public Optional<WebtoonSeries> findByWebtoonSeq(Long seq) {
 		WebtoonSeries results = queryFactory.selectFrom(qWebtoonSeries)
-				.where(qWebtoonSeries.webtoon.seq.eq(seq))
-				.innerJoin(qWebtoonSeries.series, qSeries)
-				.innerJoin(qWebtoonSeries.webtoon, qWebtoon)
-				.fetchJoin()
-				.fetchOne();
+			.where(qWebtoonSeries.webtoon.seq.eq(seq))
+			.innerJoin(qWebtoonSeries.series, qSeries)
+			.innerJoin(qWebtoonSeries.webtoon, qWebtoon)
+			.fetchJoin()
+			.fetchOne();
 		return Optional.ofNullable(results);
 	}
 }
