@@ -26,6 +26,7 @@ public class QWebtoonLikeRepositoryImpl implements QWebtoonLikeRepository {
 			.innerJoin(qWebtoonLike.user, qUser)
 			.innerJoin(qWebtoonLike.webtoon, qWebtoon)
 			.fetchJoin()
+				.orderBy(qWebtoonLike.createdDate.desc())
 				.offset(start).limit(display)
 			.fetch();
 		return results;
