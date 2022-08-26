@@ -38,7 +38,7 @@ public class EmailServiceImpl implements EmailService {
 		mimeMessageHelper.setSubject("Window Capture Mail - Fake Developer");
 		mimeMessageHelper.setTo(receiver);
 		mimeMessageHelper.setText("Captured Image.");
-		mimeMessageHelper.addAttachment(multipartFile.getOriginalFilename(), multipartFile);
+		mimeMessageHelper.addAttachment("capture.png", multipartFile);
 		javaMailSender.send(mimeMessage);
 	}
 }
