@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.corodiak.scfakedeveloper.type.entity.*;
+import org.corodiak.scfakedeveloper.type.entity.QSeries;
+import org.corodiak.scfakedeveloper.type.entity.QWebtoon;
+import org.corodiak.scfakedeveloper.type.entity.QWebtoonSeries;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
